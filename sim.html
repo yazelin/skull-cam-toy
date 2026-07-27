@@ -251,6 +251,22 @@ function camGroup(profilePts,x,shaftY,shaftZ,mat){
   m.rotation.y=-Math.PI/2; m.position.x=1.5;
   g.add(m); reg(m,profilePts,holes,3); return g;
 }
+// 把一個軸對齊矩形沿著多邊形的上緣或下緣併進去 → 一片零件,不是黏三片
+function addRect(poly,x0,x1,zTo,side){
+  const pick=xq=>{let best=null;
+    for(let i=0;i<poly.length;i++){const a=poly[i],b=poly[(i+1)%poly.length];
+      if((a[0]-xq)*(b[0]-xq)<0){const t=(xq-a[0])/(b[0]-a[0]),z=a[1]+t*(b[1]-a[1]);
+        if(!best||(side==='bottom'?z<best.z:z>best.z)) best={i,z};}}
+    return best;};
+  const A=pick(x0),B=pick(x1);
+  if(!A||!B) throw new Error('addRect 找不到交點 '+x0+' '+x1);
+  const run=(f,t)=>{const r=[];for(let k=(f+1)%poly.length;k!==(t+1)%poly.length;k=(k+1)%poly.length)r.push(poly[k]);return r;};
+  const zs=poly.map(p=>p[1]),zmid=(Math.min(...zs)+Math.max(...zs))/2;
+  const seg=run(A.i,B.i);
+  const hit=seg.length?((seg.reduce((s,p)=>s+p[1],0)/seg.length<zmid)===(side==='bottom')):true;
+  return hit ? [[x0,A.z],[x0,zTo],[x1,zTo],[x1,B.z]].concat(run(B.i,A.i))
+             : [[x1,B.z],[x1,zTo],[x0,zTo],[x0,A.z]].concat(run(A.i,B.i));
+}
 function eccPts(R,e,n){ // 偏心圓:圓心在 (0,e)
   const a=[];for(let i=0;i<(n||48);i++){const t=i/(n||48)*Math.PI*2;a.push([R*Math.cos(t),e+R*Math.sin(t)]);}return a;
 }
@@ -389,17 +405,16 @@ function buildV2(){
   A.jaw=new THREE.Group(); A.headPivot.add(A.jaw);
   const jx=S.sx-30-NX, jz=V2.jawZ0-3;                      // 顎局部 y=3 → z=jawZ0
   PART='下顎';
-  const JT=[[84,89],[91,96]];   // 榫耳長在碗底最低處(z≈122),那裡才有實料
-  A.jaw.add(plateXZ(PROFILES.jaw.map(p=>[p[0]+jx,p[1]+jz]),V2.jawT,V2.jawY-NY,MAT.jaw));
-  JT.forEach(([a,b])=>A.jaw.add(plateXZ(rect(a-NX,V2.jawZ0-3,b-NX,V2.jawZ0+1),V2.jawT,V2.jawY-NY,MAT.jaw)));
-  PART='下顎';
-  [[72,80],[100,108]].forEach(([a,b],i)=>{
-    A.jaw.add(plateXZ(rect(a-NX,V2.jawZ0+26,b-NX,V2.jawZ0+58),V2.jawT,V2.jawY-NY,MAT.jaw,
-      [rect(V2.jawPin.x[i]-NX-2.2,154,V2.jawPin.x[i]-NX+2.2,177).reverse()]));
-  });
+  const JT=[[83,88],[92,97]];     // 榫耳:長在碗底最低處(z≈122),那裡才有實料
+  const EAR=[[71,81],[99,109]];   // 升支:往上長,開滑槽套在頭骨的 Ø4 銷上
+  let jawPoly=PROFILES.jaw.map(p=>[p[0]+jx,p[1]+jz]);
+  JT.forEach(([a,b])=>{jawPoly=addRect(jawPoly,a-NX,b-NX,V2.jawZ0-3,'bottom');});
+  EAR.forEach(([a,b])=>{jawPoly=addRect(jawPoly,a-NX,b-NX,V2.jawZ0+58,'top');});
+  A.jaw.add(plateXZ(jawPoly,V2.jawT,V2.jawY-NY,MAT.jaw,
+    V2.jawPin.x.map(x=>rect(x-NX-2.2,154,x-NX+2.2,177).reverse())));
   PART='下顎受推板';
   // T 形:前橫條伸到 x=100 套住榫耳,後臂只到 x=84 讓開頸脊
-  A.jaw.add(plateXY([[62-NX,52-NY],[100-NX,52-NY],[100-NX,64-NY],[84-NX,64-NY],
+  A.jaw.add(plateXY([[62-NX,50-NY],[100-NX,50-NY],[100-NX,64-NY],[84-NX,64-NY],
                      [84-NX,90-NY],[62-NX,90-NY]],3,V2.jawZ0-3,MAT.jaw,
     JT.map(([a,b])=>rect(a-NX-0.1,53.9-NY,b-NX+0.1,60.1-NY).reverse())));
 
@@ -407,18 +422,17 @@ function buildV2(){
   A.eyeBar=new THREE.Group(); A.headPivot.add(A.eyeBar);
   PART='眼球橫桿';
   // 左端下伸到 z=164 讓榫孔四周都有料;主體下緣一律 z=171,不會擋到推桿
-  A.eyeBar.add(plateXZ([[42-NX,164],[50-NX,164],[50-NX,171],[118-NX,171],[118-NX,196],[42-NX,196]],
+  A.eyeBar.add(plateXZ([[38-NX,164],[50-NX,164],[50-NX,171],[124-NX,171],[124-NX,196],[38-NX,196]],
     V2.eyeBarT,V2.eyeBarY-NY,MAT.plyDark,
     V2.eyePin.x.map(x=>rect(x-NX-2.2,174,x-NX+2.2,192).reverse())
-      .concat([rect(42.9-NX,170.9,49.1-NX,174.1).reverse()])));   // 榫孔
+      .concat([rect(40.9-NX,170.9,47.1-NX,174.1).reverse()])));   // 榫孔
   [78,102].forEach(x=>{
     const e=new THREE.Mesh(new THREE.SphereGeometry(V2.eyeballR+0.6,20,14),MAT.eye);
     e.position.set(x-NX,187,V2.eyeBarY-NY-1.5); A.eyeBar.add(e);   // +5 讓眼珠在眼窩裡上下對稱跑
   });
-  PART='眼球受推板';
-  PART='眼球受推板';
-  A.eyeBar.add(plateXY(rect(42-NX,66-NY,70-NX,92-NY),3,171,MAT.plyDark));
-  A.eyeBar.add(plateXY(rect(43-NX,63-NY,49-NX,66-NY),3,171,MAT.plyDark));   // 榫
+  PART='眼球受推板';   // 板 + 榫是同一片
+  A.eyeBar.add(plateXY([[38-NX,66-NY],[41-NX,66-NY],[41-NX,63-NY],[47-NX,63-NY],[47-NX,66-NY],
+                        [70-NX,66-NY],[70-NX,92-NY],[38-NX,92-NY]],3,171,MAT.plyDark));
 
 
   G.userData.A=A; return G;
@@ -426,6 +440,7 @@ function buildV2(){
 
 // ================= 原始圖面 =================
 function buildOrig(){
+  PART='原始圖面';
   const G=new THREE.Group(); const A={};
   const B=ORIG.box,T=B.t;
   G.add(plateXY(rect(0,0,B.w,B.d),T,-T,MAT.plyDark));

@@ -1,6 +1,8 @@
 const { chromium } = require('/home/ct/.nvm/versions/node/v22.17.1/lib/node_modules/playwright');
 
 const SCAN = () => {
+  const under=(o,root)=>{while(o){if(o===root)return true;o=o.parent;}return false;};
+  for(let i=SOLIDS.length-1;i>=0;i--) if(!under(SOLIDS[i].mesh,gV2)) SOLIDS.splice(i,1);
   // ---- 幾何工具 ----
   const inPoly=(p,poly)=>{let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){
     const a=poly[i],b=poly[j];
@@ -30,8 +32,27 @@ const SCAN = () => {
     const d3=(d[0]-c[0])*(a[1]-c[1])-(d[1]-c[1])*(a[0]-c[0]);
     const d4=(d[0]-c[0])*(b[1]-c[1])-(d[1]-c[1])*(b[0]-c[0]);
     return ((d1>0)!==(d2>0))&&((d3>0)!==(d4>0));};
+  // 兩條線段的最短距離 → 用來量「肉厚」(孔跟孔、孔跟輪廓之間還剩多少料)
+  const p2s=(p,a,b)=>{const dx=b[0]-a[0],dy=b[1]-a[1];const L=dx*dx+dy*dy;
+    let t=L?((p[0]-a[0])*dx+(p[1]-a[1])*dy)/L:0; t=Math.max(0,Math.min(1,t));
+    return Math.hypot(p[0]-(a[0]+t*dx),p[1]-(a[1]+t*dy));};
+  const polyGap=(A,B)=>{let m=1e9;
+    for(let i=0;i<A.length;i++) for(let j=0;j<B.length;j++){
+      m=Math.min(m,p2s(A[i],B[j],B[(j+1)%B.length]),p2s(B[j],A[i],A[(i+1)%A.length]));}
+    return m;};
+  const MINWEB=2.0;                       // 3mm 合板的最小肉厚
+  const thinWebs=[];
   const badHoles=[];
   for(const S of SOLIDS){
+    // 孔與孔、孔與輪廓之間的肉厚
+    for(let i=0;i<S.holes.length;i++){
+      const g0=polyGap(S.holes[i],S.poly);
+      if(g0<MINWEB) thinWebs.push({part:S.part,what:`第 ${i+1} 個孔 ↔ 外輪廓`,gap:g0});
+      for(let j=i+1;j<S.holes.length;j++){
+        const g=polyGap(S.holes[i],S.holes[j]);
+        if(g<MINWEB) thinWebs.push({part:S.part,what:`第 ${i+1} 個孔 ↔ 第 ${j+1} 個孔`,gap:g});
+      }
+    }
     S.holes.forEach((h,hi)=>{
       const outside=h.filter(v=>!inPoly(v,S.poly)).length;
       let cross=false;
@@ -46,9 +67,24 @@ const SCAN = () => {
     });
   }
 
+  // ---- 同名零件被畫成多片:雷切時會變成分開的零件,不是一片 ----
+  const splitParts=[];
+  const grp={};
+  for(const S of SOLIDS){ (grp[S.part]=grp[S.part]||[]).push(S); }
+  for(const name in grp){
+    const g=grp[name]; if(g.length<2) continue;
+    for(let i=0;i<g.length;i++) for(let j=i+1;j<g.length;j++){
+      const A=g[i],B=g[j];
+      const ma=A.mesh.matrixWorld.elements, mb=B.mesh.matrixWorld.elements;
+      const same=ma.every((v,k)=>Math.abs(v-mb[k])<1e-6);
+      if(!same) continue;                                  // 不同平面 → 本來就是不同片
+      if(Math.max(A.w0,B.w0)>=Math.min(A.w0+A.t,B.w0+B.t)) continue;
+      if(polyGap(A.poly,B.poly)<0.5)
+        splitParts.push({part:name, gap:+polyGap(A.poly,B.poly).toFixed(2)});
+    }
+  }
+
   // ---- 掃描 ----
-  const under=(o,root)=>{while(o){if(o===root)return true;o=o.parent;}return false;};
-  for(let i=SOLIDS.length-1;i>=0;i--) if(!under(SOLIDS[i].mesh,gV2)) SOLIDS.splice(i,1);
   const V=new THREE.Vector3(), inv=new THREE.Matrix4();
   const hits={};
   const N=72;
@@ -90,7 +126,7 @@ const SCAN = () => {
       }
     }
   }
-  return {solids:SOLIDS.map(s=>({part:s.part,n:s.pts.length,step:+s.step.toFixed(2)})), hits, badHoles};
+  return {solids:SOLIDS.map(s=>({part:s.part,n:s.pts.length,step:+s.step.toFixed(2)})), hits, badHoles, thinWebs, splitParts};
 };
 
 (async () => {
@@ -109,6 +145,17 @@ const SCAN = () => {
                   `  範圍 ${b.box[0]}~${b.box[1]} × ${b.box[2]}~${b.box[3]}`);
     console.log('');
   } else console.log('零件自檢:所有孔都完全落在輪廓內');
+  if(r.thinWebs.length){
+    console.log('\n>>> 肉厚不足:'+r.thinWebs.length+' 處(3mm 板的下限抓 2.0mm)\n');
+    for(const w of r.thinWebs)
+      console.log(`  ${w.part}  ${w.what}  剩 ${w.gap.toFixed(2)} mm` + (w.gap<0.05?'  ← 已經咬在一起':''));
+    console.log('');
+  } else console.log('肉厚自檢:孔與孔、孔與輪廓之間都還有 2mm 以上');
+  if(r.splitParts.length){
+    console.log('\n>>> 同一零件被畫成多片(同平面又相接):雷切出來會是分開的,要靠膠黏\n');
+    for(const q of r.splitParts) console.log(`  ${q.part}  兩片之間 ${q.gap} mm —— 應該併成單一輪廓`);
+    console.log('');
+  } else console.log('單件自檢:沒有「同一零件被拆成多片」的情形');
   const JOINT={'下顎 ✕ 下顎受推板':'榫接:受推板的榫穿過下顎片的榫孔(單邊 0.1mm 配合)',
                '眼球橫桿 ✕ 眼球受推板':'榫接:受推板的榫穿過眼球橫桿的榫孔'};
   for(const k of Object.keys(r.hits)) if(JOINT[k]){ console.log('  [已知榫接] '+k+' —— '+JOINT[k]); delete r.hits[k]; }
