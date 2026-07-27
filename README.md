@@ -16,7 +16,7 @@
 
 | | |
 |---|---|
-| [`cut/cut-all-A4.pdf`](cut/cut-all-A4.pdf) | 1:1 切割檔,A4 五頁,共 46 片 |
+| [`cut/cut-all-A4.pdf`](cut/cut-all-A4.pdf) | 1:1 切割檔,A4 五頁,共 48 片 |
 | [`cut/cut-*.dxf`](cut/) | 同上的 DXF(雷射軟體通吃,單位 mm) |
 | [`cut/cut-*.svg`](cut/) | 同上的 SVG(黑線=切割、藍字=刻字) |
 | [`ASSEMBLY.md`](ASSEMBLY.md) | 組裝說明書,十步,每步附「怎麼驗」 |

@@ -12,7 +12,7 @@ const SHEET = { w: 210, h: 297, m: 8, gap: 4 };   // A4 直放
   const b = await chromium.launch({ args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader'] });
   const p = await b.newPage({ viewport: { width: 900, height: 600 } });
   p.on('pageerror', e => console.log('PAGEERROR', e.message));
-  await p.goto('http://127.0.0.1:8099/index.html');
+  await p.goto('http://127.0.0.1:8099/sim.html');
   await p.waitForTimeout(2000);
 
   const parts = await p.evaluate(() => {

@@ -22,7 +22,7 @@
 <p><code>x</code> = 左右 0~180 · <code>y</code> = 前後 0 是前板 · <code>z</code> = 上下 0 是底板上表面。</p>
 <hr>
 <h2 id="0-材料">0 · 材料</h2>
-<p><strong>板材</strong>:3mm 合板,A4 五張的量(<code>cut-all-A4.pdf</code>,共 46 片)。</p>
+<p><strong>板材</strong>:3mm 合板,A4 五張的量(<code>cut-all-A4.pdf</code>,共 48 片)。</p>
 <p><strong>非板材</strong>(要另外買):</p>
 <div class="tw"><table><thead><tr><th>品項</th><th>規格</th><th>數量</th><th>用在哪</th></tr></thead><tbody>
 <tr><td>圓棒</td><td>Ø6 × 215</td><td>1</td><td>凸輪軸</td></tr>
@@ -54,7 +54,7 @@
 </ol>
 <p>   這一步不能省:側板只有 3mm,軸承長度不夠,孔會被磨成橢圓。貼了之後變 9mm。</p>
 <ol>
-<li><strong>兩支 Ø4 導柱</strong>插進底板的兩個孔,位置 (82, 50) 與 (114, 74),垂直立好。</li>
+<li><strong>兩支 Ø4 導柱</strong>插進底板的兩個孔,位置 (82, 50) 與 (114, 70),垂直立好。</li>
 </ol>
 <blockquote><strong>驗</strong>:兩片側板的軸孔要左右對齊 —— 拿 Ø6 圓棒穿過去,能輕鬆轉動不卡。</blockquote>
 <hr>
@@ -112,19 +112,22 @@
 <ol>
 <li><strong>頭骨主片 ×2</strong>(68×91,含兩眼窩、鼻孔、四個 Ø4 銷孔)。</li>
 <li><strong>下顎</strong>(本體 + 兩支升支,6mm)夾在兩片主片之間。</li>
-<li><strong>眼球橫桿</strong>(74×32)放在後片後面。</li>
+<li><strong>眼球橫桿</strong>(76×32)放在後片後面。</li>
 <li>四支 <strong>Ø4 滑銷</strong>穿過「主片 + 升支 / 橫桿 + 主片」:</li>
 </ol>
 <ul>
 <li>下顎銷:x = 76、104,z = 156</li>
-<li>眼球銷:x = 66、114,z = 176</li>
+<li>眼球銷:x = 68、112,z = 176</li>
 </ul>
 <p>   下顎和眼球桿就是吊在這四支銷上,靠自己的滑槽上下滑,<strong>掉不出來</strong>。</p>
 <ol>
 <li><strong>受推板榫接</strong>:</li>
 </ol>
 <ul>
-<li>下顎受推板的兩個 6×6 榫,插進下顎片的兩個榫孔,上膠。</li>
+<li>下顎片底部中央有兩個 5×4 的<strong>榫耳</strong>(x=84~89、91~96),穿過下顎受推板的兩個榫孔,上膠。</li>
+</ul>
+<p>     榫耳長在碗底最低處,那裡才有實料 —— 碗形下緣往兩側是往上翹的。</p>
+<ul>
 <li>眼球受推板的 6×3 榫,插進眼球橫桿的榫孔,上膠。</li>
 </ul>
 <p>   &gt; 這裡千萬不要只用對接。3mm 板對接的膠合面太小,一推就開。</p>
@@ -168,7 +171,7 @@
 </ul>
 <hr>
 <h2 id="想看它動">想看它動</h2>
-<p>打開 <code>index.html</code>,右邊切「修正版」。</p>
+<p>打開 <code>sim.html</code>(或網站的「3D 模擬」),右邊切「修正版」。</p>
 <p>右側面板有 15 項幾何檢查和完整的約束盤點(每個零件的每個自由度被什麼固定住)。</p>
 <p><code>node collide.js</code> 可以重跑干涉掃描,<code>node bom.js</code> 重出零件表,<code>node export-cut.js</code> 重出切割檔。</p>
 </main>

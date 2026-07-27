@@ -3,7 +3,7 @@ const { chromium } = require('/home/ct/.nvm/versions/node/v22.17.1/lib/node_modu
  const b=await chromium.launch({args:['--use-gl=swiftshader','--enable-unsafe-swiftshader']});
  const p=await b.newPage({viewport:{width:900,height:600}});
  p.on('pageerror',e=>console.log('ERR',e.message));
- await p.goto('http://127.0.0.1:8099/index.html'); await p.waitForTimeout(2000);
+ await p.goto('http://127.0.0.1:8099/sim.html'); await p.waitForTimeout(2000);
  const rows=await p.evaluate(()=>{
   updV2(gV2.userData.A,0); gV2.updateMatrixWorld(true);
   const under=(o,r)=>{while(o){if(o===r)return true;o=o.parent;}return false;};

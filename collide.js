@@ -23,6 +23,29 @@ const SCAN = () => {
       if(inSolid2D(u,v,S)) for(const w of ws) pts.push([u,v,w]);
     S.pts=pts; S.step=step;
   }
+  // ---- 零件自檢:每個孔都必須完全落在輪廓內 ----
+  // (孔畫在零件外時,干涉掃描永遠掃不到 —— 因為不存在的材料不會跟任何東西相撞)
+  const segX=(a,b,c,d)=>{const d1=(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);
+    const d2=(b[0]-a[0])*(d[1]-a[1])-(b[1]-a[1])*(d[0]-a[0]);
+    const d3=(d[0]-c[0])*(a[1]-c[1])-(d[1]-c[1])*(a[0]-c[0]);
+    const d4=(d[0]-c[0])*(b[1]-c[1])-(d[1]-c[1])*(b[0]-c[0]);
+    return ((d1>0)!==(d2>0))&&((d3>0)!==(d4>0));};
+  const badHoles=[];
+  for(const S of SOLIDS){
+    S.holes.forEach((h,hi)=>{
+      const outside=h.filter(v=>!inPoly(v,S.poly)).length;
+      let cross=false;
+      for(let i=0;i<h.length&&!cross;i++)
+        for(let j=0;j<S.poly.length;j++)
+          if(segX(h[i],h[(i+1)%h.length],S.poly[j],S.poly[(j+1)%S.poly.length])){cross=true;break;}
+      if(outside||cross){
+        const xs=h.map(v=>v[0]),ys=h.map(v=>v[1]);
+        badHoles.push({part:S.part,hi,outside,total:h.length,cross,
+          box:[Math.min(...xs),Math.max(...xs),Math.min(...ys),Math.max(...ys)].map(v=>+v.toFixed(1))});
+      }
+    });
+  }
+
   // ---- 掃描 ----
   const under=(o,root)=>{while(o){if(o===root)return true;o=o.parent;}return false;};
   for(let i=SOLIDS.length-1;i>=0;i--) if(!under(SOLIDS[i].mesh,gV2)) SOLIDS.splice(i,1);
@@ -67,18 +90,25 @@ const SCAN = () => {
       }
     }
   }
-  return {solids:SOLIDS.map(s=>({part:s.part,n:s.pts.length,step:+s.step.toFixed(2)})), hits};
+  return {solids:SOLIDS.map(s=>({part:s.part,n:s.pts.length,step:+s.step.toFixed(2)})), hits, badHoles};
 };
 
 (async () => {
   const b = await chromium.launch({args:['--use-gl=swiftshader','--enable-unsafe-swiftshader']});
   const p = await b.newPage({viewport:{width:1200,height:700}});
   p.on('pageerror',e=>console.log('PAGEERROR',e.message));
-  await p.goto('http://127.0.0.1:8099/index.html');
+  await p.goto('http://127.0.0.1:8099/sim.html');
   await p.waitForTimeout(2000);
   await p.evaluate(()=>{playing=false;});
   const r = await p.evaluate(SCAN);
   console.log('登記的木片:', r.solids.length, ' 取樣點合計:', r.solids.reduce((a,s)=>a+s.n,0));
+  if(r.badHoles.length){
+    console.log('\n>>> 零件自檢失敗:'+r.badHoles.length+' 個孔沒有完全落在輪廓內\n');
+    for(const b of r.badHoles)
+      console.log(`  ${b.part} 的第 ${b.hi+1} 個孔  ${b.outside===b.total?'整個在輪廓外':(b.cross?'跨過輪廓邊界':'部分在外')}`+
+                  `  範圍 ${b.box[0]}~${b.box[1]} × ${b.box[2]}~${b.box[3]}`);
+    console.log('');
+  } else console.log('零件自檢:所有孔都完全落在輪廓內');
   const JOINT={'下顎 ✕ 下顎受推板':'榫接:受推板的榫穿過下顎片的榫孔(單邊 0.1mm 配合)',
                '眼球橫桿 ✕ 眼球受推板':'榫接:受推板的榫穿過眼球橫桿的榫孔'};
   for(const k of Object.keys(r.hits)) if(JOINT[k]){ console.log('  [已知榫接] '+k+' —— '+JOINT[k]); delete r.hits[k]; }
