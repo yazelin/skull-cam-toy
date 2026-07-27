@@ -274,10 +274,11 @@ function eccPts(R,e,n){ // 偏心圓:圓心在 (0,e)
 // ================= 修正版 v2 =================
 function buildV2(){
   const G=new THREE.Group(); const A={};
-  const B=V2.box, T=B.t, TOPZ=B.h;                      // 頂板底面 z=90
+  const B=V2.box, T=B.t, TOPZ=B.h;
+  const finSlots=V2.fins.map(([x,y0,y1])=>rect(x-1.7,y0-0.2,x+1.7,y1+0.2).reverse());                      // 頂板底面 z=90
   // 盒體
   PART='底板';
-  G.add(plateXY(rect(0,0,B.w,B.d),T,-T,MAT.plyDark,V2.posts.map(([x,y])=>circPts(x,y,2.1,16).reverse())));  // 底板(含導柱孔)
+  G.add(plateXY(rect(0,0,B.w,B.d),T,-T,MAT.plyDark,finSlots));  // 底板(含導片榫孔)
   PART='前板';
   G.add(withEdges(plateXZ(rect(0,0,B.w,B.h),T,0,MAT.shell)));          // 前板
   PART='後板';
@@ -301,7 +302,7 @@ function buildV2(){
   G.add(withEdges(plateXY(rect(0,0,B.w,B.d),T,TOPZ,MAT.shell,rodSlots.concat([turnSlot,neckHoleTop]))));
   PART='中段導板';
   G.add(plateXY(rect(6,V2.rodY.lo-2,118,V2.shankY.hi+4),T,V2.guide.z,MAT.shell,
-    rodSlots.concat([neckHoleGuide],V2.posts.map(([x,y])=>circPts(x,y,2.1,16).reverse()))));
+    rodSlots.concat([neckHoleGuide],finSlots)));
   PART='轉頭導片';   // 兩塊夾片黏在頂板下,給轉頭板 22mm 深的導引通道
   G.add(plateYZ(rect(58,66,86,79),3,V2.turnPlate.x-5,MAT.shell));
   G.add(plateYZ(rect(58,66,86,79),3,V2.turnPlate.x+2,MAT.shell));
@@ -314,7 +315,8 @@ function buildV2(){
   const crank=plateYZ(rect(-8,-8,8,54),6,-22,MAT.plyDark,[circPts(0,0,3,18).reverse(),circPts(0,46,4,18).reverse()]);
   A.shaft.add(crank);
   const knob=rodX(6,26,-32,0,46,MAT.plyDark); A.shaft.add(knob);
-  A.shaft.add(rodX(7,4,-6,0,0,MAT.steel)); A.shaft.add(rodX(7,4,182,0,0,MAT.steel));  // 軸環:擋住軸向竄動
+  PART='軸環';   // 板材圓片,黏在軸上抵住側板外側
+  [-3,180].forEach(x=>A.shaft.add(plateYZ(circPts(0,0,7,26),3,x,MAT.plyDark,[circPts(0,0,3.1,20).reverse()])));
 
   // 四片凸輪
   A.cams={};
@@ -357,19 +359,19 @@ function buildV2(){
   const L=V2.lift;
   A.lift=new THREE.Group();
   PART='點頭升降板';
-  const POSTS=V2.posts;
   A.lift.add(plateXY(rect(L.x0,L.y0,L.x1,L.y1),L.t,0,MAT.plyDark,
-    [neckHoleGuide].concat(POSTS.map(([x,y])=>circPts(x,y,2.4,16).reverse()))));
+    [neckHoleGuide].concat(V2.fins.map(([x,y0,y1])=>rect(x-1.9,y0-0.4,x+1.9,y1+0.4).reverse()))));
   G.add(A.lift);
-  // 兩支導柱:下端插底板、上端插中段導板 —— 定 x、y、與繞 z 的旋轉
-  POSTS.forEach(([x,y])=>G.add(rodZ(2,76,x,y,34)));
+  // 兩片導片(板材卡榫):下端插底板、上端插中段導板;封閉長槽同時定住 x、y 與旋轉
+  PART='升降導片';
+  V2.fins.forEach(([x,y0,y1])=>G.add(plateYZ(rect(y0,-3,y1,73),3,x-1.5,MAT.plyDark)));
 
   // 頸脊(8 寬 × 6 厚的扁棒,站在頭部後方)+ 底部項圈
   A.neck=new THREE.Group(); A.neck.position.set(NX,0,NY);
   PART='頸脊';
   A.neck.add(box(V2.neck.w,V2.neck.d,110,0,0,58,MAT.plyDark));
   PART='頸脊項圈';
-  A.neck.add(box(20,16,3,0,0,1.5,MAT.plyDark));
+  A.neck.add(box(16,14,3,0,0,1.5,MAT.plyDark));   // 項圈縮小,讓開導片
   G.add(A.neck);
 
   // 轉盤:方孔 hub 套住頸脊(可上下滑、不能相對轉)+ 臂 + 銷
@@ -391,12 +393,15 @@ function buildV2(){
   const holes=[circPts(30+ox,66+oz,V2.socketR,26).reverse(),circPts(54+ox,66+oz,V2.socketR,26).reverse(),
                [[42+ox,55+oz],[48+ox,44+oz],[36+ox,44+oz]]];          // 兩眼窩 + 鼻孔
   PART='頭骨主片';
-  V2.jawPin.x.forEach(x=>holes.push(circPts(x-NX,V2.jawPin.z,2.1,16).reverse()));
-  V2.eyePin.x.forEach(x=>holes.push(circPts(x-NX,V2.eyePin.z,2.1,16).reverse()));
+  V2.jawPin.x.forEach(x=>holes.push(rect(x-NX-1.6,V2.jawPin.z-2.1,x-NX+1.6,V2.jawPin.z+2.1).reverse()));
+  V2.eyePin.x.forEach(x=>holes.push(rect(x-NX-1.6,V2.eyePin.z-2.1,x-NX+1.6,V2.eyePin.z+2.1).reverse()));
   V2.skullPlateY.forEach(y=>A.headLift.add(plateXZ(skullPts,V2.skullT,y-NY,MAT.bone,holes)));
   // 頭骨上的滑銷(下顎 ×2、眼球桿 ×2)
-  V2.jawPin.x.forEach(x=>A.headLift.add(rodY(2,V2.jawT+8,x-NX,0,V2.jawPin.z)));
-  V2.eyePin.x.forEach(x=>A.headLift.add(rodY(2,V2.eyeBarT+8,x-NX,-4.5,V2.eyePin.z)));
+  PART='滑榫';   // 3×4 板材小榫,黏進頭骨主片的方孔;下顎/眼球桿的長槽掛在上面
+  V2.jawPin.x.forEach(x=>A.headLift.add(
+    plateYZ(rect(50-NY,V2.jawPin.z-2,64-NY,V2.jawPin.z+2),3,x-NX-1.5,MAT.plyDark)));
+  V2.eyePin.x.forEach(x=>A.headLift.add(
+    plateYZ(rect(50-NY,V2.eyePin.z-2,68-NY,V2.eyePin.z+2),3,x-NX-1.5,MAT.plyDark)));
   // 頸脊與頭骨的接合塊
   PART='頸脊接合塊';
   A.headLift.add(plateXZ(rect(-10,S.z0+9,10,S.z0+35),3,63-NY,MAT.plyDark));
@@ -411,7 +416,7 @@ function buildV2(){
   JT.forEach(([a,b])=>{jawPoly=addRect(jawPoly,a-NX,b-NX,V2.jawZ0-3,'bottom');});
   EAR.forEach(([a,b])=>{jawPoly=addRect(jawPoly,a-NX,b-NX,V2.jawZ0+58,'top');});
   A.jaw.add(plateXZ(jawPoly,V2.jawT,V2.jawY-NY,MAT.jaw,
-    V2.jawPin.x.map(x=>rect(x-NX-2.2,154,x-NX+2.2,177).reverse())));
+    V2.jawPin.x.map(x=>rect(x-NX-1.7,153,x-NX+1.7,177).reverse())));
   PART='下顎受推板';
   // T 形:前橫條伸到 x=100 套住榫耳,後臂只到 x=84 讓開頸脊
   A.jaw.add(plateXY([[62-NX,50-NY],[100-NX,50-NY],[100-NX,64-NY],[84-NX,64-NY],
@@ -424,7 +429,7 @@ function buildV2(){
   // 左端下伸到 z=164 讓榫孔四周都有料;主體下緣一律 z=171,不會擋到推桿
   A.eyeBar.add(plateXZ([[38-NX,164],[50-NX,164],[50-NX,171],[124-NX,171],[124-NX,196],[38-NX,196]],
     V2.eyeBarT,V2.eyeBarY-NY,MAT.plyDark,
-    V2.eyePin.x.map(x=>rect(x-NX-2.2,174,x-NX+2.2,192).reverse())
+    V2.eyePin.x.map(x=>rect(x-NX-1.7,173,x-NX+1.7,192).reverse())
       .concat([rect(40.9-NX,170.9,47.1-NX,174.1).reverse()])));   // 榫孔
   [78,102].forEach(x=>{
     const e=new THREE.Mesh(new THREE.SphereGeometry(V2.eyeballR+0.6,20,14),MAT.eye);
