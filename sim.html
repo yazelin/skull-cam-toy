@@ -393,15 +393,15 @@ function buildV2(){
   const holes=[circPts(30+ox,66+oz,V2.socketR,26).reverse(),circPts(54+ox,66+oz,V2.socketR,26).reverse(),
                [[42+ox,55+oz],[48+ox,44+oz],[36+ox,44+oz]]];          // 兩眼窩 + 鼻孔
   PART='頭骨主片';
-  V2.jawPin.x.forEach(x=>holes.push(rect(x-NX-1.6,V2.jawPin.z-2.1,x-NX+1.6,V2.jawPin.z+2.1).reverse()));
-  V2.eyePin.x.forEach(x=>holes.push(rect(x-NX-1.6,V2.eyePin.z-2.1,x-NX+1.6,V2.eyePin.z+2.1).reverse()));
+  V2.jawPin.x.forEach(x=>holes.push(rect(x-NX-1.6,V2.jawPin.z-3.1,x-NX+1.6,V2.jawPin.z+3.1).reverse()));
+  V2.eyePin.x.forEach(x=>holes.push(rect(x-NX-1.6,V2.eyePin.z-3.1,x-NX+1.6,V2.eyePin.z+3.1).reverse()));
   V2.skullPlateY.forEach(y=>A.headLift.add(plateXZ(skullPts,V2.skullT,y-NY,MAT.bone,holes)));
   // 頭骨上的滑銷(下顎 ×2、眼球桿 ×2)
   PART='滑榫';   // 3×4 板材小榫,黏進頭骨主片的方孔;下顎/眼球桿的長槽掛在上面
   V2.jawPin.x.forEach(x=>A.headLift.add(
-    plateYZ(rect(50-NY,V2.jawPin.z-2,64-NY,V2.jawPin.z+2),3,x-NX-1.5,MAT.plyDark)));
+    plateYZ(rect(50-NY,V2.jawPin.z-3,64-NY,V2.jawPin.z+3),3,x-NX-1.5,MAT.plyDark)));
   V2.eyePin.x.forEach(x=>A.headLift.add(
-    plateYZ(rect(50-NY,V2.eyePin.z-2,68-NY,V2.eyePin.z+2),3,x-NX-1.5,MAT.plyDark)));
+    plateYZ(rect(50-NY,V2.eyePin.z-3,68-NY,V2.eyePin.z+3),3,x-NX-1.5,MAT.plyDark)));
   // 頸脊與頭骨的接合塊
   PART='頸脊接合塊';
   A.headLift.add(plateXZ(rect(-10,S.z0+9,10,S.z0+35),3,63-NY,MAT.plyDark));
@@ -414,9 +414,9 @@ function buildV2(){
   const EAR=[[71,81],[99,109]];   // 升支:往上長,開滑槽套在頭骨的 Ø4 銷上
   let jawPoly=PROFILES.jaw.map(p=>[p[0]+jx,p[1]+jz]);
   JT.forEach(([a,b])=>{jawPoly=addRect(jawPoly,a-NX,b-NX,V2.jawZ0-3,'bottom');});
-  EAR.forEach(([a,b])=>{jawPoly=addRect(jawPoly,a-NX,b-NX,V2.jawZ0+58,'top');});
+  EAR.forEach(([a,b])=>{jawPoly=addRect(jawPoly,a-NX,b-NX,V2.jawZ0+60,'top');});
   A.jaw.add(plateXZ(jawPoly,V2.jawT,V2.jawY-NY,MAT.jaw,
-    V2.jawPin.x.map(x=>rect(x-NX-1.7,153,x-NX+1.7,177).reverse())));
+    V2.jawPin.x.map(x=>rect(x-NX-1.7,152,x-NX+1.7,179).reverse())));
   PART='下顎受推板';
   // T 形:前橫條伸到 x=100 套住榫耳,後臂只到 x=84 讓開頸脊
   A.jaw.add(plateXY([[62-NX,50-NY],[100-NX,50-NY],[100-NX,64-NY],[84-NX,64-NY],
@@ -429,7 +429,7 @@ function buildV2(){
   // 左端下伸到 z=164 讓榫孔四周都有料;主體下緣一律 z=171,不會擋到推桿
   A.eyeBar.add(plateXZ([[38-NX,164],[50-NX,164],[50-NX,171],[124-NX,171],[124-NX,196],[38-NX,196]],
     V2.eyeBarT,V2.eyeBarY-NY,MAT.plyDark,
-    V2.eyePin.x.map(x=>rect(x-NX-1.7,173,x-NX+1.7,192).reverse())
+    V2.eyePin.x.map(x=>rect(x-NX-1.7,173,x-NX+1.7,193).reverse())
       .concat([rect(40.9-NX,170.9,47.1-NX,174.1).reverse()])));   // 榫孔
   [78,102].forEach(x=>{
     const e=new THREE.Mesh(new THREE.SphereGeometry(V2.eyeballR+0.6,20,14),MAT.eye);
