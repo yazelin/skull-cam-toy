@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm"
+     viewBox="0 0 210 297">
+  <style>
+    polygon{fill:none;stroke:#000;stroke-width:.1}
+    .lb{fill:#06c;font:2.6px "Noto Sans TC",sans-serif;text-anchor:middle;dominant-baseline:middle}
+    .hd{fill:#06c;font:3.4px sans-serif}
+  </style>
+  <g stroke="#000" stroke-width=".15" fill="none">
+    <path d="M8,285 h50 M8,283 v4 M33,284 v3 M58,283 v4"/>
+  </g>
+  <text class="hd" style="font-size:2.4px" x="61" y="286">↑ 這段必須剛好 50mm,不對就是印表機縮放了</text>
+  <text class="hd" x="8" y="294">骷髏頭凸輪玩具 · 3mm 板 · 1:1 · 第 3/5 張 · 黑線=切割 藍字=刻字</text>
+<g><polygon points="8.00,98.00 188.00,98.00 188.00,8.00 8.00,8.00"/><text class="lb" style="font-size:2.6px" x="98.0" y="53.0">前板</text></g>
+<g><polygon points="8.00,192.00 188.00,192.00 188.00,102.00 8.00,102.00"/><text class="lb" style="font-size:2.6px" x="98.0" y="147.0">後板</text></g>
+<g><polygon points="8.00,286.00 116.00,286.00 116.00,196.00 8.00,196.00"/><polygon points="65.09,250.83 64.77,251.60 64.26,252.26 63.60,252.77 62.83,253.09 62.00,253.20 61.17,253.09 60.40,252.77 59.74,252.26 59.23,251.60 58.91,250.83 58.80,250.00 58.91,249.17 59.23,248.40 59.74,247.74 60.40,247.23 61.17,246.91 62.00,246.80 62.83,246.91 63.60,247.23 64.26,247.74 64.77,248.40 65.09,249.17 65.20,250.00"/><text class="lb" style="font-size:2.6px" x="62.0" y="241.0">左側板</text></g>
+</svg>
