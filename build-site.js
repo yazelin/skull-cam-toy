@@ -97,6 +97,8 @@ const jobs = [
     desc: '3mm 板的十步組裝流程,每一步都附驗證方法。' },
   { src: 'FINDINGS.md', out: 'findings.html', cur: 'fnd', title: '驗證報告 · 骷髏頭凸輪玩具',
     desc: '原始圖面為什麼做不出來,以及修正版怎麼驗證的。' },
+  { src: 'HEART-ASSEMBLY.md', out: 'heart-assembly.html', cur: 'heart', title: '組裝說明 · 七夕心跳凸輪',
+    desc: '18 片 3mm 板的七步組裝流程,每一步都附驗收,含最容易裝錯的五件事。' },
 ];
 for (const j of jobs) {
   const src = fs.readFileSync(path.join(DIR, j.src), 'utf8');

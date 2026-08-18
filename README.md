@@ -37,6 +37,8 @@
 | `sim.html` | 3D 模擬。可切「原始圖面 / 修正版」,右側有 15 項幾何檢查與完整約束盤點 |
 <!-- 直播彩蛋,2026-08-19 揭曉後解除註解:
 | `heart.html` | **七夕限定「心跳凸輪」**:一片偏心凸輪+一顆會跳的心,18 片 3mm 板、一張 A4 的入門版。含 3D 模擬與 8 項整圈幾何檢查;切割檔 `cut/heart-cut-1.svg/.dxf` 由 `node export-heart.js` 從模型產生;干涉掃描 `node heart-collide.js`(36 角度全零件對,抓過一次相位反向)。模擬全過,**還沒實際切過** |
+| `heart-assembly.html` | 由 `HEART-ASSEMBLY.md` 產生:七步組裝+每步驗收+防呆五清單 |
+| `DESIGN-RULES.md` | 機構設計規則檢查表(接頭/配合/導引/約束/驗證順序),新機構動工前逐條過 |
 -->
 | `assembly.html` | 由 `ASSEMBLY.md` 產生 |
 | `findings.html` | 由 `FINDINGS.md` 產生 |
