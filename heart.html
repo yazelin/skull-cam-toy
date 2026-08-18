@@ -83,6 +83,10 @@
       <span id="spdv">70</span>
     </div>
     <div class="row">
+      <button id="explodeBtn">拆解接頭</button>
+      <span style="font-size:11px;color:var(--dim)">看心和推桿的十字插槽怎麼咬合</span>
+    </div>
+    <div class="row">
       <span style="width:46px">曲柄</span>
       <input type="range" id="ang" min="0" max="359" value="0">
       <span id="angv" style="width:38px;text-align:right">0°</span>
@@ -345,13 +349,16 @@ function heartWithSlot(pts,cx,w,d){
   return poly;
 }
 const heartPoly=heartWithSlot(rawHeart,hcx,D.heartSlotW,D.heartSlotD);
+let heartMesh;
 {
   const m=new THREE.Mesh(extrude(mkShape(heartPoly),D.t),MAT.heart);
   m.position.z=D.shaftY-D.t/2;               // y 33.5..36.5
   gFoll.add(m); reg(m,heartPoly,[],D.t);
   m.userData.zBase=D.follLen-D.heartSlotD;   // 心尖端 local z 對齊推桿槽底
   m.position.y=D.follLen-D.heartSlotD;
+  heartMesh=m;
 }
+let explode=0, explodeTo=0;                   // 拆解接頭:心上滑 28mm 露出兩邊的槽
 
 // ================= 驅動 =================
 const gV2=new THREE.Group(); gV2.userData={A:0}; scene.add(gV2); // 供 export-heart.js 使用的掛名
@@ -365,6 +372,8 @@ let liveA=0, playing=true, speed=70;
 const play=document.getElementById('play'), spd=document.getElementById('spd'), spdv=document.getElementById('spdv');
 const ang=document.getElementById('ang'), angv=document.getElementById('angv'), live=document.getElementById('live');
 play.onclick=()=>{playing=!playing;play.textContent=playing?'⏸ 暫停':'▶ 播放';};
+const explodeBtn=document.getElementById('explodeBtn');
+explodeBtn.onclick=()=>{explodeTo=explodeTo?0:1;explodeBtn.textContent=explodeTo?'合回去':'拆解接頭';};
 spd.oninput=()=>{speed=+spd.value;spdv.textContent=speed;};
 ang.oninput=()=>{playing=false;play.textContent='▶ 播放';updV2(null,+ang.value*Math.PI/180);};
 let last=0;
@@ -372,6 +381,8 @@ function loop(ts){
   requestAnimationFrame(loop);
   const dt=Math.min(.05,(ts-last)/1000); last=ts;
   if(playing){ updV2(null,(gV2.userData.A+dt*speed*Math.PI/180)%(Math.PI*2)); ang.value=Math.round(gV2.userData.A*180/Math.PI); }
+  explode+=(explodeTo-explode)*Math.min(1,dt*6);
+  heartMesh.position.y=heartMesh.userData.zBase+explode*28;
   const deg=Math.round(gV2.userData.A*180/Math.PI);
   angv.textContent=deg+'°';
   live.innerHTML='<span class="k">曲柄</span>'+deg+'°<br>'+
