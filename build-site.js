@@ -61,10 +61,11 @@ function md2html(src) {
   return out.join('\n');
 }
 
-const HEARTNAV = (cur) => `<nav class="nav"><a class="brand" href="./">骷髏頭凸輪玩具</a>
-  <a href="heart.html">七夕心跳凸輪</a>
+const HEARTNAV = (cur) => `<nav class="nav"><a class="brand" href="heart.html">七夕限定 · 心跳凸輪</a>
+  <a href="heart.html">3D 模擬</a>
   <a href="heart-assembly.html"${cur === 'heart' ? ' class="on"' : ''}>組裝說明</a>
-  <a href="cut/heart-cut-1.svg">下載切割檔</a></nav>`;
+  <a href="cut/heart-cut-1.svg">下載切割檔</a>
+  <a href="./">骷髏頭本站</a></nav>`;
 
 const NAV = (cur) => `<nav class="nav"><a class="brand" href="./">骷髏頭凸輪玩具</a>
   <a href="./"${cur === 'home' ? ' class="on"' : ''}>概覽</a>
