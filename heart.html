@@ -45,6 +45,11 @@
   .note{font-size:11.5px;color:var(--warn);line-height:1.7;border:1px solid rgba(240,180,41,.35);
     border-radius:6px;padding:8px 10px;margin:10px 0}
   ol.steps{font-size:12px;color:var(--dim);line-height:1.8;padding-left:1.3em;margin:.4em 0}
+  .vis{display:flex;flex-wrap:wrap;gap:5px;margin:4px 0 10px}
+  .vis label{font-size:11px;color:var(--dim);border:1px solid var(--line);border-radius:99px;
+    padding:3px 9px;cursor:pointer;user-select:none}
+  .vis label.off{opacity:.4;text-decoration:line-through}
+  .vis input{display:none}
   @media (max-width:760px){
     #wrap{flex-direction:column;height:auto}
     #view{height:56vh;flex:none}
@@ -86,6 +91,12 @@
       <button id="explodeBtn">拆解接頭</button>
       <span style="font-size:11px;color:var(--dim)">看兩道槽怎麼錯位互咬</span>
     </div>
+    <div class="row">
+      <span style="width:46px">爆炸圖</span>
+      <input type="range" id="boom" min="0" max="100" value="0">
+      <span id="boomv" style="width:38px;text-align:right">0%</span>
+    </div>
+    <div class="vis" id="vis"></div>
     <div class="row">
       <span style="width:46px">曲柄</span>
       <input type="range" id="ang" min="0" max="359" value="0">
@@ -243,20 +254,20 @@ const D={
 const footZ=A=>D.shaftZ+D.camR-D.camE*Math.sin(A);
 
 // ================= 固定件 =================
-PART='底板'; plateXY(rect(0,0,D.baseX,D.baseY),D.t,0,MAT.ply2);
+PART='底板'; const mBase=plateXY(rect(0,0,D.baseX,D.baseY),D.t,0,MAT.ply2);
 PART='側板';
 const sideHole=[circPts(D.shaftY,D.shaftZ,3.1,24).reverse()];
-withEdges(plateYZ(rect(0,D.t,D.baseY,D.topZ),D.t,D.sideLx,MAT.shell,sideHole));
-withEdges(plateYZ(rect(0,D.t,D.baseY,D.topZ),D.t,D.sideRx,MAT.shell,sideHole));
+const mSideL=withEdges(plateYZ(rect(0,D.t,D.baseY,D.topZ),D.t,D.sideLx,MAT.shell,sideHole));
+const mSideR=withEdges(plateYZ(rect(0,D.t,D.baseY,D.topZ),D.t,D.sideRx,MAT.shell,sideHole));
 PART='頂板';
 const slot=[ [[D.slotX0,D.slotY0],[D.slotX1,D.slotY0],[D.slotX1,D.slotY1],[D.slotX0,D.slotY1]].reverse() ];
-withEdges(plateXY(rect(0,0,D.baseX,D.baseY),D.t,D.topZ,MAT.shell,slot));
+const mTop=withEdges(plateXY(rect(0,0,D.baseX,D.baseY),D.t,D.topZ,MAT.shell,slot));
 PART='導片';
-plateYZ(rect(D.slotY0,D.guideZ0,D.slotY1,D.topZ),D.t,D.camX-D.t-0.3,MAT.ply2);           // 左 53.7..56.7
-plateYZ(rect(D.slotY0,D.guideZ0,D.slotY1,D.topZ),D.t,D.camX+D.follT+0.3,MAT.ply2);       // 右 63.3..66.3
+const mG1=plateYZ(rect(D.slotY0,D.guideZ0,D.slotY1,D.topZ),D.t,D.camX-D.t-0.3,MAT.ply2);
+const mG2=plateYZ(rect(D.slotY0,D.guideZ0,D.slotY1,D.topZ),D.t,D.camX+D.follT+0.3,MAT.ply2);
 PART='導片前後';
-plateXZ(rect(D.camX-D.t-0.3,D.guideZ0,D.camX+D.follT+D.t+0.3,D.topZ),D.t,D.follY0-0.3-D.t,MAT.ply2); // 前 y 23.7..26.7
-plateXZ(rect(D.camX-D.t-0.3,D.guideZ0,D.camX+D.follT+D.t+0.3,D.topZ),D.t,D.follY0+D.follW+0.3,MAT.ply2); // 後 y 43.3..46.3
+const mG3=plateXZ(rect(D.camX-D.t-0.3,D.guideZ0,D.camX+D.follT+D.t+0.3,D.topZ),D.t,D.follY0-0.3-D.t,MAT.ply2);
+const mG4=plateXZ(rect(D.camX-D.t-0.3,D.guideZ0,D.camX+D.follT+D.t+0.3,D.topZ),D.t,D.follY0+D.follW+0.3,MAT.ply2);
 
 // ================= 轉動組(繞世界 X 軸) =================
 const gRot=new THREE.Group(); gRot.position.set(0,D.shaftZ,D.shaftY); scene.add(gRot);
@@ -268,7 +279,7 @@ function addRotPlate(pts,holes,t,x0,mat,part){
 }
 // 凸輪:偏心圓,局部 (y,z),圓心 (e,0)
 const camPoly=circPts(D.camE,0,D.camR,44), camHole=[circPts(0,0,3.1,24).reverse()];
-addRotPlate(camPoly,camHole,D.camT,D.camX-(D.camT-D.follT)/2,MAT.cam,'偏心凸輪');
+const mCam=addRotPlate(camPoly,camHole,D.camT,D.camX-(D.camT-D.follT)/2,MAT.cam,'偏心凸輪');
 // 曲柄臂:stadium 由 (0,0) 到 (0,-arm),寬 14,兩端 Ø6.2
 function stadium(x0,y0,x1,y1,w){
   const a=Math.atan2(y1-y0,x1-x0), r=w/2, pts=[];
@@ -278,14 +289,14 @@ function stadium(x0,y0,x1,y1,w){
 }
 const crankPoly=stadium(0,0,0,-D.crankArm,D.crankW);
 const crankHoles=[circPts(0,0,3.1,24).reverse(),circPts(0,-D.crankArm,3.1,24).reverse()];
-addRotPlate(crankPoly,crankHoles,6,D.crankX,MAT.ply,'曲柄臂');
+const mCrank=addRotPlate(crankPoly,crankHoles,6,D.crankX,MAT.ply,'曲柄臂');
 // 軸環 ×2(貼側板內側)
 PART='軸環';
 const collarPoly=circPts(0,0,D.collarR,30), collarHole=[circPts(0,0,3.1,24).reverse()];
-addRotPlate(collarPoly,collarHole,D.t,23.5,MAT.ply2,'軸環');
-addRotPlate(collarPoly,collarHole,D.t,D.sideRx-3.5,MAT.ply2,'軸環');
+const mCol1=addRotPlate(collarPoly,collarHole,D.t,23.5,MAT.ply2,'軸環');
+const mCol2=addRotPlate(collarPoly,collarHole,D.t,D.sideRx-3.5,MAT.ply2,'軸環');
 // 軸與手把(圓棒,不進切割檔)
-gRot.add(rodX(3,92,62,0,0));
+const mShaft=rodX(3,92,62,0,0); gRot.add(mShaft);
 const handle=rodX(3,34,D.crankX+6+17,0,-D.crankArm); gRot.add(handle);
 
 // ================= 跟隨組(推桿+心) =================
@@ -300,10 +311,11 @@ const follPoly=[
   [nY0,D.follLen-D.forkD],[nY0,D.follLen],[D.follY0,D.follLen],
   [D.follY0,D.footH],[fy0,D.footH],
 ];
+let follMesh;
 {
   const m=new THREE.Mesh(extrude(mkShape(follPoly),D.follT),MAT.foll);
   m.rotation.y=-Math.PI/2; m.position.x=D.camX+D.follT;
-  gFoll.add(m); reg(m,follPoly,[],D.follT);
+  gFoll.add(m); reg(m,follPoly,[],D.follT); follMesh=m;
 }
 // 心:局部 (x,z),參數曲線,尖端在 (camX+3,0);底部挖 6.4 寬深 10 槽
 PART='心';
@@ -360,6 +372,36 @@ let heartMesh;
 }
 let explode=0, explodeTo=0;                   // 拆解接頭:心上滑 28mm 露出兩邊的槽
 
+// ================= 爆炸圖與顯隱 =================
+// 偏移為機構座標 (x,y,z),各件沿自己的裝配方向拉開;three 對應 (x, z, y)
+const PARTGROUPS=[
+  {key:'heart', label:'心',       meshes:[],            off:[0,0,40]},   // heartMesh 建立後補
+  {key:'foll',  label:'推桿',     meshes:[],            off:[0,0,14]},
+  {key:'top',   label:'頂板',     meshes:[mTop],        off:[0,0,26]},
+  {key:'guide', label:'導套',     meshes:[mG1,mG2,mG3,mG4], off:[0,0,18]},
+  {key:'cam',   label:'凸輪',     meshes:[mCam],        off:[0,0,0]},
+  {key:'shaft', label:'軸與手把', meshes:[mShaft,handle], off:[0,0,0]},
+  {key:'crank', label:'曲柄臂',   meshes:[mCrank],      off:[20,0,0]},
+  {key:'collar',label:'軸環',     meshes:[mCol1,mCol2], off:null},       // 個別:左-12/右+12
+  {key:'side',  label:'側板',     meshes:[mSideL,mSideR], off:null},     // 個別:左-24/右+24
+  {key:'base',  label:'底板',     meshes:[mBase],       off:[0,0,-14]},
+];
+const INDIV=new Map([[mCol1,[-12,0,0]],[mCol2,[12,0,0]],[mSideL,[-24,0,0]],[mSideR,[24,0,0]]]);
+let explodeF=0;
+function initExplode(){
+  PARTGROUPS.find(g=>g.key==='heart').meshes.push(heartMesh);
+  PARTGROUPS.find(g=>g.key==='foll').meshes.push(follMesh);
+  for(const g of PARTGROUPS) for(const m of g.meshes) m.userData.p0=m.position.clone();
+}
+function applyExplode(f){
+  explodeF=f;
+  for(const g of PARTGROUPS) for(const m of g.meshes){
+    if(m===heartMesh) continue;                    // 心在動畫迴圈裡合成(接頭鈕+爆炸)
+    const o=INDIV.get(m)||g.off||[0,0,0];
+    m.position.copy(m.userData.p0);
+    m.position.x+=o[0]*f; m.position.z+=o[1]*f; m.position.y+=o[2]*f;
+  }
+}
 // ================= 驅動 =================
 const gV2=new THREE.Group(); gV2.userData={A:0}; scene.add(gV2); // 供 export-heart.js 使用的掛名
 function updV2(_,A){
@@ -374,6 +416,18 @@ const ang=document.getElementById('ang'), angv=document.getElementById('angv'), 
 play.onclick=()=>{playing=!playing;play.textContent=playing?'⏸ 暫停':'▶ 播放';};
 const explodeBtn=document.getElementById('explodeBtn');
 explodeBtn.onclick=()=>{explodeTo=explodeTo?0:1;explodeBtn.textContent=explodeTo?'合回去':'拆解接頭';};
+const boom=document.getElementById('boom'), boomv=document.getElementById('boomv');
+boom.oninput=()=>{applyExplode(+boom.value/100);boomv.textContent=boom.value+'%';};
+(function(){
+  const box=document.getElementById('vis');
+  for(const g of PARTGROUPS){
+    const lb=document.createElement('label');
+    lb.innerHTML='<input type="checkbox" checked>'+g.label;
+    const cb=lb.querySelector('input');
+    cb.onchange=()=>{lb.classList.toggle('off',!cb.checked);g.meshes.forEach(m=>m.visible=cb.checked);};
+    box.appendChild(lb);
+  }
+})();
 spd.oninput=()=>{speed=+spd.value;spdv.textContent=speed;};
 ang.oninput=()=>{playing=false;play.textContent='▶ 播放';updV2(null,+ang.value*Math.PI/180);};
 let last=0;
@@ -382,7 +436,7 @@ function loop(ts){
   const dt=Math.min(.05,(ts-last)/1000); last=ts;
   if(playing){ updV2(null,(gV2.userData.A+dt*speed*Math.PI/180)%(Math.PI*2)); ang.value=Math.round(gV2.userData.A*180/Math.PI); }
   explode+=(explodeTo-explode)*Math.min(1,dt*6);
-  heartMesh.position.y=heartMesh.userData.zBase+explode*28;
+  heartMesh.position.y=heartMesh.userData.zBase+explode*28+explodeF*40;
   const deg=Math.round(gV2.userData.A*180/Math.PI);
   angv.textContent=deg+'°';
   live.innerHTML='<span class="k">曲柄</span>'+deg+'°<br>'+
@@ -437,7 +491,7 @@ function runChecks(){
   return items.every(i=>i[2]);
 }
 
-updV2(null,0); resize(); applyCam(); runChecks();
+initExplode(); updV2(null,0); resize(); applyCam(); runChecks();
 requestAnimationFrame(loop);
 </script>
 </body>
