@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>七夕限定 · 心跳凸輪 · 骷髏頭凸輪玩具</title>
-<meta name="description" content="一根手搖軸、一片偏心凸輪、一顆會跳的心。18 片 3mm 板的入門凸輪玩具,含 3D 模擬與逐項幾何檢查。模擬驗證完成,待實物回報。">
+<meta name="description" content="一根手搖軸、一片偏心凸輪、一顆會跳的心。20 片 3mm 板的入門凸輪玩具,含 3D 模擬與逐項幾何檢查。模擬驗證完成,待實物回報。">
 <link rel="stylesheet" href="site.css">
 <style>
   :root{
@@ -76,7 +76,7 @@
   <aside id="side">
     <h1>七夕限定 · 心跳凸輪</h1>
     <div class="sub">骷髏頭的入門版:一根手搖軸、一片偏心凸輪、一顆會跳的心。<br>
-      18 片 3mm 板 + 兩段 Ø6 圓棒,升程 12mm。</div>
+      20 片 3mm 板 + 兩段 Ø6 圓棒,升程 12mm。</div>
 
     <div class="note">誠實聲明:這台走完跟骷髏頭同一套模擬驗證(下方逐項檢查),但<b>還沒實際切過</b>。
       骷髏頭當初也是同樣狀態,後來線鋸切出來真的會動。</div>
@@ -110,6 +110,7 @@
       <tr><th>零件</th><th>外形 mm</th><th>片數</th></tr>
       <tr><td>底板</td><td>100 × 70</td><td>1</td></tr>
       <tr><td>側板(含 Ø6.2 軸孔)</td><td>70 × 72</td><td>2</td></tr>
+      <tr><td>前後裙板(閉環箱體)</td><td>74 × 26</td><td>2</td></tr>
       <tr><td>頂板(含推桿導槽)</td><td>100 × 70</td><td>1</td></tr>
       <tr><td>導片(黏頂板下,四面圍成導套)</td><td>16.6×12 ×2、12.6×12 ×2</td><td>4</td></tr>
       <tr><td>偏心凸輪 R16 e6</td><td>Ø32</td><td>3(疊 9mm)</td></tr>
@@ -267,6 +268,9 @@ const mSideR=withEdges(plateYZ(rect(0,D.t,D.baseY,D.topZ),D.t,D.sideRx,MAT.shell
 PART='頂板';
 const slot=[ [[D.slotX0,D.slotY0],[D.slotX1,D.slotY0],[D.slotX1,D.slotY1],[D.slotX0,D.slotY1]].reverse() ];
 const mTop=withEdges(plateXY(rect(0,0,D.baseX,D.baseY),D.t,D.topZ,MAT.shell,slot));
+PART='前後裙板';
+const mSkF=withEdges(plateXZ(rect(23,D.t,97,29),D.t,0,MAT.shell));            // 前 y 0..3
+const mSkB=withEdges(plateXZ(rect(23,D.t,97,29),D.t,D.baseY-D.t,MAT.shell));  // 後 y 67..70
 PART='導片';
 const mG1=plateYZ(rect(D.slotY0,D.guideZ0,D.slotY1,D.topZ),D.t,D.camX-D.t-0.3,MAT.ply2);
 const mG2=plateYZ(rect(D.slotY0,D.guideZ0,D.slotY1,D.topZ),D.t,D.camX+D.follT+0.3,MAT.ply2);
@@ -389,13 +393,15 @@ const PARTGROUPS=[
   {key:'crank', label:'曲柄臂',   meshes:[mCrank],      off:[20,0,0]},
   {key:'collar',label:'軸環',     meshes:[mCol1,mCol2], off:null},       // 個別:左-12/右+12
   {key:'side',  label:'側板',     meshes:[mSideL,mSideR], off:null},     // 個別:左-24/右+24
+  {key:'skirt', label:'裙板',     meshes:[],              off:null},     // 個別:前-16/後+16
   {key:'base',  label:'底板',     meshes:[mBase],       off:[0,0,-14]},
 ];
-const INDIV=new Map([[mCol1,[-12,0,0]],[mCol2,[12,0,0]],[mSideL,[-24,0,0]],[mSideR,[24,0,0]]]);
+const INDIV=new Map([[mCol1,[-12,0,0]],[mCol2,[12,0,0]],[mSideL,[-24,0,0]],[mSideR,[24,0,0]],[mSkF,[0,-16,0]],[mSkB,[0,16,0]]]);
 let explodeF=0;
 function initExplode(){
   PARTGROUPS.find(g=>g.key==='heart').meshes.push(heartMesh);
   PARTGROUPS.find(g=>g.key==='foll').meshes.push(follMesh);
+  PARTGROUPS.find(g=>g.key==='skirt').meshes.push(mSkF,mSkB);
   for(const g of PARTGROUPS) for(const m of g.meshes) m.userData.p0=m.position.clone();
 }
 function applyExplode(f){
