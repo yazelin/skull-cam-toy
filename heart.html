@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>七夕限定 · 心跳凸輪 · 骷髏頭凸輪玩具</title>
-<meta name="description" content="一根手搖軸、一片偏心凸輪、一顆會跳的心。17 片 3mm 板的入門凸輪玩具,含 3D 模擬與逐項幾何檢查。模擬驗證完成,待實物回報。">
+<meta name="description" content="一根手搖軸、一片偏心凸輪、一顆會跳的心。18 片 3mm 板的入門凸輪玩具,含 3D 模擬與逐項幾何檢查。模擬驗證完成,待實物回報。">
 <link rel="stylesheet" href="site.css">
 <style>
   :root{
@@ -72,7 +72,7 @@
   <aside id="side">
     <h1>七夕限定 · 心跳凸輪</h1>
     <div class="sub">骷髏頭的入門版:一根手搖軸、一片偏心凸輪、一顆會跳的心。<br>
-      17 片 3mm 板 + 兩段 Ø6 圓棒,升程 12mm。</div>
+      18 片 3mm 板 + 兩段 Ø6 圓棒,升程 12mm。</div>
 
     <div class="note">誠實聲明:這台走完跟骷髏頭同一套模擬驗證(下方逐項檢查),但<b>還沒實際切過</b>。
       骷髏頭當初也是同樣狀態,後來線鋸切出來真的會動。</div>
@@ -102,13 +102,13 @@
       <tr><td>側板(含 Ø6.2 軸孔)</td><td>70 × 72</td><td>2</td></tr>
       <tr><td>頂板(含推桿導槽)</td><td>100 × 70</td><td>1</td></tr>
       <tr><td>導片(黏頂板下,四面圍成導套)</td><td>16.6×12 ×2、12.6×12 ×2</td><td>4</td></tr>
-      <tr><td>偏心凸輪 R16 e6</td><td>Ø32</td><td>2(疊 6mm)</td></tr>
-      <tr><td>推桿(頂端含十字槽)</td><td>16 × 47</td><td>2(疊 6mm)</td></tr>
+      <tr><td>偏心凸輪 R16 e6</td><td>Ø32</td><td>3(疊 9mm)</td></tr>
+      <tr><td>推桿(T 型腳+頂端十字槽)</td><td>22 × 47</td><td>2(疊 6mm)</td></tr>
       <tr><td>心(底部含十字槽)</td><td>約 44 × 40</td><td>1</td></tr>
       <tr><td>曲柄臂(兩端 Ø6.2 孔)</td><td>14 × 42</td><td>2(疊 6mm)</td></tr>
       <tr><td>軸環 Ø14(孔 Ø6.2)</td><td>Ø14</td><td>2</td></tr>
     </table>
-    <div class="sub" style="margin-top:8px">另需:Ø6 圓棒兩段(軸 92mm、手把 34mm)、白膠。回位靠心與推桿自重,搖太快會跳,可加一條橡皮筋。推桿桿身與凸輪接觸面磨圓、上蠟,滑起來才順。</div>
+    <div class="sub" style="margin-top:8px">另需:Ø6 圓棒兩段(軸 92mm、手把 34mm)、白膠。圓棒用竹筷替代也行,骷髏頭實作就是用竹筷切的段。回位靠心與推桿自重,搖太快會跳,可加一條橡皮筋。推桿桿身與凸輪接觸面磨圓、上蠟,滑起來才順。</div>
 
     <h2>組裝六步</h2>
     <ol class="steps">
@@ -116,7 +116,7 @@
       <li>凸輪兩片疊黏,穿軸,軸穿過兩側板</li>
       <li>軸環各一枚貼側板內側黏在軸上(擋軸向滑動)</li>
       <li>曲柄臂兩片疊黏,套軸右端,插手把段</li>
-      <li>推桿兩片疊黏,從頂板導槽穿入站上凸輪;導片四片在頂板下緣圍成導套(左右夾、前後擋);蓋上頂板黏好</li>
+      <li>推桿兩片疊黏,直接立在凸輪上(T 腳朝下);導片四片黏在頂板下緣圍成導套;最後把頂板從桿身上方套下、對準導套蓋好黏牢</li>
       <li>心與推桿十字槽互插上膠,搖!</li>
     </ol>
     <div class="sub">切割檔:repo 的 <a href="cut/heart-cut-1.svg" style="color:var(--acc)">cut/heart-cut-*.svg</a>(含 50mm 校正尺)</div>
@@ -228,12 +228,13 @@ const D={
   baseX:100, baseY:70, t:3,
   sideLx:20, sideRx:97,           // 側板 x0(板厚 3 → 20..23 / 97..100)
   shaftY:35, shaftZ:38,           // 軸心
-  camR:16, camE:6, camX:57, camT:6,     // 偏心凸輪(x 57..63,厚 6)
-  follW:16, follT:6, follLen:47,        // 推桿:y 寬 16(27..43)、x 厚 6(57..63)、長 47
+  camR:16, camE:6, camX:57, camT:9,     // 偏心凸輪厚 9(3 層):比推桿寬,軸向黏歪 ±1.5mm 也磨得到
+  follW:16, follT:6, follLen:47,        // 推桿:桿身 y 寬 16(27..43)、x 厚 6(57..63)、長 47
+  footW:22, footH:3,                    // T 型腳:底部加寬,接觸游走 ±6 之外還有 5mm 餘裕
   follY0:27,
   topZ:75,                              // 頂板底面
   slotX0:56.7, slotX1:63.3, slotY0:26.7, slotY1:43.3,   // 頂板導槽 6.6×16.6
-  guideZ0:63,                           // 導片 z 63..75
+  guideZ0:63.5,                         // 導套 z 63.5..75(T 腳最高 63,留 0.5 間隙)
   crankArm:28, crankW:14, crankX:101.5, // 曲柄:臂長 28(手搖直徑 56)
   heartScale:1.42, heartSlotW:6.4, heartSlotD:10,
   collarR:7,
@@ -267,7 +268,7 @@ function addRotPlate(pts,holes,t,x0,mat,part){
 }
 // 凸輪:偏心圓,局部 (y,z),圓心 (e,0)
 const camPoly=circPts(D.camE,0,D.camR,44), camHole=[circPts(0,0,3.1,24).reverse()];
-addRotPlate(camPoly,camHole,D.camT,D.camX,MAT.cam,'偏心凸輪');
+addRotPlate(camPoly,camHole,D.camT,D.camX-(D.camT-D.follT)/2,MAT.cam,'偏心凸輪');
 // 曲柄臂:stadium 由 (0,0) 到 (0,-arm),寬 14,兩端 Ø6.2
 function stadium(x0,y0,x1,y1,w){
   const a=Math.atan2(y1-y0,x1-x0), r=w/2, pts=[];
@@ -292,10 +293,12 @@ const gFoll=new THREE.Group(); scene.add(gFoll);
 // 推桿:局部 (y,z),底緣 z=0;頂端中央挖 3.3 寬深 10 的十字槽
 PART='推桿';
 const nW=3.3, nY0=D.shaftY-nW/2, nY1=D.shaftY+nW/2;
+const fy0=D.shaftY-D.footW/2, fy1=D.shaftY+D.footW/2;   // T 腳 y 24..46
 const follPoly=[
-  [D.follY0,0],[D.follY0+D.follW,0],
+  [fy0,0],[fy1,0],[fy1,D.footH],[D.follY0+D.follW,D.footH],
   [D.follY0+D.follW,D.follLen],[nY1,D.follLen],[nY1,D.follLen-D.heartSlotD],
   [nY0,D.follLen-D.heartSlotD],[nY0,D.follLen],[D.follY0,D.follLen],
+  [D.follY0,D.footH],[fy0,D.footH],
 ];
 {
   const m=new THREE.Mesh(extrude(mkShape(follPoly),D.follT),MAT.foll);
@@ -398,7 +401,7 @@ function runChecks(){
   for(let i=0;i<N;i++){
     const A=i/N*Math.PI*2, zc=footZ(A);
     const cy=D.shaftY+D.camE*Math.cos(A);                       // 接觸點 y(符號經掃描驗證)
-    minFootMargin=Math.min(minFootMargin,(D.follY0+D.follW)-cy-0, cy-D.follY0);
+    minFootMargin=Math.min(minFootMargin,(D.shaftY+D.footW/2)-cy, cy-(D.shaftY-D.footW/2));
     minSlotZ=Math.min(minSlotZ, zc+D.follLen-(D.topZ+D.t), D.guideZ0-zc>0?1e9:1e9);
     minHeartTop=Math.min(minHeartTop, zc+(D.follLen-D.heartSlotD)-(D.topZ+D.t)); // 心尖對頂板面
     const hz=D.shaftZ-Math.sin(A+Math.PI/2)*0; // 手把中心軌跡
@@ -412,8 +415,12 @@ function runChecks(){
   const crankClearBase=D.crankX-D.baseX;                        // 曲柄面離底板右緣
   const items=[
     ['凸輪對底板間隙', camClear+' mm(軸心 '+D.shaftZ+',最大半徑 '+(D.camR+D.camE)+')', camClear>=6],
-    ['接觸點落在推桿底緣內', '最小邊距 '+minFootMargin.toFixed(1)+' mm(底緣寬 '+D.follW+',接觸游走 ±'+D.camE+')', minFootMargin>=1.5],
-    ['推桿全程貫穿頂板導槽', '最低時桿頂 '+ (follLow+D.follLen).toFixed(1)+' > 槽頂 '+(D.topZ+D.t)+';最高時桿底 '+footZ(Math.PI/2).toFixed(1)+' < 導片底 '+D.guideZ0, (follLow+D.follLen)>(D.topZ+D.t) && footZ(Math.PI/2)<D.guideZ0],
+    ['接觸點落在 T 腳底緣內', '最小邊距 '+minFootMargin.toFixed(1)+' mm(腳寬 '+D.footW+',接觸游走 ±'+D.camE+')', minFootMargin>=3],
+    ['凸輪軸向容差', '凸輪厚 '+D.camT+' vs 推桿 '+D.follT+':黏歪 ±'+((D.camT-D.follT)/2).toFixed(1)+' mm 仍全面接觸', D.camT>=D.follT+2],
+    ['推桿全程貫穿導套與頂板槽', (()=>{
+        const zLo=footZ(Math.PI/2), zHi=footZ(-Math.PI/2);
+        return '桿底 '+zLo.toFixed(0)+'~'+zHi.toFixed(0)+',桿頂 '+(zLo+D.follLen).toFixed(0)+'~'+(zHi+D.follLen).toFixed(0)+';T 腳頂最高 '+(zHi+D.footH).toFixed(1)+' < 導套底 '+D.guideZ0;
+      })(), (footZ(Math.PI/2)+D.follLen)>(D.topZ+D.t) && (footZ(-Math.PI/2)+D.footH)<D.guideZ0],
     ['導槽配合間隙', 'x 向 ±'+slotPlayX.toFixed(2)+' mm / y 向 ±'+slotPlayY.toFixed(2)+' mm / 導套四面 ±'+guideGap, slotPlayX>0.2&&slotPlayY>0.2],
     ['導引防卡滯(抽屜法則)', (()=>{
         const engage=(D.topZ+D.t)-D.guideZ0;                     // 嚙合深度 15
