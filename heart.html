@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>七夕限定 · 心跳凸輪 · 骷髏頭凸輪玩具</title>
+<meta name="description" content="一根手搖軸、一片偏心凸輪、一顆會跳的心。15 片 3mm 板的入門凸輪玩具,含 3D 模擬與逐項幾何檢查。模擬驗證完成,待實物回報。">
+<link rel="stylesheet" href="site.css">
+<style>
+  :root{
+    --bg:#14161a; --panel:#1c1f26; --line:#2c313b; --fg:#e6e8ec; --dim:#9aa3b2;
+    --ok:#4ec9a0; --bad:#ff6b6b; --warn:#f0b429; --acc:#f76e8c;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);
+    font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+  #wrap{display:flex;height:calc(100vh - 50px)}
+  #view{flex:1;position:relative;min-width:0}
+  canvas{display:block}
+  #side{width:400px;flex:none;border-left:1px solid var(--line);background:var(--panel);
+    overflow-y:auto;padding:16px 18px 40px}
+  h1{font-size:16px;margin:0 0 4px}
+  .sub{font-size:12px;color:var(--dim);margin-bottom:14px;line-height:1.6}
+  .row{display:flex;align-items:center;gap:9px;margin-bottom:11px;font-size:12px;color:var(--dim)}
+  .row input[type=range]{flex:1}
+  .row button{padding:5px 11px;border:1px solid var(--line);background:#232733;color:var(--fg);
+    border-radius:6px;cursor:pointer;font-family:inherit}
+  h2{font-size:12px;letter-spacing:.1em;color:var(--dim);margin:20px 0 9px;font-weight:600}
+  .chk{border:1px solid var(--line);border-left-width:3px;border-radius:6px;padding:8px 10px;margin-bottom:7px;font-size:12px;line-height:1.55}
+  .chk.ok{border-left-color:var(--ok)}
+  .chk.bad{border-left-color:var(--bad)}
+  .chk b{display:block;font-size:12.5px;margin-bottom:2px}
+  .chk .v{color:var(--dim);font-variant-numeric:tabular-nums}
+  .tag{float:right;font-size:10px;padding:1px 6px;border-radius:99px}
+  .ok .tag{background:rgba(78,201,160,.15);color:var(--ok)}
+  .bad .tag{background:rgba(255,107,107,.15);color:var(--bad)}
+  #live{position:absolute;left:14px;top:14px;background:rgba(20,22,26,.82);border:1px solid var(--line);
+    border-radius:8px;padding:9px 12px;font-size:12px;line-height:1.75;font-variant-numeric:tabular-nums;
+    pointer-events:none;min-width:170px}
+  #live .k{color:var(--dim);display:inline-block;width:74px}
+  #hint{position:absolute;right:14px;bottom:12px;font-size:11px;color:var(--dim)}
+  .bom{width:100%;border-collapse:collapse;font-size:11.5px}
+  .bom td,.bom th{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left;color:var(--dim)}
+  .bom td:first-child{color:var(--fg)}
+  .note{font-size:11.5px;color:var(--warn);line-height:1.7;border:1px solid rgba(240,180,41,.35);
+    border-radius:6px;padding:8px 10px;margin:10px 0}
+  ol.steps{font-size:12px;color:var(--dim);line-height:1.8;padding-left:1.3em;margin:.4em 0}
+  @media (max-width:760px){
+    #wrap{flex-direction:column;height:auto}
+    #view{height:56vh;flex:none}
+    #side{width:100%;border-left:none;border-top:1px solid var(--line);padding:12px 14px 34px}
+    .row{font-size:13px}
+    .row input[type=range]{min-height:28px}
+    #live{left:8px;top:8px;min-width:0;padding:6px 9px;font-size:10.5px;line-height:1.6}
+    #live .k{width:52px}
+    #hint{display:none}
+  }
+</style>
+</head>
+<body>
+<nav class="nav"><a class="brand" href="./">骷髏頭凸輪玩具</a>
+  <a href="./">概覽</a>
+  <a href="sim.html">3D 模擬</a>
+  <a href="heart.html" class="on">七夕心跳凸輪</a>
+  <a href="assembly.html">組裝說明</a>
+  <a href="index.html#download">下載切割檔</a></nav>
+<div id="wrap">
+  <div id="view">
+    <div id="live"></div>
+    <div id="hint">拖曳旋轉 · 滾輪縮放 · 右鍵平移</div>
+  </div>
+  <aside id="side">
+    <h1>七夕限定 · 心跳凸輪</h1>
+    <div class="sub">骷髏頭的入門版:一根手搖軸、一片偏心凸輪、一顆會跳的心。<br>
+      15 片 3mm 板 + 兩段 Ø6 圓棒,升程 12mm。</div>
+
+    <div class="note">誠實聲明:這台走完跟骷髏頭同一套模擬驗證(下方逐項檢查),但<b>還沒實際切過</b>。
+      骷髏頭當初也是同樣狀態,後來線鋸切出來真的會動。</div>
+
+    <div class="row">
+      <button id="play">⏸ 暫停</button>
+      <input type="range" id="spd" min="0" max="200" value="70">
+      <span id="spdv">70</span>
+    </div>
+    <div class="row">
+      <span style="width:46px">曲柄</span>
+      <input type="range" id="ang" min="0" max="359" value="0">
+      <span id="angv" style="width:38px;text-align:right">0°</span>
+    </div>
+
+    <h2>幾何檢查(曲柄整圈 72 個角度掃過)</h2>
+    <div id="checks"></div>
+
+    <h2>零件表(3mm 板)</h2>
+    <table class="bom">
+      <tr><th>零件</th><th>外形 mm</th><th>片數</th></tr>
+      <tr><td>底板</td><td>100 × 70</td><td>1</td></tr>
+      <tr><td>側板(含 Ø6.2 軸孔)</td><td>70 × 72</td><td>2</td></tr>
+      <tr><td>頂板(含推桿導槽)</td><td>100 × 70</td><td>1</td></tr>
+      <tr><td>導片(黏頂板下,夾推桿)</td><td>16 × 12</td><td>2</td></tr>
+      <tr><td>偏心凸輪 R16 e6</td><td>Ø32</td><td>2(疊 6mm)</td></tr>
+      <tr><td>推桿(頂端含十字槽)</td><td>16 × 47</td><td>2(疊 6mm)</td></tr>
+      <tr><td>心(底部含十字槽)</td><td>約 44 × 40</td><td>1</td></tr>
+      <tr><td>曲柄臂(兩端 Ø6.2 孔)</td><td>14 × 42</td><td>2(疊 6mm)</td></tr>
+      <tr><td>軸環 Ø14(孔 Ø6.2)</td><td>Ø14</td><td>2</td></tr>
+    </table>
+    <div class="sub" style="margin-top:8px">另需:Ø6 圓棒兩段(軸 92mm、手把 34mm)、白膠。回位靠心與推桿自重,搖太快會跳,可加一條橡皮筋。</div>
+
+    <h2>組裝六步</h2>
+    <ol class="steps">
+      <li>側板立在底板上黏好(距左右邊各 20 / 4)</li>
+      <li>凸輪兩片疊黏,穿軸,軸穿過兩側板</li>
+      <li>軸環各一枚貼側板內側黏在軸上(擋軸向滑動)</li>
+      <li>曲柄臂兩片疊黏,套軸右端,插手把段</li>
+      <li>推桿兩片疊黏,從頂板導槽穿入站上凸輪;導片兩片黏頂板下緣夾住推桿;蓋上頂板黏好</li>
+      <li>心與推桿十字槽互插上膠,搖!</li>
+    </ol>
+    <div class="sub">切割檔:repo 的 <a href="cut/heart-cut-1.svg" style="color:var(--acc)">cut/heart-cut-*.svg</a>(含 50mm 校正尺)</div>
+  </aside>
+</div>
+
+<script src="three.min.js"></script>
+<script>
+// ================= 場景 =================
+const view=document.getElementById('view');
+const scene=new THREE.Scene(); scene.background=new THREE.Color(0x14161a);
+const camera=new THREE.PerspectiveCamera(42,1,1,4000);
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+view.appendChild(renderer.domElement);
+scene.add(new THREE.AmbientLight(0xffffff,.55));
+const key=new THREE.DirectionalLight(0xffffff,.9); key.position.set(180,260,160); scene.add(key);
+const fil=new THREE.DirectionalLight(0xaad,.35); fil.position.set(-140,80,-120); scene.add(fil);
+const grid=new THREE.GridHelper(700,24,0x2a2f3a,0x21252e); grid.position.set(52,-2.5,35); scene.add(grid);
+
+const orbit={t:new THREE.Vector3(52,58,35), r:300, th:-0.62, ph:1.12};
+if(matchMedia('(max-width:760px)').matches) orbit.r=400;
+function applyCam(){
+  camera.position.set(
+    orbit.t.x+orbit.r*Math.sin(orbit.ph)*Math.sin(orbit.th),
+    orbit.t.y+orbit.r*Math.cos(orbit.ph),
+    orbit.t.z+orbit.r*Math.sin(orbit.ph)*Math.cos(orbit.th));
+  camera.lookAt(orbit.t);
+}
+(function(){
+  const el=renderer.domElement;
+  el.style.touchAction='none';
+  const ptrs=new Map(); let pinch=null;
+  function pan(dx,dy){
+    const s=orbit.r*0.0016;
+    const right=new THREE.Vector3().subVectors(camera.position,orbit.t).cross(new THREE.Vector3(0,1,0)).normalize();
+    orbit.t.addScaledVector(right,-dx*s); orbit.t.y+=dy*s;
+  }
+  function zoom(f){ orbit.r=Math.max(70,Math.min(1100,orbit.r*f)); }
+  el.addEventListener('contextmenu',e=>e.preventDefault());
+  el.addEventListener('pointerdown',e=>{
+    ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY,b:e.button});
+    el.setPointerCapture(e.pointerId);
+    if(ptrs.size===2){const [a,b]=[...ptrs.values()];pinch={d:Math.hypot(a.x-b.x,a.y-b.y),cx:(a.x+b.x)/2,cy:(a.y+b.y)/2};}
+  });
+  function drop(e){ ptrs.delete(e.pointerId); if(ptrs.size<2) pinch=null; }
+  el.addEventListener('pointerup',drop); el.addEventListener('pointercancel',drop);
+  el.addEventListener('pointermove',e=>{
+    const p=ptrs.get(e.pointerId); if(!p) return;
+    if(ptrs.size===2){
+      p.x=e.clientX;p.y=e.clientY;
+      const [a,b]=[...ptrs.values()];
+      const d=Math.hypot(a.x-b.x,a.y-b.y),cx=(a.x+b.x)/2,cy=(a.y+b.y)/2;
+      if(pinch){ if(pinch.d>0&&d>0) zoom(pinch.d/d); pan(cx-pinch.cx,cy-pinch.cy); }
+      pinch={d,cx,cy}; applyCam(); return;
+    }
+    const dx=e.clientX-p.x,dy=e.clientY-p.y; p.x=e.clientX;p.y=e.clientY;
+    if(p.b===2){ pan(dx,dy); }
+    else{ orbit.th-=dx*0.006; orbit.ph=Math.max(0.12,Math.min(Math.PI-0.12,orbit.ph-dy*0.006)); }
+    applyCam();
+  });
+  el.addEventListener('wheel',e=>{e.preventDefault();zoom(1+Math.sign(e.deltaY)*0.11);applyCam()},{passive:false});
+})();
+function resize(){const w=view.clientWidth||800,h=view.clientHeight||600;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();}
+addEventListener('resize',resize);
+
+// ================= 建模小工具(與 sim.html 同一套約定) =================
+// 世界對應:three.x = 機構 x(左右) / three.y = 機構 z(上下) / three.z = 機構 y(前後)
+const MAT={
+  ply:  new THREE.MeshStandardMaterial({color:0xd9b382,roughness:.85,metalness:.02}),
+  ply2: new THREE.MeshStandardMaterial({color:0xb08654,roughness:.85,metalness:.02}),
+  cam:  new THREE.MeshStandardMaterial({color:0xe4713a,roughness:.55,metalness:.1}),
+  rod:  new THREE.MeshStandardMaterial({color:0xa8b0bd,roughness:.35,metalness:.7}),
+  heart:new THREE.MeshStandardMaterial({color:0xe4506e,roughness:.5,emissive:0x3a0d18}),
+  foll: new THREE.MeshStandardMaterial({color:0x7aa2f7,roughness:.5,metalness:.15}),
+  shell:new THREE.MeshStandardMaterial({color:0xc9a273,roughness:.9,transparent:true,opacity:.22,side:THREE.DoubleSide}),
+};
+const EDGE=new THREE.LineBasicMaterial({color:0x6b7385});
+function withEdges(m){ m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry,25),EDGE)); return m; }
+function rect(x0,y0,x1,y1){return [[x0,y0],[x1,y0],[x1,y1],[x0,y1]];}
+function circPts(cx,cy,r,n){const a=[];for(let i=0;i<(n||28);i++){const t=i/(n||28)*Math.PI*2;a.push([cx+r*Math.cos(t),cy+r*Math.sin(t)]);}return a;}
+function mkShape(pts,holes){
+  const s=new THREE.Shape(pts.map(p=>new THREE.Vector2(p[0],p[1])));
+  (holes||[]).forEach(h=>{const p=new THREE.Path(h.map(q=>new THREE.Vector2(q[0],q[1])));s.holes.push(p);});
+  return s;
+}
+function extrude(shape,t){return new THREE.ExtrudeGeometry(shape,{depth:t,bevelEnabled:false});}
+const SOLIDS=[]; let PART='?';
+function reg(m,pts,holes,t){ SOLIDS.push({part:PART,mesh:m,poly:pts,holes:holes||[],t:t}); return m; }
+function plateXZ(pts,t,y0,mat,holes){
+  const m=new THREE.Mesh(extrude(mkShape(pts,holes),t),mat||MAT.ply); m.position.z=y0;
+  scene.add(m); return reg(m,pts,holes,t);
+}
+function plateYZ(pts,t,x0,mat,holes){
+  const m=new THREE.Mesh(extrude(mkShape(pts,holes),t),mat||MAT.ply);
+  m.rotation.y=-Math.PI/2; m.position.x=x0+t; scene.add(m); return reg(m,pts,holes,t);
+}
+function plateXY(pts,t,z0,mat,holes){
+  const m=new THREE.Mesh(extrude(mkShape(pts,holes),t),mat||MAT.ply);
+  m.rotation.x=Math.PI/2; m.position.y=z0+t; scene.add(m); return reg(m,pts,holes,t);
+}
+function rodX(r,len,x,y,z,mat){
+  const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,len,20),mat||MAT.rod);
+  m.rotation.z=Math.PI/2; m.position.set(x,z,y); return m;
+}
+
+// ================= 尺寸(單一事實來源) =================
+const D={
+  baseX:100, baseY:70, t:3,
+  sideLx:20, sideRx:97,           // 側板 x0(板厚 3 → 20..23 / 97..100)
+  shaftY:35, shaftZ:38,           // 軸心
+  camR:16, camE:6, camX:57, camT:6,     // 偏心凸輪(x 57..63,厚 6)
+  follW:16, follT:6, follLen:47,        // 推桿:y 寬 16(27..43)、x 厚 6(57..63)、長 47
+  follY0:27,
+  topZ:75,                              // 頂板底面
+  slotX0:56.7, slotX1:63.3, slotY0:26.7, slotY1:43.3,   // 頂板導槽 6.6×16.6
+  guideZ0:63,                           // 導片 z 63..75
+  crankArm:28, crankW:14, crankX:101.5, // 曲柄:臂長 28(手搖直徑 56)
+  heartScale:1.42, heartSlotW:6.4, heartSlotD:10,
+  collarR:7,
+};
+// 接觸:zc(A)=shaftZ+camR+camE·sinA → 推桿底緣 z;接觸點 y=shaftY+camE·cosA
+const footZ=A=>D.shaftZ+D.camR+D.camE*Math.sin(A);
+
+// ================= 固定件 =================
+PART='底板'; plateXY(rect(0,0,D.baseX,D.baseY),D.t,0,MAT.ply2);
+PART='側板';
+const sideHole=[circPts(D.shaftY,D.shaftZ,3.1,24).reverse()];
+withEdges(plateYZ(rect(0,D.t,D.baseY,D.topZ),D.t,D.sideLx,MAT.shell,sideHole));
+withEdges(plateYZ(rect(0,D.t,D.baseY,D.topZ),D.t,D.sideRx,MAT.shell,sideHole));
+PART='頂板';
+const slot=[ [[D.slotX0,D.slotY0],[D.slotX1,D.slotY0],[D.slotX1,D.slotY1],[D.slotX0,D.slotY1]].reverse() ];
+withEdges(plateXY(rect(0,0,D.baseX,D.baseY),D.t,D.topZ,MAT.shell,slot));
+PART='導片';
+plateYZ(rect(D.slotY0,D.guideZ0,D.slotY1,D.topZ),D.t,D.camX-D.t-0.3,MAT.ply2);           // 53.7..56.7
+plateYZ(rect(D.slotY0,D.guideZ0,D.slotY1,D.topZ),D.t,D.camX+D.follT+0.3,MAT.ply2);       // 63.3..66.3
+
+// ================= 轉動組(繞世界 X 軸) =================
+const gRot=new THREE.Group(); gRot.position.set(0,D.shaftZ,D.shaftY); scene.add(gRot);
+function addRotPlate(pts,holes,t,x0,mat,part){
+  PART=part;
+  const m=new THREE.Mesh(extrude(mkShape(pts,holes),t),mat);
+  m.rotation.y=-Math.PI/2; m.position.x=x0+t;
+  gRot.add(m); reg(m,pts,holes,t); return m;
+}
+// 凸輪:偏心圓,局部 (y,z),圓心 (e,0)
+const camPoly=circPts(D.camE,0,D.camR,44), camHole=[circPts(0,0,3.1,24).reverse()];
+addRotPlate(camPoly,camHole,D.camT,D.camX,MAT.cam,'偏心凸輪');
+// 曲柄臂:stadium 由 (0,0) 到 (0,-arm),寬 14,兩端 Ø6.2
+function stadium(x0,y0,x1,y1,w){
+  const a=Math.atan2(y1-y0,x1-x0), r=w/2, pts=[];
+  for(let i=0;i<=10;i++){const t=a+Math.PI/2+i/10*Math.PI;pts.push([x0+r*Math.cos(t),y0+r*Math.sin(t)]);}
+  for(let i=0;i<=10;i++){const t=a-Math.PI/2+i/10*Math.PI;pts.push([x1+r*Math.cos(t),y1+r*Math.sin(t)]);}
+  return pts;
+}
+const crankPoly=stadium(0,0,0,-D.crankArm,D.crankW);
+const crankHoles=[circPts(0,0,3.1,24).reverse(),circPts(0,-D.crankArm,3.1,24).reverse()];
+addRotPlate(crankPoly,crankHoles,6,D.crankX,MAT.ply,'曲柄臂');
+// 軸環 ×2(貼側板內側)
+PART='軸環';
+const collarPoly=circPts(0,0,D.collarR,30), collarHole=[circPts(0,0,3.1,24).reverse()];
+addRotPlate(collarPoly,collarHole,D.t,23.5,MAT.ply2,'軸環');
+addRotPlate(collarPoly,collarHole,D.t,D.sideRx-3.5,MAT.ply2,'軸環');
+// 軸與手把(圓棒,不進切割檔)
+gRot.add(rodX(3,92,62,0,0));
+const handle=rodX(3,34,D.crankX+6+17,0,-D.crankArm); gRot.add(handle);
+
+// ================= 跟隨組(推桿+心) =================
+const gFoll=new THREE.Group(); scene.add(gFoll);
+// 推桿:局部 (y,z),底緣 z=0;頂端中央挖 3.3 寬深 10 的十字槽
+PART='推桿';
+const nW=3.3, nY0=D.shaftY-nW/2, nY1=D.shaftY+nW/2;
+const follPoly=[
+  [D.follY0,0],[D.follY0+D.follW,0],
+  [D.follY0+D.follW,D.follLen],[nY1,D.follLen],[nY1,D.follLen-D.heartSlotD],
+  [nY0,D.follLen-D.heartSlotD],[nY0,D.follLen],[D.follY0,D.follLen],
+];
+{
+  const m=new THREE.Mesh(extrude(mkShape(follPoly),D.follT),MAT.foll);
+  m.rotation.y=-Math.PI/2; m.position.x=D.camX+D.follT;
+  gFoll.add(m); reg(m,follPoly,[],D.follT);
+}
+// 心:局部 (x,z),參數曲線,尖端在 (camX+3,0);底部挖 6.4 寬深 10 槽
+PART='心';
+function heartPts(cx,scale){
+  const pts=[];
+  for(let i=0;i<=60;i++){
+    const t=i/60*Math.PI*2;
+    const hx=16*Math.pow(Math.sin(t),3);
+    const hy=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
+    pts.push([cx+hx*scale,(hy+17)*scale]);
+  }
+  return pts;
+}
+const hcx=D.camX+D.follT/2;
+const rawHeart=heartPts(hcx,D.heartScale);
+// 底部開槽:心尖比槽窄,槽是「開口穿過尖端」的缺口 → 用線段與 x=cx±half 的精確交點重建輪廓
+function heartWithSlot(pts,cx,w,d){
+  const half=w/2;
+  // pts 順序:頂部凹點 → 右側往下 → 尖端 → 左側往上
+  let tip=0; for(let i=0;i<pts.length;i++) if(pts[i][1]<pts[tip][1]) tip=i;
+  const right=pts.slice(0,tip+1), left=pts.slice(tip);
+  const keep=p=>p[1]>=d || Math.abs(p[0]-cx)>=half;
+  const xcross=(a,b,x)=>{const t=(x-a[0])/(b[0]-a[0]);return [x,a[1]+t*(b[1]-a[1])];};
+  // 右側:保留到進入槽區前,補上與 x=cx+half 的交點
+  const outR=[]; let hitR=null;
+  for(let i=0;i<right.length;i++){
+    const p=right[i];
+    if(keep(p)){ outR.push(p); }
+    else{ const q=right[i-1]; hitR=xcross(q,p,cx+half); break; }
+  }
+  // 左側:從離開槽區起保留,起點補交點
+  const outL=[]; let hitL=null;
+  for(let i=0;i<left.length;i++){
+    const p=left[i];
+    if(!keep(p)) continue;
+    if(!outL.length && i>0){ hitL=xcross(left[i-1],p,cx-half); }
+    outL.push(p);
+  }
+  const poly=[];
+  poly.push(...outR);
+  if(hitR) poly.push(hitR);
+  poly.push([cx+half,d],[cx-half,d]);      // 槽頂橫邊
+  if(hitL) poly.push(hitL);
+  poly.push(...outL);
+  return poly;
+}
+const heartPoly=heartWithSlot(rawHeart,hcx,D.heartSlotW,D.heartSlotD);
+{
+  const m=new THREE.Mesh(extrude(mkShape(heartPoly),D.t),MAT.heart);
+  m.position.z=D.shaftY-D.t/2;               // y 33.5..36.5
+  gFoll.add(m); reg(m,heartPoly,[],D.t);
+  m.userData.zBase=D.follLen-D.heartSlotD;   // 心尖端 local z 對齊推桿槽底
+  m.position.y=D.follLen-D.heartSlotD;
+}
+
+// ================= 驅動 =================
+const gV2=new THREE.Group(); gV2.userData={A:0}; scene.add(gV2); // 供 export-heart.js 使用的掛名
+function updV2(_,A){
+  gV2.userData.A=A;
+  gRot.rotation.x=A;
+  gFoll.position.y=footZ(A);
+  liveA=A;
+}
+let liveA=0, playing=true, speed=70;
+const play=document.getElementById('play'), spd=document.getElementById('spd'), spdv=document.getElementById('spdv');
+const ang=document.getElementById('ang'), angv=document.getElementById('angv'), live=document.getElementById('live');
+play.onclick=()=>{playing=!playing;play.textContent=playing?'⏸ 暫停':'▶ 播放';};
+spd.oninput=()=>{speed=+spd.value;spdv.textContent=speed;};
+ang.oninput=()=>{playing=false;play.textContent='▶ 播放';updV2(null,+ang.value*Math.PI/180);};
+let last=0;
+function loop(ts){
+  requestAnimationFrame(loop);
+  const dt=Math.min(.05,(ts-last)/1000); last=ts;
+  if(playing){ updV2(null,(gV2.userData.A+dt*speed*Math.PI/180)%(Math.PI*2)); ang.value=Math.round(gV2.userData.A*180/Math.PI); }
+  const deg=Math.round(gV2.userData.A*180/Math.PI);
+  angv.textContent=deg+'°';
+  live.innerHTML='<span class="k">曲柄</span>'+deg+'°<br>'+
+    '<span class="k">心跳高度</span>'+(footZ(gV2.userData.A)-footZ(0)+6).toFixed(1)+' mm<br>'+
+    '<span class="k">升程</span>12 mm';
+  renderer.render(scene,camera);
+}
+
+// ================= 幾何檢查(72 角度掃描) =================
+function runChecks(){
+  const R=[],N=72;
+  let minFootMargin=1e9,minSlotZ=1e9,minHeartTop=1e9,minHandleZ=1e9;
+  for(let i=0;i<N;i++){
+    const A=i/N*Math.PI*2, zc=footZ(A);
+    const cy=D.shaftY+D.camE*Math.cos(A);                       // 接觸點 y
+    minFootMargin=Math.min(minFootMargin,(D.follY0+D.follW)-cy-0, cy-D.follY0);
+    minSlotZ=Math.min(minSlotZ, zc+D.follLen-(D.topZ+D.t), D.guideZ0-zc>0?1e9:1e9);
+    minHeartTop=Math.min(minHeartTop, zc+(D.follLen-D.heartSlotD)-(D.topZ+D.t)); // 心尖對頂板面
+    const hz=D.shaftZ-Math.sin(A+Math.PI/2)*0; // 手把中心軌跡
+    minHandleZ=Math.min(minHandleZ, D.shaftZ+(-D.crankArm)*Math.cos(A)-3);       // 手把最低(圓棒半徑 3)
+  }
+  const camClear=D.shaftZ-D.camE-D.camR-D.t;                    // 凸輪對底板
+  const guideGap=0.3;                                           // 推桿對導片(設計值)
+  const slotPlayX=(D.slotX1-D.slotX0-D.follT)/2, slotPlayY=(D.slotY1-D.slotY0-D.follW)/2;
+  const follLow=footZ(-Math.PI/2), follHighTop=footZ(Math.PI/2)+D.follLen;
+  const handleMinZ=D.shaftZ-D.crankArm-3;
+  const crankClearBase=D.crankX-D.baseX;                        // 曲柄面離底板右緣
+  const items=[
+    ['凸輪對底板間隙', camClear+' mm(軸心 '+D.shaftZ+',最大半徑 '+(D.camR+D.camE)+')', camClear>=6],
+    ['接觸點落在推桿底緣內', '最小邊距 '+minFootMargin.toFixed(1)+' mm(底緣寬 '+D.follW+',接觸游走 ±'+D.camE+')', minFootMargin>=1.5],
+    ['推桿全程貫穿頂板導槽', '最低時桿頂 '+ (follLow+D.follLen).toFixed(1)+' > 槽頂 '+(D.topZ+D.t)+';最高時桿底 '+footZ(Math.PI/2).toFixed(1)+' < 導片底 '+D.guideZ0, (follLow+D.follLen)>(D.topZ+D.t) && footZ(Math.PI/2)<D.guideZ0],
+    ['導槽配合間隙', 'x 向 ±'+slotPlayX.toFixed(2)+' mm / y 向 ±'+slotPlayY.toFixed(2)+' mm / 導片 ±'+guideGap, slotPlayX>0.2&&slotPlayY>0.2],
+    ['心對頂板間隙', '最低時心尖距頂板面 '+minHeartTop.toFixed(1)+' mm', minHeartTop>=3],
+    ['手把不掃桌面', '手把最低點 z='+handleMinZ+' mm(> 0)', handleMinZ>3],
+    ['曲柄整圈不碰底板', '曲柄平面在底板右緣外 '+crankClearBase.toFixed(1)+' mm', crankClearBase>0],
+    ['心的十字槽肉厚', (()=>{
+        const near=rawHeart.filter(p=>Math.abs(p[1]-D.heartSlotD)<2.5);
+        const w=near.length?Math.max(...near.map(p=>p[0]))-Math.min(...near.map(p=>p[0])):0;
+        const margin=((w-D.heartSlotW)/2);
+        return '槽寬 '+D.heartSlotW+',槽頂處心寬 '+w.toFixed(1)+',單邊肉厚 '+margin.toFixed(1)+' mm';
+      })(), (()=>{
+        const near=rawHeart.filter(p=>Math.abs(p[1]-D.heartSlotD)<2.5);
+        const w=near.length?Math.max(...near.map(p=>p[0]))-Math.min(...near.map(p=>p[0])):0;
+        return (w-D.heartSlotW)/2>=2;
+      })()],
+  ];
+  const box=document.getElementById('checks');
+  box.innerHTML=items.map(([t,v,ok])=>
+    '<div class="chk '+(ok?'ok':'bad')+'"><span class="tag">'+(ok?'PASS':'FAIL')+'</span><b>'+t+'</b><span class="v">'+v+'</span></div>'
+  ).join('');
+  return items.every(i=>i[2]);
+}
+
+updV2(null,0); resize(); applyCam(); runChecks();
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
