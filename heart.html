@@ -234,8 +234,8 @@ const D={
   heartScale:1.42, heartSlotW:6.4, heartSlotD:10,
   collarR:7,
 };
-// 接觸:zc(A)=shaftZ+camR+camE·sinA → 推桿底緣 z;接觸點 y=shaftY+camE·cosA
-const footZ=A=>D.shaftZ+D.camR+D.camE*Math.sin(A);
+// 接觸:群組 rotation.x=A 時,偏心圓心落在 機構z=shaftZ−e·sinA、機構y=shaftY+e·cosA(由 three 旋轉推得,經干涉掃描驗證)
+const footZ=A=>D.shaftZ+D.camR-D.camE*Math.sin(A);
 
 // ================= 固定件 =================
 PART='底板'; plateXY(rect(0,0,D.baseX,D.baseY),D.t,0,MAT.ply2);
@@ -382,7 +382,7 @@ function runChecks(){
   let minFootMargin=1e9,minSlotZ=1e9,minHeartTop=1e9,minHandleZ=1e9;
   for(let i=0;i<N;i++){
     const A=i/N*Math.PI*2, zc=footZ(A);
-    const cy=D.shaftY+D.camE*Math.cos(A);                       // 接觸點 y
+    const cy=D.shaftY+D.camE*Math.cos(A);                       // 接觸點 y(符號經掃描驗證)
     minFootMargin=Math.min(minFootMargin,(D.follY0+D.follW)-cy-0, cy-D.follY0);
     minSlotZ=Math.min(minSlotZ, zc+D.follLen-(D.topZ+D.t), D.guideZ0-zc>0?1e9:1e9);
     minHeartTop=Math.min(minHeartTop, zc+(D.follLen-D.heartSlotD)-(D.topZ+D.t)); // 心尖對頂板面
