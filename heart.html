@@ -104,7 +104,7 @@
       <tr><td>導片(黏頂板下,四面圍成導套)</td><td>16.6×12 ×2、12.6×12 ×2</td><td>4</td></tr>
       <tr><td>偏心凸輪 R16 e6</td><td>Ø32</td><td>3(疊 9mm)</td></tr>
       <tr><td>推桿(T 型腳+頂端十字槽)</td><td>22 × 47</td><td>2(疊 6mm)</td></tr>
-      <tr><td>心(底部含十字槽)</td><td>約 44 × 40</td><td>1</td></tr>
+      <tr><td>心(底部含柄與搭接槽)</td><td>約 44 × 43</td><td>1</td></tr>
       <tr><td>曲柄臂(兩端 Ø6.2 孔)</td><td>14 × 42</td><td>2(疊 6mm)</td></tr>
       <tr><td>軸環 Ø14(孔 Ø6.2)</td><td>Ø14</td><td>2</td></tr>
     </table>
@@ -236,7 +236,7 @@ const D={
   slotX0:56.7, slotX1:63.3, slotY0:26.7, slotY1:43.3,   // 頂板導槽 6.6×16.6
   guideZ0:63.5,                         // 導套 z 63.5..75(T 腳最高 63,留 0.5 間隙)
   crankArm:28, crankW:14, crankX:101.5, // 曲柄:臂長 28(手搖直徑 56)
-  heartScale:1.42, heartSlotW:6.4, heartSlotD:10,
+  heartScale:1.42, stemW:12, stemH:10, lapD:5, heartSlotW:6.4,
   collarR:7,
 };
 // 接觸:群組 rotation.x=A 時,偏心圓心落在 機構z=shaftZ−e·sinA、機構y=shaftY+e·cosA(由 three 旋轉推得,經干涉掃描驗證)
@@ -296,8 +296,8 @@ const nW=3.3, nY0=D.shaftY-nW/2, nY1=D.shaftY+nW/2;
 const fy0=D.shaftY-D.footW/2, fy1=D.shaftY+D.footW/2;   // T 腳 y 24..46
 const follPoly=[
   [fy0,0],[fy1,0],[fy1,D.footH],[D.follY0+D.follW,D.footH],
-  [D.follY0+D.follW,D.follLen],[nY1,D.follLen],[nY1,D.follLen-D.heartSlotD],
-  [nY0,D.follLen-D.heartSlotD],[nY0,D.follLen],[D.follY0,D.follLen],
+  [D.follY0+D.follW,D.follLen],[nY1,D.follLen],[nY1,D.follLen-D.lapD],
+  [nY0,D.follLen-D.lapD],[nY0,D.follLen],[D.follY0,D.follLen],
   [D.follY0,D.footH],[fy0,D.footH],
 ];
 {
@@ -319,46 +319,44 @@ function heartPts(cx,scale){
 }
 const hcx=D.camX+D.follT/2;
 const rawHeart=heartPts(hcx,D.heartScale);
-// 底部開槽:心尖比槽窄,槽是「開口穿過尖端」的缺口 → 用線段與 x=cx±half 的精確交點重建輪廓
-function heartWithSlot(pts,cx,w,d){
-  const half=w/2;
-  // pts 順序:頂部凹點 → 右側往下 → 尖端 → 左側往上
+// 心底加矩形柄(stem):柄夠寬才有真的槽壁;柄底開 lapD 深的槽,與推桿叉槽各咬一半(正規十字搭接)
+function heartWithStem(pts,cx,stemW,stemH,slotW,slotD){
+  const hw=stemW/2, sw=slotW/2;
+  // pts:頂部凹點→右側下→尖端→左側上;找曲線與 x=cx±hw 的交點(柄與心身的接點)
   let tip=0; for(let i=0;i<pts.length;i++) if(pts[i][1]<pts[tip][1]) tip=i;
   const right=pts.slice(0,tip+1), left=pts.slice(tip);
-  const keep=p=>p[1]>=d || Math.abs(p[0]-cx)>=half;
+  const keep=p=>p[0]>=cx+hw||p[1]>=stemH?true:false;
   const xcross=(a,b,x)=>{const t=(x-a[0])/(b[0]-a[0]);return [x,a[1]+t*(b[1]-a[1])];};
-  // 右側:保留到進入槽區前,補上與 x=cx+half 的交點
   const outR=[]; let hitR=null;
   for(let i=0;i<right.length;i++){
     const p=right[i];
-    if(keep(p)){ outR.push(p); }
-    else{ const q=right[i-1]; hitR=xcross(q,p,cx+half); break; }
+    if(p[0]>=cx+hw||p[1]>=stemH){ outR.push(p); }
+    else{ hitR=xcross(right[i-1],p,cx+hw); break; }
   }
-  // 左側:從離開槽區起保留,起點補交點
   const outL=[]; let hitL=null;
   for(let i=0;i<left.length;i++){
     const p=left[i];
-    if(!keep(p)) continue;
-    if(!outL.length && i>0){ hitL=xcross(left[i-1],p,cx-half); }
+    if(!(p[0]<=cx-hw||p[1]>=stemH)) continue;
+    if(!outL.length&&i>0){ hitL=xcross(left[i-1],p,cx-hw); }
     outL.push(p);
   }
   const poly=[];
   poly.push(...outR);
   if(hitR) poly.push(hitR);
-  poly.push([cx+half,d],[cx-half,d]);      // 槽頂橫邊
+  poly.push([cx+hw,0],[cx+sw,0],[cx+sw,slotD],[cx-sw,slotD],[cx-sw,0],[cx-hw,0]); // 柄右壁下、槽、柄左壁下
   if(hitL) poly.push(hitL);
   poly.push(...outL);
-  while(poly.length>1 && Math.hypot(poly[0][0]-poly[poly.length-1][0], poly[0][1]-poly[poly.length-1][1])<0.05) poly.pop(); // 參數曲線頭尾同點,去重複避免輪廓自交
+  while(poly.length>1 && Math.hypot(poly[0][0]-poly[poly.length-1][0], poly[0][1]-poly[poly.length-1][1])<0.05) poly.pop();
   return poly;
 }
-const heartPoly=heartWithSlot(rawHeart,hcx,D.heartSlotW,D.heartSlotD);
+const heartPoly=heartWithStem(rawHeart,hcx,D.stemW,D.stemH,D.heartSlotW,D.lapD);
 let heartMesh;
 {
   const m=new THREE.Mesh(extrude(mkShape(heartPoly),D.t),MAT.heart);
   m.position.z=D.shaftY-D.t/2;               // y 33.5..36.5
   gFoll.add(m); reg(m,heartPoly,[],D.t);
-  m.userData.zBase=D.follLen-D.heartSlotD;   // 心尖端 local z 對齊推桿槽底
-  m.position.y=D.follLen-D.heartSlotD;
+  m.userData.zBase=D.follLen-D.stemH;        // 柄底到推桿頂下方 stemH,兩槽各咬 lapD 在中線相會
+  m.position.y=D.follLen-D.stemH;
   heartMesh=m;
 }
 let explode=0, explodeTo=0;                   // 拆解接頭:心上滑 28mm 露出兩邊的槽
@@ -403,7 +401,7 @@ function runChecks(){
     const cy=D.shaftY+D.camE*Math.cos(A);                       // 接觸點 y(符號經掃描驗證)
     minFootMargin=Math.min(minFootMargin,(D.shaftY+D.footW/2)-cy, cy-(D.shaftY-D.footW/2));
     minSlotZ=Math.min(minSlotZ, zc+D.follLen-(D.topZ+D.t), D.guideZ0-zc>0?1e9:1e9);
-    minHeartTop=Math.min(minHeartTop, zc+(D.follLen-D.heartSlotD)-(D.topZ+D.t)); // 心尖對頂板面
+    minHeartTop=Math.min(minHeartTop, zc+(D.follLen-D.stemH)-(D.topZ+D.t)); // 心尖對頂板面
     const hz=D.shaftZ-Math.sin(A+Math.PI/2)*0; // 手把中心軌跡
     minHandleZ=Math.min(minHandleZ, D.shaftZ+(-D.crankArm)*Math.cos(A)-3);       // 手把最低(圓棒半徑 3)
   }
@@ -431,16 +429,8 @@ function runChecks(){
     ['心對頂板間隙', '最低時心尖距頂板面 '+minHeartTop.toFixed(1)+' mm', minHeartTop>=3],
     ['手把不掃桌面', '手把最低點 z='+handleMinZ+' mm(> 0)', handleMinZ>3],
     ['曲柄整圈不碰底板', '曲柄平面在底板右緣外 '+crankClearBase.toFixed(1)+' mm', crankClearBase>0],
-    ['心的十字槽肉厚', (()=>{
-        const near=rawHeart.filter(p=>Math.abs(p[1]-D.heartSlotD)<2.5);
-        const w=near.length?Math.max(...near.map(p=>p[0]))-Math.min(...near.map(p=>p[0])):0;
-        const margin=((w-D.heartSlotW)/2);
-        return '槽寬 '+D.heartSlotW+',槽頂處心寬 '+w.toFixed(1)+',單邊肉厚 '+margin.toFixed(1)+' mm';
-      })(), (()=>{
-        const near=rawHeart.filter(p=>Math.abs(p[1]-D.heartSlotD)<2.5);
-        const w=near.length?Math.max(...near.map(p=>p[0]))-Math.min(...near.map(p=>p[0])):0;
-        return (w-D.heartSlotW)/2>=2;
-      })()],
+    ['心柄槽壁肉厚', '柄寬 '+D.stemW+' − 槽寬 '+D.heartSlotW+' → 單邊 '+((D.stemW-D.heartSlotW)/2).toFixed(1)+' mm', (D.stemW-D.heartSlotW)/2>=2],
+    ['十字搭接咬合', '兩邊各切 '+D.lapD+' mm 於中線相會:x 向由柄槽壁夾、y 向由叉槽壁夾,各 '+D.lapD+' mm 咬合', D.lapD>=4],
   ];
   const box=document.getElementById('checks');
   box.innerHTML=items.map(([t,v,ok])=>
