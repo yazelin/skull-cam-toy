@@ -61,6 +61,11 @@ function md2html(src) {
   return out.join('\n');
 }
 
+const HEARTNAV = (cur) => `<nav class="nav"><a class="brand" href="./">骷髏頭凸輪玩具</a>
+  <a href="heart.html">七夕心跳凸輪</a>
+  <a href="heart-assembly.html"${cur === 'heart' ? ' class="on"' : ''}>組裝說明</a>
+  <a href="cut/heart-cut-1.svg">下載切割檔</a></nav>`;
+
 const NAV = (cur) => `<nav class="nav"><a class="brand" href="./">骷髏頭凸輪玩具</a>
   <a href="./"${cur === 'home' ? ' class="on"' : ''}>概覽</a>
   <a href="sim.html"${cur === 'sim' ? ' class="on"' : ''}>3D 模擬</a>
@@ -82,7 +87,7 @@ function page({ title, cur, body, desc }) {
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
-${NAV(cur)}
+${cur === "heart" ? HEARTNAV(cur) : NAV(cur)}
 <main class="doc">
 ${body}
 </main>
