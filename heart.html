@@ -108,10 +108,10 @@
     <h2>零件表(3mm 板)</h2>
     <table class="bom">
       <tr><th>零件</th><th>外形 mm</th><th>片數</th></tr>
-      <tr><td>底板</td><td>100 × 70</td><td>1</td></tr>
+      <tr><td>底板</td><td>86 × 70</td><td>1</td></tr>
       <tr><td>側板(含 Ø6.2 軸孔)</td><td>70 × 72</td><td>2</td></tr>
       <tr><td>前後裙板(閉環箱體)</td><td>74 × 26</td><td>2</td></tr>
-      <tr><td>頂板(含推桿導槽)</td><td>100 × 70</td><td>1</td></tr>
+      <tr><td>頂板(含推桿導槽)</td><td>86 × 70</td><td>1</td></tr>
       <tr><td>導片(黏頂板下,四面圍成導套)</td><td>16.6×12 ×2、12.6×12 ×2</td><td>4</td></tr>
       <tr><td>偏心凸輪 R16 e6</td><td>Ø32</td><td>3(疊 9mm)</td></tr>
       <tr><td>推桿(T 型腳+頂端叉槽)</td><td>22 × 47</td><td>2(疊 6mm)</td></tr>
@@ -242,7 +242,7 @@ function rodX(r,len,x,y,z,mat){
 
 // ================= 尺寸(單一事實來源) =================
 const D={
-  baseX:100, baseY:70, t:3,
+  baseX0:14, baseX:100, baseY:70, t:3,      // 底/頂板 x 14..100:左留 6mm 膠肩,右緣貼齊側板讓曲柄懸空
   sideLx:20, sideRx:97,           // 側板 x0(板厚 3 → 20..23 / 97..100)
   shaftY:35, shaftZ:38,           // 軸心
   camR:16, camE:6, camX:57, camT:9,     // 偏心凸輪厚 9(3 層):比推桿寬,軸向黏歪 ±1.5mm 也磨得到
@@ -260,14 +260,14 @@ const D={
 const footZ=A=>D.shaftZ+D.camR-D.camE*Math.sin(A);
 
 // ================= 固定件 =================
-PART='底板'; const mBase=plateXY(rect(0,0,D.baseX,D.baseY),D.t,0,MAT.ply2);
+PART='底板'; const mBase=plateXY(rect(D.baseX0,0,D.baseX,D.baseY),D.t,0,MAT.ply2);
 PART='側板';
 const sideHole=[circPts(D.shaftY,D.shaftZ,3.1,24).reverse()];
 const mSideL=withEdges(plateYZ(rect(0,D.t,D.baseY,D.topZ),D.t,D.sideLx,MAT.shell,sideHole));
 const mSideR=withEdges(plateYZ(rect(0,D.t,D.baseY,D.topZ),D.t,D.sideRx,MAT.shell,sideHole));
 PART='頂板';
 const slot=[ [[D.slotX0,D.slotY0],[D.slotX1,D.slotY0],[D.slotX1,D.slotY1],[D.slotX0,D.slotY1]].reverse() ];
-const mTop=withEdges(plateXY(rect(0,0,D.baseX,D.baseY),D.t,D.topZ,MAT.shell,slot));
+const mTop=withEdges(plateXY(rect(D.baseX0,0,D.baseX,D.baseY),D.t,D.topZ,MAT.shell,slot));
 PART='前後裙板';
 const mSkF=withEdges(plateXZ(rect(23,D.t,97,29),D.t,0,MAT.shell));            // 前 y 0..3
 const mSkB=withEdges(plateXZ(rect(23,D.t,97,29),D.t,D.baseY-D.t,MAT.shell));  // 後 y 67..70
