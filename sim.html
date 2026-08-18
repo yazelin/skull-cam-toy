@@ -152,25 +152,49 @@ function applyCam(){
   camera.lookAt(orbit.t);
 }
 (function(){
-  let down=null;
   const el = renderer.domElement;
+  el.style.touchAction='none'; // 沒這行,手機會把拖曳當成捲頁面,旋轉整個失效
+  const ptrs=new Map(); let pinch=null;
+  function pan(dx,dy){
+    const s=orbit.r*0.0016;
+    const right=new THREE.Vector3().subVectors(camera.position,orbit.t).cross(new THREE.Vector3(0,1,0)).normalize();
+    orbit.t.addScaledVector(right,-dx*s); orbit.t.y += dy*s;
+  }
+  function zoom(f){ orbit.r=Math.max(90,Math.min(1400,orbit.r*f)); }
   el.addEventListener('contextmenu',e=>e.preventDefault());
-  el.addEventListener('pointerdown',e=>{down={x:e.clientX,y:e.clientY,b:e.button};el.setPointerCapture(e.pointerId)});
-  el.addEventListener('pointerup',e=>{down=null});
+  el.addEventListener('pointerdown',e=>{
+    ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY,b:e.button});
+    el.setPointerCapture(e.pointerId);
+    if(ptrs.size===2){
+      const [a,b]=[...ptrs.values()];
+      pinch={d:Math.hypot(a.x-b.x,a.y-b.y), cx:(a.x+b.x)/2, cy:(a.y+b.y)/2};
+    }
+  });
+  function drop(e){ ptrs.delete(e.pointerId); if(ptrs.size<2) pinch=null; }
+  el.addEventListener('pointerup',drop);
+  el.addEventListener('pointercancel',drop);
   el.addEventListener('pointermove',e=>{
-    if(!down) return;
-    const dx=e.clientX-down.x, dy=e.clientY-down.y; down.x=e.clientX; down.y=e.clientY;
-    if(down.b===2){
-      const s=orbit.r*0.0016;
-      const right=new THREE.Vector3().subVectors(camera.position,orbit.t).cross(new THREE.Vector3(0,1,0)).normalize();
-      orbit.t.addScaledVector(right,-dx*s); orbit.t.y += dy*s;
-    }else{
+    const p=ptrs.get(e.pointerId); if(!p) return;
+    if(ptrs.size===2){
+      p.x=e.clientX; p.y=e.clientY;
+      const [a,b]=[...ptrs.values()];
+      const d=Math.hypot(a.x-b.x,a.y-b.y), cx=(a.x+b.x)/2, cy=(a.y+b.y)/2;
+      if(pinch){
+        if(pinch.d>0 && d>0) zoom(pinch.d/d);        // 雙指捏合 = 縮放
+        pan(cx-pinch.cx, cy-pinch.cy);               // 雙指同移 = 平移
+      }
+      pinch={d,cx,cy};
+      applyCam(); return;
+    }
+    const dx=e.clientX-p.x, dy=e.clientY-p.y; p.x=e.clientX; p.y=e.clientY;
+    if(p.b===2){ pan(dx,dy); }
+    else{
       orbit.th -= dx*0.006;
       orbit.ph = Math.max(0.12, Math.min(Math.PI-0.12, orbit.ph - dy*0.006));
     }
     applyCam();
   });
-  el.addEventListener('wheel',e=>{e.preventDefault();orbit.r=Math.max(90,Math.min(1400,orbit.r*(1+Math.sign(e.deltaY)*0.11)));applyCam()},{passive:false});
+  el.addEventListener('wheel',e=>{e.preventDefault();zoom(1+Math.sign(e.deltaY)*0.11);applyCam()},{passive:false});
 })();
 function resize(){
   const w=view.clientWidth||800,h=view.clientHeight||600;
