@@ -46,6 +46,18 @@
   #hint{position:absolute;right:14px;bottom:12px;font-size:11px;color:var(--dim)}
   .lg{font-size:11px;color:var(--dim);line-height:1.8;margin-top:6px}
   .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+  /* 手機:上下堆疊,畫布固定高,控制面板直接接在下面 */
+  @media (max-width:760px){
+    #wrap{flex-direction:column;height:auto}
+    #view{height:56vh;flex:none}
+    #side{width:100%;border-left:none;border-top:1px solid var(--line);padding:12px 14px 34px}
+    .modes button{padding:12px 6px;font-size:14px}
+    .row{font-size:13px}
+    .row input[type=range]{min-height:28px}
+    #live{left:8px;top:8px;min-width:0;padding:6px 9px;font-size:10.5px;line-height:1.6}
+    #live .k{width:52px}
+    #hint{display:none}
+  }
 </style>
 </head>
 <body>
@@ -144,6 +156,7 @@ grid.position.set(90,-3.2,57); scene.add(grid);
 
 // 手轉軌道控制(自製,免額外檔案)
 const orbit = {t:new THREE.Vector3(90,95,57), r:430, th:-0.62, ph:1.15};
+if(matchMedia('(max-width:760px)').matches) orbit.r=560; // 窄螢幕拉遠,整台機構進畫面
 function applyCam(){
   camera.position.set(
     orbit.t.x + orbit.r*Math.sin(orbit.ph)*Math.sin(orbit.th),
