@@ -5,7 +5,8 @@ const path = require('path');
 const DIR = __dirname;
 
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-const inline = s => esc(s)
+const img = s => s.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" loading="lazy" style="max-width:100%;border-radius:8px;margin:.4em 0">');
+const inline = s => img(esc(s))
   .replace(/`([^`]+)`/g, '<code>$1</code>')
   .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
   .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
