@@ -64,7 +64,6 @@ function md2html(src) {
 const NAV = (cur) => `<nav class="nav"><a class="brand" href="./">骷髏頭凸輪玩具</a>
   <a href="./"${cur === 'home' ? ' class="on"' : ''}>概覽</a>
   <a href="sim.html"${cur === 'sim' ? ' class="on"' : ''}>3D 模擬</a>
-  <a href="heart.html"${cur === 'heart' ? ' class="on"' : ''}>七夕心跳凸輪</a>
   <a href="assembly.html"${cur === 'asm' ? ' class="on"' : ''}>組裝說明</a>
   <a href="findings.html"${cur === 'fnd' ? ' class="on"' : ''}>驗證報告</a>
   <a href="#download">下載切割檔</a></nav>`;
