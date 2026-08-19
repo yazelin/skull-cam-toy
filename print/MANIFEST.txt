@@ -1,0 +1,11 @@
+heart-01-base.stl  底板  厚 3mm  印 1 件
+heart-02-side.stl  側板  厚 3mm  印 2 件
+heart-03-top.stl  頂板  厚 3mm  印 1 件
+heart-04-skirt.stl  前後裙板  厚 3mm  印 2 件
+heart-05-guide-side.stl  導片  厚 3mm  印 2 件
+heart-06-guide-frontback.stl  導片前後  厚 3mm  印 2 件
+heart-07-cam.stl  偏心凸輪  厚 9mm  印 1 件
+heart-08-crank.stl  曲柄臂  厚 6mm  印 1 件
+heart-09-collar.stl  軸環  厚 3mm  印 2 件
+heart-10-follower.stl  推桿  厚 6mm  印 1 件
+heart-11-heart.stl  心  厚 3mm  印 1 件

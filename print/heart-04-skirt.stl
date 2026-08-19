@@ -1,0 +1,86 @@
+solid heart-04-skirt
+ facet normal 0 0 -1
+  outer loop
+   vertex 23 3 0
+   vertex 23 29 0
+   vertex 97 29 0
+  endloop
+ endfacet
+ facet normal 0 0 -1
+  outer loop
+   vertex 97 29 0
+   vertex 97 3 0
+   vertex 23 3 0
+  endloop
+ endfacet
+ facet normal 0 0 1
+  outer loop
+   vertex 97 29 3
+   vertex 23 29 3
+   vertex 23 3 3
+  endloop
+ endfacet
+ facet normal 0 0 1
+  outer loop
+   vertex 23 3 3
+   vertex 97 3 3
+   vertex 97 29 3
+  endloop
+ endfacet
+ facet normal 0 -1 0
+  outer loop
+   vertex 23 3 0
+   vertex 97 3 0
+   vertex 23 3 3
+  endloop
+ endfacet
+ facet normal 0 -1 0
+  outer loop
+   vertex 97 3 0
+   vertex 97 3 3
+   vertex 23 3 3
+  endloop
+ endfacet
+ facet normal 1 0 0
+  outer loop
+   vertex 97 3 0
+   vertex 97 29 0
+   vertex 97 3 3
+  endloop
+ endfacet
+ facet normal 1 0 0
+  outer loop
+   vertex 97 29 0
+   vertex 97 29 3
+   vertex 97 3 3
+  endloop
+ endfacet
+ facet normal 0 1 0
+  outer loop
+   vertex 97 29 0
+   vertex 23 29 0
+   vertex 97 29 3
+  endloop
+ endfacet
+ facet normal 0 1 0
+  outer loop
+   vertex 23 29 0
+   vertex 23 29 3
+   vertex 97 29 3
+  endloop
+ endfacet
+ facet normal -1 0 0
+  outer loop
+   vertex 23 29 0
+   vertex 23 3 0
+   vertex 23 29 3
+  endloop
+ endfacet
+ facet normal -1 0 0
+  outer loop
+   vertex 23 3 0
+   vertex 23 3 3
+   vertex 23 29 3
+  endloop
+ endfacet
+endsolid heart-04-skirt

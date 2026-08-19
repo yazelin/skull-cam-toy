@@ -1,0 +1,310 @@
+solid heart-10-follower
+ facet normal 0 0 -1
+  outer loop
+   vertex 24 0 0
+   vertex 24 3 0
+   vertex 27 3 0
+  endloop
+ endfacet
+ facet normal 0 0 -1
+  outer loop
+   vertex 46 3 0
+   vertex 46 0 0
+   vertex 24 0 0
+  endloop
+ endfacet
+ facet normal 0 0 -1
+  outer loop
+   vertex 36.650001525878906 47 0
+   vertex 43 47 0
+   vertex 43 3 0
+  endloop
+ endfacet
+ facet normal 0 0 -1
+  outer loop
+   vertex 27 47 0
+   vertex 33.349998474121094 47 0
+   vertex 33.349998474121094 43 0
+  endloop
+ endfacet
+ facet normal 0 0 -1
+  outer loop
+   vertex 43 3 0
+   vertex 46 3 0
+   vertex 24 0 0
+  endloop
+ endfacet
+ facet normal 0 0 -1
+  outer loop
+   vertex 36.650001525878906 43 0
+   vertex 36.650001525878906 47 0
+   vertex 43 3 0
+  endloop
+ endfacet
+ facet normal 0 0 -1
+  outer loop
+   vertex 27 3 0
+   vertex 27 47 0
+   vertex 33.349998474121094 43 0
+  endloop
+ endfacet
+ facet normal 0 0 -1
+  outer loop
+   vertex 43 3 0
+   vertex 24 0 0
+   vertex 27 3 0
+  endloop
+ endfacet
+ facet normal 0 0 -1
+  outer loop
+   vertex 33.349998474121094 43 0
+   vertex 36.650001525878906 43 0
+   vertex 43 3 0
+  endloop
+ endfacet
+ facet normal 0 0 -1
+  outer loop
+   vertex 43 3 0
+   vertex 27 3 0
+   vertex 33.349998474121094 43 0
+  endloop
+ endfacet
+ facet normal 0 0 1
+  outer loop
+   vertex 27 3 6
+   vertex 24 3 6
+   vertex 24 0 6
+  endloop
+ endfacet
+ facet normal 0 0 1
+  outer loop
+   vertex 24 0 6
+   vertex 46 0 6
+   vertex 46 3 6
+  endloop
+ endfacet
+ facet normal 0 0 1
+  outer loop
+   vertex 43 3 6
+   vertex 43 47 6
+   vertex 36.650001525878906 47 6
+  endloop
+ endfacet
+ facet normal 0 0 1
+  outer loop
+   vertex 33.349998474121094 43 6
+   vertex 33.349998474121094 47 6
+   vertex 27 47 6
+  endloop
+ endfacet
+ facet normal 0 0 1
+  outer loop
+   vertex 24 0 6
+   vertex 46 3 6
+   vertex 43 3 6
+  endloop
+ endfacet
+ facet normal 0 0 1
+  outer loop
+   vertex 43 3 6
+   vertex 36.650001525878906 47 6
+   vertex 36.650001525878906 43 6
+  endloop
+ endfacet
+ facet normal 0 0 1
+  outer loop
+   vertex 33.349998474121094 43 6
+   vertex 27 47 6
+   vertex 27 3 6
+  endloop
+ endfacet
+ facet normal 0 0 1
+  outer loop
+   vertex 27 3 6
+   vertex 24 0 6
+   vertex 43 3 6
+  endloop
+ endfacet
+ facet normal 0 0 1
+  outer loop
+   vertex 43 3 6
+   vertex 36.650001525878906 43 6
+   vertex 33.349998474121094 43 6
+  endloop
+ endfacet
+ facet normal 0 0 1
+  outer loop
+   vertex 33.349998474121094 43 6
+   vertex 27 3 6
+   vertex 43 3 6
+  endloop
+ endfacet
+ facet normal 0 -1 0
+  outer loop
+   vertex 24 0 0
+   vertex 46 0 0
+   vertex 24 0 6
+  endloop
+ endfacet
+ facet normal 0 -1 0
+  outer loop
+   vertex 46 0 0
+   vertex 46 0 6
+   vertex 24 0 6
+  endloop
+ endfacet
+ facet normal 1 0 0
+  outer loop
+   vertex 46 0 0
+   vertex 46 3 0
+   vertex 46 0 6
+  endloop
+ endfacet
+ facet normal 1 0 0
+  outer loop
+   vertex 46 3 0
+   vertex 46 3 6
+   vertex 46 0 6
+  endloop
+ endfacet
+ facet normal 0 1 0
+  outer loop
+   vertex 46 3 0
+   vertex 43 3 0
+   vertex 46 3 6
+  endloop
+ endfacet
+ facet normal 0 1 0
+  outer loop
+   vertex 43 3 0
+   vertex 43 3 6
+   vertex 46 3 6
+  endloop
+ endfacet
+ facet normal 1 0 0
+  outer loop
+   vertex 43 3 0
+   vertex 43 47 0
+   vertex 43 3 6
+  endloop
+ endfacet
+ facet normal 1 0 0
+  outer loop
+   vertex 43 47 0
+   vertex 43 47 6
+   vertex 43 3 6
+  endloop
+ endfacet
+ facet normal 0 1 0
+  outer loop
+   vertex 43 47 0
+   vertex 36.650001525878906 47 0
+   vertex 43 47 6
+  endloop
+ endfacet
+ facet normal 0 1 0
+  outer loop
+   vertex 36.650001525878906 47 0
+   vertex 36.650001525878906 47 6
+   vertex 43 47 6
+  endloop
+ endfacet
+ facet normal -1 0 0
+  outer loop
+   vertex 36.650001525878906 47 0
+   vertex 36.650001525878906 43 0
+   vertex 36.650001525878906 47 6
+  endloop
+ endfacet
+ facet normal -1 0 0
+  outer loop
+   vertex 36.650001525878906 43 0
+   vertex 36.650001525878906 43 6
+   vertex 36.650001525878906 47 6
+  endloop
+ endfacet
+ facet normal 0 1 0
+  outer loop
+   vertex 36.650001525878906 43 0
+   vertex 33.349998474121094 43 0
+   vertex 36.650001525878906 43 6
+  endloop
+ endfacet
+ facet normal 0 1 0
+  outer loop
+   vertex 33.349998474121094 43 0
+   vertex 33.349998474121094 43 6
+   vertex 36.650001525878906 43 6
+  endloop
+ endfacet
+ facet normal 1 0 0
+  outer loop
+   vertex 33.349998474121094 43 0
+   vertex 33.349998474121094 47 0
+   vertex 33.349998474121094 43 6
+  endloop
+ endfacet
+ facet normal 1 0 0
+  outer loop
+   vertex 33.349998474121094 47 0
+   vertex 33.349998474121094 47 6
+   vertex 33.349998474121094 43 6
+  endloop
+ endfacet
+ facet normal 0 1 0
+  outer loop
+   vertex 33.349998474121094 47 0
+   vertex 27 47 0
+   vertex 33.349998474121094 47 6
+  endloop
+ endfacet
+ facet normal 0 1 0
+  outer loop
+   vertex 27 47 0
+   vertex 27 47 6
+   vertex 33.349998474121094 47 6
+  endloop
+ endfacet
+ facet normal -1 0 0
+  outer loop
+   vertex 27 47 0
+   vertex 27 3 0
+   vertex 27 47 6
+  endloop
+ endfacet
+ facet normal -1 0 0
+  outer loop
+   vertex 27 3 0
+   vertex 27 3 6
+   vertex 27 47 6
+  endloop
+ endfacet
+ facet normal 0 1 0
+  outer loop
+   vertex 27 3 0
+   vertex 24 3 0
+   vertex 27 3 6
+  endloop
+ endfacet
+ facet normal 0 1 0
+  outer loop
+   vertex 24 3 0
+   vertex 24 3 6
+   vertex 27 3 6
+  endloop
+ endfacet
+ facet normal -1 0 0
+  outer loop
+   vertex 24 3 0
+   vertex 24 0 0
+   vertex 24 3 6
+  endloop
+ endfacet
+ facet normal -1 0 0
+  outer loop
+   vertex 24 0 0
+   vertex 24 0 6
+   vertex 24 3 6
+  endloop
+ endfacet
+endsolid heart-10-follower
