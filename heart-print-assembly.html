@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>組裝說明 · 七夕心跳凸輪</title>
-<meta name="description" content="18 片 3mm 板的七步組裝流程,每一步都附驗收,含最容易裝錯的五件事。">
+<title>組裝說明 · 心跳凸輪 3D 列印版</title>
+<meta name="description" content="9 種零件印 10 件、全程免膠的組裝五步,每一步附 3D 完成狀態圖與驗收。">
 <meta property="og:type" content="website">
-<meta property="og:title" content="組裝說明 · 七夕心跳凸輪">
-<meta property="og:description" content="18 片 3mm 板的七步組裝流程,每一步都附驗收,含最容易裝錯的五件事。">
+<meta property="og:title" content="組裝說明 · 心跳凸輪 3D 列印版">
+<meta property="og:description" content="9 種零件印 10 件、全程免膠的組裝五步,每一步附 3D 完成狀態圖與驗收。">
 <meta property="og:image" content="https://yazelin.github.io/skull-cam-toy/assets/og.jpg">
-<meta property="og:url" content="https://yazelin.github.io/skull-cam-toy/heart-assembly.html">
+<meta property="og:url" content="https://yazelin.github.io/skull-cam-toy/heart-print-assembly.html">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="site.css">
 </head>
@@ -17,93 +17,81 @@
 <nav class="nav"><a class="brand" href="heart.html">七夕限定 · 心跳凸輪</a>
   <a href="heart.html">3D 模擬</a>
   <a href="heart-print.html">3D 列印版</a>
-  <a href="heart-assembly.html" class="on">組裝說明(木板)</a>
-  <a href="heart-print-assembly.html">組裝說明(列印)</a>
+  <a href="heart-assembly.html">組裝說明(木板)</a>
+  <a href="heart-print-assembly.html" class="on">組裝說明(列印)</a>
   <a href="cut/heart-cut-1.svg">下載切割檔</a>
   <a href="./">骷髏頭本站</a></nav>
 <main class="doc">
-<h1 id="七夕心跳凸輪-組裝說明">七夕心跳凸輪 · 組裝說明</h1>
-<p>一根手搖軸、一片偏心凸輪、一顆會跳的心。20 片 3mm 板 + 兩段 Ø6 圓棒,升程 12mm。</p>
-<p>搭配 <a href="heart.html">3D 模擬</a> 一起看:拉「爆炸圖」滑桿對照每一步,點「拆解接頭」看心和推桿怎麼咬合。</p>
-<blockquote>誠實聲明:本設計走完模擬三層驗證(幾何檢查/干涉掃描/零件自檢),<strong>還沒實際切過</strong>。</blockquote>
-<blockquote>骷髏頭當初也是同樣狀態,後來線鋸切出來真的會動。你切了,歡迎回報。</blockquote>
-<h2 id="第-0-步-列印與備料">第 0 步:列印與備料</h2>
+<h1 id="心跳凸輪-3D-列印版-組裝說明">心跳凸輪 3D 列印版 · 組裝說明</h1>
+<p>9 種零件印 10 件,<strong>全程免膠</strong>,升程 12mm。</p>
+<p>搭配 <a href="heart-print.html">3D 模擬</a> 一起看:用「顯示/隱藏」藥丸對照每一步,拉「爆炸圖」看全部零件怎麼疊。</p>
+<blockquote>誠實聲明:本設計通過模擬三層驗證(逐項幾何檢查/干涉掃描/STL 水密核對),<strong>還沒實際印過</strong>。</blockquote>
+<blockquote>木板版當初也是同樣狀態,後來線鋸切出來真的會動。你印了,歡迎回報。</blockquote>
+<h2 id="第-0-步-列印與公差測試">第 0 步:列印與公差測試</h2>
 <ul>
-<li>列印描圖:印 <a href="cut/heart-cut-A4.pdf"><code>cut/heart-cut-A4.pdf</code></a>(一張 A4、1:1),縮放選「實際大小 / 100%」,<strong>不要</strong>選「符合頁面」。雷切:用 <a href="cut/heart-cut-1.svg"><code>heart-cut-1.svg</code></a> 或 <a href="cut/heart-cut-1.dxf"><code>heart-cut-1.dxf</code></a>,黑線=切割、藍字=刻字。</li>
-<li>印出後量左下角校正尺:<strong>50mm 線段必須剛好 50mm</strong>,不對就調印表機縮放重印。</li>
-<li>材料:3mm 木板或厚紙板一張 A4 的量、Ø6 圓棒兩段(軸 92mm、手把 34mm;竹筷可替代,骷髏頭實作就是竹筷)、白膠、砂紙、一張紙條(第 5 步當墊片用)。</li>
-<li>板材標 3mm 實際常是 2.8~3.2mm:疊層件黏完若超過 6.4mm,先磨薄再裝。</li>
-<li>雷切的話:kerf 會讓配合再鬆 0.1~0.2mm,本設計全走「留隙+上膠」,鬆一點無害。</li>
-<li><strong>膠水用白膠(木工 PVA)就對了</strong>:乾透後比木材本身還強,膠層薄不吃間隙。<strong>不要用熱熔膠</strong>黏配合面——膠層厚 0.5~1mm 會把留好的間隙全吃掉,受力久了還會剝。趕時間就用快乾木工膠。</li>
-<li><strong>圓棒/竹筷的黏合段先用砂紙磨毛</strong>:竹子表面光滑,白膠咬不住,磨毛才牢(凸輪孔、軸環、曲柄孔、手把孔都適用)。</li>
+<li>STL 都在 <a href="print/"><code>print/</code></a>:hp-01 到 hp-09,共 10 件(間隔套印 2 件),清單見 <code>MANIFEST.txt</code>。</li>
+<li>PLA、層高 0.2mm、3 層壁、15% 填充,全部平躺免支撐。列印方向照 <a href="print/README.md">print/README.md</a> 的表。</li>
+<li><strong>先只印一件間隔套當公差測試</strong>:軸(印出來的或 Ø6 圓棒)要能插進去「轉動不晃」。</li>
 </ul>
-<h2 id="第-1-步-疊層件先黏">第 1 步:疊層件先黏</h2>
-<p>凸輪 3 片(疊 9mm)、推桿 2 片(疊 6mm)、曲柄臂 2 片(疊 6mm)各自疊黏。</p>
+<p>  太緊就在切片軟體開 XY 孔補償 +0.1~0.2mm 重印,調到剛好,<strong>再</strong>印其餘零件。FDM 孔會縮,這步不能跳。</p>
 <ul>
-<li>黏之前拿一小段軸穿過孔當定位銷,孔對孔再壓合;曲柄臂兩孔都穿。</li>
-<li>乾後把疊層邊緣磨齊,推桿四邊尤其要磨——它之後要在導套裡滑。</li>
+<li>心那件換紅色料印。</li>
+<li>不想印軸:Ø6 圓棒或竹筷可替代,但圓棒沒有 D 面,凸輪和曲柄就得各點一滴瞬間膠固定。</li>
 </ul>
-<p><strong>驗</strong>:凸輪穿軸能轉不晃;推桿厚度量起來 ≤6.4mm、寬度 ≤16.4mm。</p>
-<h2 id="第-2-步-側板立上底板">第 2 步:側板立上底板</h2>
-<p>兩片側板(有 Ø6.2 軸孔的)立在底板上:<strong>左側板距底板左緣 6mm、右側板外面距右緣 0(貼齊)</strong>,軸孔同高同向,黏牢。</p>
-<p>再把兩片<strong>前後裙板</strong>(74×26)卡進兩側板之間、貼齊底板前後緣黏好——結構閉環,箱體才不會左右歪斜。</p>
-<p><strong>驗</strong>:拿軸同時穿過兩孔,能自由轉、不彆手;抓住兩側板前後搖,不晃。</p>
-<p><img src="assets/asm/step2.png" alt="第 2 步完成:側板立上底板" loading="lazy" style="max-width:100%;border-radius:8px;margin:.4em 0"></p>
-<h2 id="第-3-步-穿軸鏈-順序不能反">第 3 步:穿軸鏈(順序不能反)</h2>
-<p>軸從<strong>左側板外</strong>往內穿 → 套<strong>左軸環</strong> → 套<strong>凸輪</strong>(先不上膠) → 套<strong>右軸環</strong> → 穿出<strong>右側板</strong>。</p>
+<h2 id="第-1-步-穿軸鏈">第 1 步:穿軸鏈</h2>
+<p>箱身頂是開的,凸輪和兩個間隔套先從頂口放進箱內。</p>
+<p>軸從<strong>右牆外</strong>往內穿 → 箱內依序串:<strong>右間隔套</strong> → <strong>凸輪</strong>(D 孔對準軸的 D 面) → <strong>左間隔套</strong> → 穿出<strong>左牆</strong>。</p>
 <ul>
-<li>凸輪推到正中:距兩側板內面各約 34mm。置中才有 ±1.5mm 的軸向容差,推桿不會踩空。</li>
-<li>定位好後:凸輪中孔<strong>整圈上白膠</strong>(軸的這段先磨毛);兩枚軸環分別貼側板內側、黏在軸上(擋軸向滑動)。</li>
+<li>凸輪 D 孔要對準 D 面再推,別硬壓,壓裂孔就要重印。</li>
+<li>兩個間隔套把凸輪自動夾在正中,不用量尺寸。</li>
 </ul>
-<p><strong>驗</strong>:搖軸,凸輪跟著轉、軸不左右滑動。</p>
-<p><img src="assets/asm/step3.png" alt="第 3 步完成:軸鏈就位,凸輪置中" loading="lazy" style="max-width:100%;border-radius:8px;margin:.4em 0"></p>
-<h2 id="第-4-步-曲柄與手把">第 4 步:曲柄與手把</h2>
-<p>曲柄臂套軸右端,與右側板<strong>留 1~2mm 縫</strong>再黏死;手把段插進臂另一端的孔黏牢。</p>
-<p><strong>驗</strong>:搖一整圈,曲柄與手把不掃到底板、不擦側板。</p>
-<p><img src="assets/asm/step4.png" alt="第 4 步完成:曲柄與手把裝上" loading="lazy" style="max-width:100%;border-radius:8px;margin:.4em 0"></p>
-<h2 id="第-5-步-推桿與導套-最容易裝錯的一步">第 5 步:推桿與導套(最容易裝錯的一步)</h2>
-<ol>
-<li>推桿 <strong>T 腳朝下</strong>立在凸輪正上方。</li>
-<li>頂板<strong>先不上膠</strong>,從桿頂套下(導槽對準桿身)。</li>
-<li>桿身<strong>包一層紙</strong>當墊片。</li>
-<li>四片導片貼著紙面靠緊:左右兩片夾窄邊、前後兩片擋寬邊,頂邊全部貼齊頂板底面,黏在頂板上。</li>
-<li>膠乾後<strong>抽掉紙</strong>——孔道位置準(推桿自己就是治具)、間隙也剛好(紙就是間隙)。</li>
-</ol>
-<p><strong>驗</strong>:手抽推桿上下要順滑;搖軸,推桿升降 12mm 不卡。<strong>過了這關</strong>才把頂板四邊上膠、蓋牢箱體。</p>
-<p><img src="assets/asm/step5.png" alt="第 5 步完成:推桿穿過導套與頂板" loading="lazy" style="max-width:100%;border-radius:8px;margin:.4em 0"></p>
-<h2 id="第-6-步-裝心">第 6 步:裝心</h2>
-<p>心的底槽對準推桿頂端叉槽,往下沉到底(心槽頂面坐在叉槽底面),四面上白膠。</p>
-<p>這是錯位搭接:心的槽壁跨住推桿(左右)、叉齒夾住心板(前後)、槽頂面定深(上下)。</p>
-<p><strong>驗</strong>:搖軸,心上下跳 12mm,四個接觸面都吃到膠。</p>
-<p><img src="assets/asm/step6.png" alt="第 6 步完成:整機" loading="lazy" style="max-width:100%;border-radius:8px;margin:.4em 0"></p>
-<h2 id="第-7-步-調校">第 7 步:調校</h2>
+<p><strong>驗</strong>:搖軸,凸輪跟著轉(D 面咬合,免膠);軸向左右推,游隙約 1mm、不會大幅滑動。</p>
+<p><img src="assets/asm/hp-step1.png" alt="第 1 步完成:軸鏈就位,間隔套夾住凸輪" loading="lazy" style="max-width:100%;border-radius:8px;margin:.4em 0"></p>
+<h2 id="第-2-步-放推桿">第 2 步:放推桿</h2>
+<p>推桿 <strong>T 腳朝下</strong>,立在凸輪正上方。</p>
+<p><strong>驗</strong>:推桿底面貼著凸輪頂,直立不歪。</p>
+<p><img src="assets/asm/hp-step2.png" alt="第 2 步完成:推桿立上凸輪" loading="lazy" style="max-width:100%;border-radius:8px;margin:.4em 0"></p>
+<h2 id="第-3-步-蓋頂蓋">第 3 步:蓋頂蓋</h2>
+<p>頂蓋的<strong>導套對準推桿</strong>從桿頂套下,四邊內唇對準箱口,壓到底。</p>
+<p>(順序不能反:T 腳寬 22mm 穿不過導槽,<strong>先放推桿才能蓋頂蓋</strong>。)</p>
+<p><strong>驗</strong>:手抽推桿上下要順滑;搖軸,推桿升降 12mm 不卡。緊了磨唇外緣,鬆了唇上貼一圈紙膠帶。</p>
+<p><img src="assets/asm/hp-step3.png" alt="第 3 步完成:頂蓋壓入,推桿穿出導槽" loading="lazy" style="max-width:100%;border-radius:8px;margin:.4em 0"></p>
+<h2 id="第-4-步-曲柄與手把銷">第 4 步:曲柄與手把銷</h2>
+<p>曲柄的 <strong>D 孔</strong>壓上右邊露出的軸端,與右牆<strong>留 1~2mm 縫</strong>;手把銷(帽朝外)壓進曲柄另一端的孔。</p>
+<p><strong>驗</strong>:搖一整圈,曲柄和手把不掃桌面、不擦牆。</p>
+<p><img src="assets/asm/hp-step4.png" alt="第 4 步完成:曲柄與手把裝上" loading="lazy" style="max-width:100%;border-radius:8px;margin:.4em 0"></p>
+<h2 id="第-5-步-裝心">第 5 步:裝心</h2>
+<p>心的底槽對準推桿頂端叉槽,往下沉到底(槽頂面坐在叉槽底面)。</p>
+<p>錯位搭接:心的槽壁跨住推桿(左右)、叉齒夾住心板(前後)、槽頂面定深(上下)。</p>
+<p><strong>驗</strong>:搖軸,心上下跳 12mm。配合太鬆會晃的話,叉槽裡點一滴瞬間膠,非必要。</p>
+<p><img src="assets/asm/hp-step5.png" alt="第 5 步完成:整機" loading="lazy" style="max-width:100%;border-radius:8px;margin:.4em 0"></p>
+<h2 id="調校">調校</h2>
 <ul>
-<li>推桿桿身與凸輪頂面<strong>磨圓、上蠟</strong>(蠟燭塗一塗就行),滑起來才順。</li>
-<li>回位靠自重就夠:偏心 6mm 要搖到約每秒 6 轉(386rpm)心才會跳離,手搖通常 1~2 轉/秒,餘裕三倍以上。</li>
-<li>卡卡的:先查導套四面間隙(磨導片內側),再查凸輪有沒有置中。</li>
+<li>推桿桿身與凸輪頂面的層紋用砂紙輕磨,滑起來才順;乾性潤滑(蠟燭塗一塗)更好。</li>
+<li>卡卡的:先查導套四面(磨推桿稜線),再查頂蓋有沒有壓到底。</li>
+<li>回位靠心與推桿自重:手搖 1~2 轉/秒餘裕三倍以上,不需要彈簧。</li>
 </ul>
 <h2 id="最容易裝錯的五件事">最容易裝錯的五件事</h2>
 <ol>
-<li>導片「靠緊黏」<strong>沒墊紙</strong> → 零間隙,100% 卡死</li>
-<li><strong>先黏死頂板</strong>才想放推桿 → T 腳穿不過導槽,順序不能反</li>
+<li><strong>跳過公差測試</strong>直接印全套 → 孔太緊全部重印</li>
+<li>D 孔<strong>沒對準 D 面硬壓</strong> → 撐裂,凸輪報廢</li>
+<li><strong>先蓋頂蓋才想放推桿</strong> → T 腳穿不過導槽,順序不能反</li>
 <li>T 腳<strong>裝反朝上</strong> → 沒有接觸面,心不會跳</li>
-<li>凸輪<strong>沒置中</strong> → 吃掉 ±1.5mm 軸向容差,推桿踩空</li>
-<li>曲柄臂<strong>貼死側板</strong> → 整圈摩擦,要留 1~2mm 縫</li>
+<li>頂蓋<strong>沒壓到底</strong> → 導套懸空,推桿行程卡一半</li>
 </ol>
 <h2 id="零件表">零件表</h2>
-<div class="tw"><table><thead><tr><th>零件</th><th>外形 mm</th><th>片數</th></tr></thead><tbody>
-<tr><td>底板</td><td>86 × 70</td><td>1</td></tr>
-<tr><td>側板(含 Ø6.2 軸孔)</td><td>70 × 72</td><td>2</td></tr>
-<tr><td>前後裙板(閉環箱體)</td><td>74 × 26</td><td>2</td></tr>
-<tr><td>頂板(含推桿導槽)</td><td>86 × 70</td><td>1</td></tr>
-<tr><td>導片(圍成導套)</td><td>16.6×12 ×2、12.6×12 ×2</td><td>4</td></tr>
-<tr><td>偏心凸輪 R16 e6</td><td>Ø32</td><td>3(疊 9mm)</td></tr>
-<tr><td>推桿(T 型腳+頂端叉槽)</td><td>22 × 47</td><td>2(疊 6mm)</td></tr>
-<tr><td>心(底緣藏一道搭接槽)</td><td>約 44 × 40</td><td>1</td></tr>
-<tr><td>曲柄臂(兩端 Ø6.2 孔)</td><td>14 × 42</td><td>2(疊 6mm)</td></tr>
-<tr><td>軸環 Ø14(孔 Ø6.2)</td><td>Ø14</td><td>2</td></tr>
+<div class="tw"><table><thead><tr><th>檔案</th><th>零件</th><th>件數</th></tr></thead><tbody>
+<tr><td>hp-01-body.stl</td><td>箱身(底板+四牆,Ø6.6 軸孔)</td><td>1</td></tr>
+<tr><td>hp-02-cap.stl</td><td>頂蓋(含導套與壓入唇)</td><td>1</td></tr>
+<tr><td>hp-03-cam.stl</td><td>偏心凸輪 R16 e6(D 孔)</td><td>1</td></tr>
+<tr><td>hp-04-spacer.stl</td><td>間隔套 Ø12×32</td><td>2</td></tr>
+<tr><td>hp-05-follower.stl</td><td>推桿(T 型腳+叉槽)</td><td>1</td></tr>
+<tr><td>hp-06-heart.stl</td><td>心</td><td>1</td></tr>
+<tr><td>hp-07-crank.stl</td><td>曲柄臂(D 孔+手把孔)</td><td>1</td></tr>
+<tr><td>hp-08-shaft.stl</td><td>軸 Ø6×92(帶 D 面)</td><td>1</td></tr>
+<tr><td>hp-09-handle-pin.stl</td><td>手把銷</td><td>1</td></tr>
 </tbody></table></div>
-<p>另需:Ø6 圓棒兩段(軸 92mm、手把 34mm)、白膠。</p>
+<p>跟雷切幾何相同的「板件直印版」在 <a href="print/flat/"><code>print/flat/</code></a>,那個版本照<a href="heart-assembly.html">木板版組裝說明</a>組,要上膠(PLA 用瞬間膠)。</p>
 </main>
 <div class="foot"><div class="in">
   <span>骷髏頭凸輪玩具 · 3mm 合板 · 1:1 · 尺寸取自樣板 PDF 的向量座標</span>

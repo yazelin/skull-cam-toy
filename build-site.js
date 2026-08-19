@@ -65,7 +65,8 @@ function md2html(src) {
 const HEARTNAV = (cur) => `<nav class="nav"><a class="brand" href="heart.html">七夕限定 · 心跳凸輪</a>
   <a href="heart.html">3D 模擬</a>
   <a href="heart-print.html">3D 列印版</a>
-  <a href="heart-assembly.html"${cur === 'heart' ? ' class="on"' : ''}>組裝說明</a>
+  <a href="heart-assembly.html"${cur === 'heart' ? ' class="on"' : ''}>組裝說明(木板)</a>
+  <a href="heart-print-assembly.html"${cur === 'hp-asm' ? ' class="on"' : ''}>組裝說明(列印)</a>
   <a href="cut/heart-cut-1.svg">下載切割檔</a>
   <a href="./">骷髏頭本站</a></nav>`;
 
@@ -96,7 +97,7 @@ function page({ title, cur, body, desc, out }) {
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
-${cur === "heart" ? HEARTNAV(cur) : NAV(cur)}
+${(cur === "heart" || cur === "hp-asm") ? HEARTNAV(cur) : NAV(cur)}
 <main class="doc">
 ${body}
 </main>
@@ -113,6 +114,8 @@ const jobs = [
     desc: '原始圖面為什麼做不出來,以及修正版怎麼驗證的。' },
   { src: 'HEART-ASSEMBLY.md', out: 'heart-assembly.html', cur: 'heart', title: '組裝說明 · 七夕心跳凸輪',
     desc: '18 片 3mm 板的七步組裝流程,每一步都附驗收,含最容易裝錯的五件事。' },
+  { src: 'HEART-PRINT-ASSEMBLY.md', out: 'heart-print-assembly.html', cur: 'hp-asm', title: '組裝說明 · 心跳凸輪 3D 列印版',
+    desc: '9 種零件印 10 件、全程免膠的組裝五步,每一步附 3D 完成狀態圖與驗收。' },
 ];
 for (const j of jobs) {
   const src = fs.readFileSync(path.join(DIR, j.src), 'utf8');
