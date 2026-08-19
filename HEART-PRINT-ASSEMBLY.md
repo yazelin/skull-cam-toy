@@ -8,7 +8,7 @@
 
 ## 第 0 步:列印與公差測試
 
-- STL 都在 [`print/`](print/):hp-01 到 hp-09,共 10 件(間隔套印 2 件),清單見 `MANIFEST.txt`。
+- STL 都在 [STL 下載頁](print/):hp-01 到 hp-09,共 10 件(間隔套印 2 件),清單見 `MANIFEST.txt`。
 - PLA、層高 0.2mm、3 層壁、15% 填充,全部平躺免支撐。列印方向照 [print/README.md](print/README.md) 的表。
 - **先只印一件間隔套當公差測試**:軸(印出來的或 Ø6 圓棒)要能插進去「轉動不晃」。
   太緊就在切片軟體開 XY 孔補償 +0.1~0.2mm 重印,調到剛好,**再**印其餘零件。FDM 孔會縮,這步不能跳。
@@ -89,4 +89,4 @@
 | hp-08-shaft.stl | 軸 Ø6×92(帶 D 面) | 1 |
 | hp-09-handle-pin.stl | 手把銷 | 1 |
 
-跟雷切幾何相同的「板件直印版」在 [`print/flat/`](print/flat/),那個版本照[木板版組裝說明](heart-assembly.html)組,要上膠(PLA 用瞬間膠)。
+跟雷切幾何相同的「板件直印版」在 [STL 下載頁的 B 區](print/#flat),那個版本照[木板版組裝說明](heart-assembly.html)組,要上膠(PLA 用瞬間膠)。
