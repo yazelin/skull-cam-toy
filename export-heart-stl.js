@@ -4,7 +4,7 @@
 const { chromium } = require('/home/ct/line-sticker-studio/node_modules/playwright');
 const fs = require('fs');
 const path = require('path');
-const OUT = path.join(__dirname, 'print');
+const OUT = path.join(__dirname, 'print', 'flat');
 
 (async () => {
   const b = await chromium.launch({ args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader'] });

@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>七夕限定 · 心跳凸輪 · 骷髏頭凸輪玩具</title>
-<meta name="description" content="一根手搖軸、一片偏心凸輪、一顆會跳的心。20 片 3mm 板的入門凸輪玩具,含 3D 模擬與逐項幾何檢查。模擬驗證完成,待實物回報。">
+<title>心跳凸輪 · 3D 列印版 · 骷髏頭凸輪玩具</title>
+<meta name="description" content="心跳凸輪的 3D 列印原生版:10 件、全程免膠。D 型軸傳扭力、頂蓋壓入、間隔套定位,含 3D 模擬與逐項幾何檢查。模擬驗證完成,待實印回報。">
 <meta property="og:type" content="website">
-<meta property="og:title" content="七夕限定 · 心跳凸輪 · 骷髏頭凸輪玩具">
-<meta property="og:description" content="一根手搖軸、一片偏心凸輪、一顆會跳的心。20 片 3mm 板的入門凸輪玩具,含 3D 模擬與逐項幾何檢查。模擬驗證完成,待實物回報。">
+<meta property="og:title" content="心跳凸輪 · 3D 列印版 · 骷髏頭凸輪玩具">
+<meta property="og:description" content="心跳凸輪的 3D 列印原生版:10 件、全程免膠。D 型軸傳扭力、頂蓋壓入、間隔套定位,含 3D 模擬與逐項幾何檢查。">
 <meta property="og:image" content="https://yazelin.github.io/skull-cam-toy/assets/og.jpg">
-<meta property="og:url" content="https://yazelin.github.io/skull-cam-toy/heart.html">
+<meta property="og:url" content="https://yazelin.github.io/skull-cam-toy/heart-print.html">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="site.css">
 <style>
@@ -70,10 +70,9 @@
 </head>
 <body>
 <nav class="nav"><a class="brand" href="heart.html">七夕限定 · 心跳凸輪</a>
-  <a href="heart.html" class="on">3D 模擬</a>
-  <a href="heart-print.html">3D 列印版</a>
-  <a href="heart-assembly.html">組裝說明</a>
-  <a href="cut/heart-cut-A4.pdf">下載切割檔</a>
+  <a href="heart.html">3D 模擬(木板版)</a>
+  <a href="heart-print.html" class="on">3D 列印版</a>
+  <a href="heart-assembly.html">組裝說明(木板版)</a>
   <a href="./">骷髏頭本站</a></nav>
 <div id="wrap">
   <div id="view">
@@ -81,12 +80,12 @@
     <div id="hint">拖曳旋轉 · 滾輪縮放 · 右鍵平移</div>
   </div>
   <aside id="side">
-    <h1>七夕限定 · 心跳凸輪</h1>
-    <div class="sub">骷髏頭的入門版:一根手搖軸、一片偏心凸輪、一顆會跳的心。<br>
-      20 片 3mm 板 + 兩段 Ø6 圓棒,升程 12mm。</div>
+    <h1>心跳凸輪 · 3D 列印版</h1>
+    <div class="sub">跟木板版同一套機構,重新設計成列印原生:<br>
+      <b>10 件、全程免膠</b>。D 型軸傳扭力、頂蓋壓入固定、間隔套取代軸環定位凸輪。升程 12mm。</div>
 
-    <div class="note">誠實聲明:這台走完跟骷髏頭同一套模擬驗證(下方逐項檢查),但<b>還沒實際切過</b>。
-      骷髏頭當初也是同樣狀態,後來線鋸切出來真的會動。</div>
+    <div class="note">誠實聲明:這版走完跟木板版同一套模擬驗證(下方逐項檢查+干涉掃描+STL 水密檢查),
+      但<b>還沒實際印過</b>。每台印表機公差不同,務必先印公差測試件(見組裝第 0 步)。</div>
 
     <div class="row">
       <button id="play">⏸ 暫停</button>
@@ -112,38 +111,39 @@
     <h2>幾何檢查(曲柄整圈 72 個角度掃過)</h2>
     <div id="checks"></div>
 
-    <h2>零件表(3mm 板)</h2>
+    <h2>零件表(PLA,全平躺免支撐)</h2>
     <table class="bom">
-      <tr><th>零件</th><th>外形 mm</th><th>片數</th></tr>
-      <tr><td>底板</td><td>86 × 70</td><td>1</td></tr>
-      <tr><td>側板(含 Ø6.2 軸孔)</td><td>70 × 72</td><td>2</td></tr>
-      <tr><td>前後裙板(閉環箱體)</td><td>74 × 26</td><td>2</td></tr>
-      <tr><td>頂板(含推桿導槽)</td><td>86 × 70</td><td>1</td></tr>
-      <tr><td>導片(黏頂板下,四面圍成導套)</td><td>16.6×12 ×2、12.6×12 ×2</td><td>4</td></tr>
-      <tr><td>偏心凸輪 R16 e6</td><td>Ø32</td><td>3(疊 9mm)</td></tr>
-      <tr><td>推桿(T 型腳+頂端叉槽)</td><td>22 × 47</td><td>2(疊 6mm)</td></tr>
-      <tr><td>心(底緣藏一道搭接槽)</td><td>約 44 × 40</td><td>1</td></tr>
-      <tr><td>曲柄臂(兩端 Ø6.2 孔)</td><td>14 × 42</td><td>2(疊 6mm)</td></tr>
-      <tr><td>軸環 Ø14(孔 Ø6.2)</td><td>Ø14</td><td>2</td></tr>
+      <tr><th>零件</th><th>外形 mm</th><th>件數</th></tr>
+      <tr><td>箱身(底板+四牆+Ø6.6 軸孔)</td><td>80 × 70 × 75</td><td>1</td></tr>
+      <tr><td>頂蓋(含導套與壓入唇)</td><td>80 × 70 × 14.5</td><td>1</td></tr>
+      <tr><td>偏心凸輪 R16 e6(D 孔)</td><td>Ø32 × 9</td><td>1</td></tr>
+      <tr><td>間隔套(定位凸輪置中)</td><td>Ø12 × 32,孔 Ø6.6</td><td>2</td></tr>
+      <tr><td>推桿(T 型腳+頂端叉槽)</td><td>22 × 47 × 6</td><td>1</td></tr>
+      <tr><td>心(底緣藏一道搭接槽)</td><td>約 45 × 35 × 3</td><td>1</td></tr>
+      <tr><td>曲柄臂(D 孔+手把孔)</td><td>14 × 42 × 6</td><td>1</td></tr>
+      <tr><td>手把銷(Ø6 桿+Ø10 帽)</td><td>Ø10 × 33</td><td>1</td></tr>
+      <tr><td>軸(Ø6,中段帶 D 面)</td><td>Ø6 × 92</td><td>1</td></tr>
     </table>
-    <div class="sub" style="margin-top:8px">另需:Ø6 圓棒兩段(軸 92mm、手把 34mm)、白膠。圓棒用竹筷替代也行,骷髏頭實作就是用竹筷切的段;黏合段先磨毛,白膠才咬得住。回位靠心與推桿自重:偏心 6mm 要搖到約每秒 6 轉才會跳離,手搖 1~2 轉/秒餘裕三倍以上,不需要回位彈簧。推桿桿身與凸輪接觸面磨圓、上蠟,滑起來才順。板材標 3mm 實際常是 2.8~3.2mm:疊層後桿身若超過 6.4mm,先磨薄再裝。</div>
+    <div class="sub" style="margin-top:8px">共 10 件。回位靠心與推桿自重(偏心 6mm 要搖到約每秒 6 轉才跳離,手搖 1~2 轉/秒餘裕三倍以上)。
+      PLA 對 PLA 滑動比木對木順,推桿桿身與凸輪頂面若有層紋,砂紙輕磨即可。
+      不想印軸的話,Ø6 圓棒或竹筷也能用,但圓軸沒有 D 面,凸輪和曲柄就要點瞬間膠固定。</div>
 
-    <h2>組裝六步(每步附驗收) · <a href="heart-assembly.html" style="color:var(--acc)">完整組裝說明頁 →</a></h2>
+    <h2>組裝五步(免膠,每步附驗收)</h2>
     <ol class="steps">
-      <li><b>疊層件先黏。</b>凸輪 3 片、推桿 2 片、曲柄臂 2 片各自疊黏:黏之前拿一小段軸穿過孔當定位,孔對孔再壓合;乾後把疊層邊緣磨齊。<br><b>驗:</b>凸輪穿軸能轉不晃;推桿厚度 ≤6.4mm(超過先磨薄)。</li>
-      <li><b>側板立上底板。</b>兩片側板距底板左緣 20mm、右緣 4mm,軸孔同高同向,黏牢。<br><b>驗:</b>拿軸穿過兩孔,能自由轉、不彆。</li>
-      <li><b>穿軸鏈(順序不能反):</b>軸從左側板外往內穿 → 套<b>左軸環</b> → 套<b>凸輪</b>(先不黏) → 套<b>右軸環</b> → 穿出右側板。凸輪推到正中(距兩側板內面各約 34mm)後,凸輪孔整圈上膠;兩軸環貼側板內側黏在軸上。<br><b>驗:</b>搖軸,凸輪跟著轉、軸不左右滑動。</li>
-      <li><b>曲柄與手把。</b>曲柄臂套軸右端,與右側板留 1~2mm 縫再黏死;手把段插進臂另一端孔黏牢。<br><b>驗:</b>搖一整圈,曲柄與手把不掃到底板、不擦側板。</li>
-      <li><b>推桿與導套(最容易裝錯的一步)。</b>推桿 <b>T 腳朝下</b>立在凸輪正上方;頂板<b>先不上膠</b>從桿頂套下;桿身<b>包一層紙</b>當墊片,四片導片貼著紙面靠緊、頂邊貼齊頂板底面黏好(左右兩片夾窄邊、前後兩片擋寬邊);膠乾<b>抽掉紙</b>。<br><b>驗:</b>手抽推桿上下要順滑;搖軸,推桿升降 12mm 不卡。過了才把頂板四邊上膠蓋牢。</li>
-      <li><b>裝心。</b>心的底槽對準推桿叉槽,往下沉到底(心槽頂面坐在叉槽底面),四面上膠。<br><b>驗:</b>搖軸,心上下跳 12mm。</li>
+      <li><b>第 0 步,公差測試。</b>先只印一件間隔套:Ø6 軸(或圓棒)要能插進去轉動不晃。太緊就在切片軟體開 XY 孔補償 +0.1~0.2mm,調到剛好再印其餘零件。FDM 孔會縮,這步不能跳。</li>
+      <li><b>穿軸鏈。</b>軸從右牆外往內穿(D 面段朝箱內)→ 套<b>右間隔套</b> → 套<b>凸輪</b>(D 孔對準軸的 D 面) → 套<b>左間隔套</b> → 穿出左牆。<br><b>驗:</b>搖軸,凸輪跟著轉(D 面咬合,不用膠);軸向被兩個間隔套頂住,左右游隙約 1mm。</li>
+      <li><b>放推桿。</b>推桿 <b>T 腳朝下</b>立在凸輪正上方。</li>
+      <li><b>蓋頂蓋。</b>導套對準推桿套下,四邊內唇對準箱口壓到底。<br><b>驗:</b>手抽推桿上下順滑;搖軸,推桿升降 12mm 不卡。緊了磨唇,鬆了唇上貼一圈紙膠帶。</li>
+      <li><b>曲柄與心。</b>曲柄 D 孔壓上右軸端、離右牆留 1~2mm 縫;手把銷壓進曲柄另一端的孔。心插進推桿頂端叉槽、沉到底。<br><b>驗:</b>搖一整圈,曲柄手把不掃桌不擦牆;心上下跳 12mm。會鬆動的配合處可各點一滴瞬間膠,非必要。</li>
     </ol>
-    <div class="note"><b>最容易裝錯的五件事:</b><br>
-      ① 導片「靠緊黏」沒墊紙 → 零間隙,100% 卡死<br>
-      ② 先黏死頂板才想放推桿 → T 腳穿不過導槽,順序不能反<br>
-      ③ T 腳裝反朝上 → 沒有接觸面,心不會跳<br>
-      ④ 凸輪沒置中 → 吃掉 ±1.5mm 軸向容差,推桿踩空<br>
-      ⑤ 曲柄臂貼死側板 → 整圈摩擦,要留 1~2mm 縫</div>
-    <div class="sub">切割檔:<a href="cut/heart-cut-A4.pdf" style="color:var(--acc)">heart-cut-A4.pdf</a>(列印描圖用,最不會被縮放)、<a href="cut/heart-cut-1.svg" style="color:var(--acc)">SVG</a> / <a href="cut/heart-cut-1.dxf" style="color:var(--acc)">DXF</a>(雷切用),都含 50mm 校正尺。雷射燒蝕會讓配合再鬆約 0.1~0.2mm:本設計全走「留隙+上膠」,鬆一點無害。</div>
+    <div class="note"><b>跟木板版差在哪:</b><br>
+      ① 疊層黏合整個消失:凸輪、推桿、曲柄直接印全厚<br>
+      ② 導套跟頂蓋印成一件,「包紙墊隙」那步不用了(間隙印在幾何裡)<br>
+      ③ 軸環換成間隔套:凸輪置中不靠對尺寸,靠套管頂住,裝歪不可能<br>
+      ④ 白膠全免:D 軸傳扭力、頂蓋壓入、心叉槽緊配<br>
+      ⑤ 組裝從六步變五步,順序也不同:先軸鏈、再推桿、再蓋頂</div>
+    <div class="sub">STL 下載:<a href="print/" style="color:var(--acc)">print/ 資料夾</a>(每件一檔,MANIFEST.txt 有清單)。
+      列印參數與公差建議見 <a href="print/README.md" style="color:var(--acc)">print/README.md</a>。</div>
   </aside>
 </div>
 
@@ -207,21 +207,31 @@ function applyCam(){
 function resize(){const w=view.clientWidth||800,h=view.clientHeight||600;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();}
 addEventListener('resize',resize);
 
-// ================= 建模小工具(與 sim.html 同一套約定) =================
+// ================= 建模小工具(與 heart.html 同一套約定) =================
 // 世界對應:three.x = 機構 x(左右) / three.y = 機構 z(上下) / three.z = 機構 y(前後)
 const MAT={
-  ply:  new THREE.MeshStandardMaterial({color:0xd9b382,roughness:.85,metalness:.02}),
-  ply2: new THREE.MeshStandardMaterial({color:0xb08654,roughness:.85,metalness:.02}),
-  cam:  new THREE.MeshStandardMaterial({color:0xd75d7a,roughness:.55,metalness:.08}),      // 玫瑰:動力來源=愛心色系
+  ply:  new THREE.MeshStandardMaterial({color:0x8fa3c8,roughness:.7,metalness:.05}),        // PLA 藍灰
+  ply2: new THREE.MeshStandardMaterial({color:0x6c82ab,roughness:.7,metalness:.05}),
+  cam:  new THREE.MeshStandardMaterial({color:0xd75d7a,roughness:.55,metalness:.08}),
   rod:  new THREE.MeshStandardMaterial({color:0xa8b0bd,roughness:.35,metalness:.7}),
   heart:new THREE.MeshStandardMaterial({color:0xe4506e,roughness:.45,emissive:0x40101c}),
-  foll: new THREE.MeshStandardMaterial({color:0xcfa66e,roughness:.8,metalness:.02}),       // 木色:跟心接起來像同一支木柄
-  shell:new THREE.MeshStandardMaterial({color:0xc9a273,roughness:.9,transparent:true,opacity:.22,side:THREE.DoubleSide}),
+  foll: new THREE.MeshStandardMaterial({color:0xc8b06e,roughness:.7,metalness:.03}),
+  shell:new THREE.MeshStandardMaterial({color:0x7c92bd,roughness:.8,transparent:true,opacity:.22,side:THREE.DoubleSide}),
 };
 const EDGE=new THREE.LineBasicMaterial({color:0x6b7385});
 function withEdges(m){ m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry,25),EDGE)); return m; }
 function rect(x0,y0,x1,y1){return [[x0,y0],[x1,y0],[x1,y1],[x0,y1]];}
 function circPts(cx,cy,r,n){const a=[];for(let i=0;i<(n||28);i++){const t=i/(n||28)*Math.PI*2;a.push([cx+r*Math.cos(t),cy+r*Math.sin(t)]);}return a;}
+// D 形輪廓:半徑 r 的圓,在 +v 方向 f 處切一刀平面(D 軸/D 孔用)
+function dPts(cx,cy,r,f,n){
+  const a=Math.asin(f/r), out=[];
+  const steps=n||36;
+  for(let i=0;i<=steps;i++){
+    const t=(Math.PI-a)+i/steps*(2*Math.PI-(Math.PI-2*a));   // 從左上交點順時針繞大弧到右上交點
+    out.push([cx+r*Math.cos(t),cy+r*Math.sin(t)]);
+  }
+  return out;   // 首尾之間由多邊形閉合線段補上=平面
+}
 function mkShape(pts,holes){
   const s=new THREE.Shape(pts.map(p=>new THREE.Vector2(p[0],p[1])));
   (holes||[]).forEach(h=>{const p=new THREE.Path(h.map(q=>new THREE.Vector2(q[0],q[1])));s.holes.push(p);});
@@ -249,41 +259,50 @@ function rodX(r,len,x,y,z,mat){
 
 // ================= 尺寸(單一事實來源) =================
 const D={
-  baseX0:14, baseX:100, baseY:70, t:3,      // 底/頂板 x 14..100:左留 6mm 膠肩,右緣貼齊側板讓曲柄懸空
-  sideLx:20, sideRx:97,           // 側板 x0(板厚 3 → 20..23 / 97..100)
-  shaftY:35, shaftZ:38,           // 軸心
-  camR:16, camE:6, camX:57, camT:9,     // 偏心凸輪厚 9(3 層):比推桿寬,軸向黏歪 ±1.5mm 也磨得到
-  follW:16, follT:6, follLen:47,        // 推桿:桿身 y 寬 16(27..43)、x 厚 6(57..63)、長 47
-  footW:22, footH:3,                    // T 型腳:底部加寬,接觸游走 ±6 之外還有 5mm 餘裕
-  follY0:27,
-  topZ:75,                              // 頂板底面
-  slotX0:56.7, slotX1:63.3, slotY0:26.7, slotY1:43.3,   // 頂板導槽 6.6×16.6
-  guideZ0:63.5,                         // 導套 z 63.5..75(T 腳最高 63,留 0.5 間隙)
-  crankArm:28, crankW:14, crankX:101.5, // 曲柄:臂長 28(手搖直徑 56)
-  heartScale:1.42, forkD:4, heartSlotW:6.4, heartSlotD:10,  // 心下沉錯位搭接:心槽跨桿(x)、叉齒夾心(y)、槽頂坐叉底(z)
-  collarR:7,
+  t:3,
+  boxX0:20, boxX1:100, boxY0:0, boxY1:70, wallZ:75,   // 箱身:底板+四牆一體,牆頂 75
+  shaftY:35, shaftZ:38,
+  holeR:3.3,                              // 牆上軸孔 Ø6.6(FDM 收縮預留)
+  camR:16, camE:6, camX:57, camT:9,
+  camDflat:2.3,                           // 凸輪 D 孔:r3.3 圓在 +z 2.3 處切平
+  shaftR:3, shaftDflat:2.0,               // 軸 Ø6,D 面切在 2.0(咬合深度 0.3 間隙)
+  spacerR:6, spacerHoleR:3.3, spacerLen:32,
+  follW:16, follT:6, follLen:47,
+  footW:22, footH:3, follY0:27,
+  capZ:75,                                // 頂蓋板底面(=牆頂)
+  slotX0:56.7, slotX1:63.3, slotY0:26.7, slotY1:43.3,
+  guideZ0:63.5,
+  lipH:2, lipT:2, lipClr:0.25,            // 頂蓋內唇:高 2 厚 2,對牆內面單邊 0.25
+  crankArm:28, crankW:14, crankX:101.5,
+  heartScale:1.42, forkD:4, heartSlotW:6.4, heartSlotD:10,
 };
-// 接觸:群組 rotation.x=A 時,偏心圓心落在 機構z=shaftZ−e·sinA、機構y=shaftY+e·cosA(由 three 旋轉推得,經干涉掃描驗證)
+// 接觸相位(與木板版同一條,經干涉掃描驗證):
 const footZ=A=>D.shaftZ+D.camR-D.camE*Math.sin(A);
 
-// ================= 固定件 =================
-PART='底板'; const mBase=plateXY(rect(D.baseX0,0,D.baseX,D.baseY),D.t,0,MAT.ply2);
-PART='側板';
-const sideHole=[circPts(D.shaftY,D.shaftZ,3.1,24).reverse()];
-const mSideL=withEdges(plateYZ(rect(0,D.t,D.baseY,D.topZ),D.t,D.sideLx,MAT.shell,sideHole));
-const mSideR=withEdges(plateYZ(rect(0,D.t,D.baseY,D.topZ),D.t,D.sideRx,MAT.shell,sideHole));
-PART='頂板';
+// ================= 箱身(一件:底板+四牆) =================
+PART='箱身';
+const mBase=plateXY(rect(D.boxX0,D.boxY0,D.boxX1,D.boxY1),D.t,0,MAT.ply2);
+const sideHole=[circPts(D.shaftY,D.shaftZ,D.holeR,24).reverse()];
+const mSideL=withEdges(plateYZ(rect(D.boxY0,D.t,D.boxY1,D.wallZ),D.t,D.boxX0,MAT.shell,sideHole));
+const mSideR=withEdges(plateYZ(rect(D.boxY0,D.t,D.boxY1,D.wallZ),D.t,D.boxX1-D.t,MAT.shell,sideHole));
+const mWallF=withEdges(plateXZ(rect(D.boxX0+D.t,D.t,D.boxX1-D.t,D.wallZ),D.t,D.boxY0,MAT.shell));
+const mWallB=withEdges(plateXZ(rect(D.boxX0+D.t,D.t,D.boxX1-D.t,D.wallZ),D.t,D.boxY1-D.t,MAT.shell));
+
+// ================= 頂蓋(一件:蓋板+導套+內唇) =================
+PART='頂蓋';
 const slot=[ [[D.slotX0,D.slotY0],[D.slotX1,D.slotY0],[D.slotX1,D.slotY1],[D.slotX0,D.slotY1]].reverse() ];
-const mTop=withEdges(plateXY(rect(D.baseX0,0,D.baseX,D.baseY),D.t,D.topZ,MAT.shell,slot));
-PART='前後裙板';
-const mSkF=withEdges(plateXZ(rect(23,D.t,97,29),D.t,0,MAT.shell));            // 前 y 0..3
-const mSkB=withEdges(plateXZ(rect(23,D.t,97,29),D.t,D.baseY-D.t,MAT.shell));  // 後 y 67..70
-PART='導片';
-const mG1=plateYZ(rect(D.slotY0,D.guideZ0,D.slotY1,D.topZ),D.t,D.camX-D.t-0.3,MAT.ply2);
-const mG2=plateYZ(rect(D.slotY0,D.guideZ0,D.slotY1,D.topZ),D.t,D.camX+D.follT+0.3,MAT.ply2);
-PART='導片前後';
-const mG3=plateXZ(rect(D.camX-D.t-0.3,D.guideZ0,D.camX+D.follT+D.t+0.3,D.topZ),D.t,D.follY0-0.3-D.t,MAT.ply2);
-const mG4=plateXZ(rect(D.camX-D.t-0.3,D.guideZ0,D.camX+D.follT+D.t+0.3,D.topZ),D.t,D.follY0+D.follW+0.3,MAT.ply2);
+const mCap=withEdges(plateXY(rect(D.boxX0,D.boxY0,D.boxX1,D.boxY1),D.t,D.capZ,MAT.shell,slot));
+const mG1=plateYZ(rect(D.slotY0,D.guideZ0,D.slotY1,D.capZ),D.t,D.camX-D.t-0.3,MAT.ply2);
+const mG2=plateYZ(rect(D.slotY0,D.guideZ0,D.slotY1,D.capZ),D.t,D.camX+D.follT+0.3,MAT.ply2);
+const mG3=plateXZ(rect(D.camX-D.t-0.3,D.guideZ0,D.camX+D.follT+D.t+0.3,D.capZ),D.t,D.follY0-0.3-D.t,MAT.ply2);
+const mG4=plateXZ(rect(D.camX-D.t-0.3,D.guideZ0,D.camX+D.follT+D.t+0.3,D.capZ),D.t,D.follY0+D.follW+0.3,MAT.ply2);
+// 內唇:壓進箱口(牆內面 x 23..97 / y 3..67,唇外面各退 0.25)
+const lipX0=D.boxX0+D.t+D.lipClr, lipX1=D.boxX1-D.t-D.lipClr;
+const lipY0=D.boxY0+D.t+D.lipClr, lipY1=D.boxY1-D.t-D.lipClr;
+const mLipF=plateXZ(rect(lipX0,D.capZ-D.lipH,lipX1,D.capZ),D.lipT,lipY0,MAT.ply2);
+const mLipB=plateXZ(rect(lipX0,D.capZ-D.lipH,lipX1,D.capZ),D.lipT,lipY1-D.lipT,MAT.ply2);
+const mLipL=plateYZ(rect(lipY0,D.capZ-D.lipH,lipY1,D.capZ),D.lipT,lipX0,MAT.ply2);
+const mLipR=plateYZ(rect(lipY0,D.capZ-D.lipH,lipY1,D.capZ),D.lipT,lipX1-D.lipT,MAT.ply2);
 
 // ================= 轉動組(繞世界 X 軸) =================
 const gRot=new THREE.Group(); gRot.position.set(0,D.shaftZ,D.shaftY); scene.add(gRot);
@@ -293,10 +312,17 @@ function addRotPlate(pts,holes,t,x0,mat,part){
   m.rotation.y=-Math.PI/2; m.position.x=x0+t;
   gRot.add(m); reg(m,pts,holes,t); return m;
 }
-// 凸輪:偏心圓,局部 (y,z),圓心 (e,0)
-const camPoly=circPts(D.camE,0,D.camR,44), camHole=[circPts(0,0,3.1,24).reverse()];
+// 凸輪:偏心圓 + D 孔(局部 (y,z),偏心在 +y=局部第一軸? 與木板版同:圓心 (e,0))
+const camPoly=circPts(D.camE,0,D.camR,44);
+const camHole=[dPts(0,0,D.holeR,D.camDflat,30).reverse()];
 const mCam=addRotPlate(camPoly,camHole,D.camT,D.camX-(D.camT-D.follT)/2,MAT.cam,'偏心凸輪');
-// 曲柄臂:stadium 由 (0,0) 到 (0,-arm),寬 14,兩端 Ø6.2
+// 間隔套 ×2:管,頂住牆內面與凸輪
+PART='間隔套';
+const spacerPoly=circPts(0,0,D.spacerR,30), spacerHole=[circPts(0,0,D.spacerHoleR,24).reverse()];
+const camL=D.camX-(D.camT-D.follT)/2, camRt=camL+D.camT;
+const mSp1=addRotPlate(spacerPoly,spacerHole,D.spacerLen,camL-0.25-D.spacerLen,MAT.ply,'間隔套');  // x 23.25..55.25
+const mSp2=addRotPlate(spacerPoly,spacerHole,D.spacerLen,camRt+0.25,MAT.ply,'間隔套');             // x 64.75..96.75
+// 曲柄:stadium,軸端 D 孔傳扭力,另一端 Ø6.2 手把孔
 function stadium(x0,y0,x1,y1,w){
   const a=Math.atan2(y1-y0,x1-x0), r=w/2, pts=[];
   for(let i=0;i<=10;i++){const t=a+Math.PI/2+i/10*Math.PI;pts.push([x0+r*Math.cos(t),y0+r*Math.sin(t)]);}
@@ -304,23 +330,18 @@ function stadium(x0,y0,x1,y1,w){
   return pts;
 }
 const crankPoly=stadium(0,0,0,-D.crankArm,D.crankW);
-const crankHoles=[circPts(0,0,3.1,24).reverse(),circPts(0,-D.crankArm,3.1,24).reverse()];
+const crankHoles=[dPts(0,0,D.holeR,D.camDflat,30).reverse(),circPts(0,-D.crankArm,3.1,24).reverse()];
 const mCrank=addRotPlate(crankPoly,crankHoles,6,D.crankX,MAT.ply,'曲柄臂');
-// 軸環 ×2(貼側板內側)
-PART='軸環';
-const collarPoly=circPts(0,0,D.collarR,30), collarHole=[circPts(0,0,3.1,24).reverse()];
-const mCol1=addRotPlate(collarPoly,collarHole,D.t,23.5,MAT.ply2,'軸環');
-const mCol2=addRotPlate(collarPoly,collarHole,D.t,D.sideRx-3.5,MAT.ply2,'軸環');
-// 軸與手把(圓棒,不進切割檔)
+// 軸與手把銷(圓棒視覺;軸中段有 D 面、手把銷有 Ø10 帽,細節見 STL)
 const mShaft=rodX(3,92,62,0,0); gRot.add(mShaft);
-const handle=rodX(3,34,D.crankX+6+17,0,-D.crankArm); gRot.add(handle);
+const handle=rodX(3,30,D.crankX+6+15,0,-D.crankArm); gRot.add(handle);
+const handleCap=rodX(5,3,D.crankX+6+31.5,0,-D.crankArm); gRot.add(handleCap);
 
-// ================= 跟隨組(推桿+心) =================
+// ================= 跟隨組(推桿+心,與木板版同幾何) =================
 const gFoll=new THREE.Group(); scene.add(gFoll);
-// 推桿:局部 (y,z),底緣 z=0;頂端中央挖 3.3 寬深 10 的十字槽
 PART='推桿';
 const nW=3.3, nY0=D.shaftY-nW/2, nY1=D.shaftY+nW/2;
-const fy0=D.shaftY-D.footW/2, fy1=D.shaftY+D.footW/2;   // T 腳 y 24..46
+const fy0=D.shaftY-D.footW/2, fy1=D.shaftY+D.footW/2;
 const follPoly=[
   [fy0,0],[fy1,0],[fy1,D.footH],[D.follY0+D.follW,D.footH],
   [D.follY0+D.follW,D.follLen],[nY1,D.follLen],[nY1,D.follLen-D.forkD],
@@ -333,7 +354,6 @@ let follMesh;
   m.rotation.y=-Math.PI/2; m.position.x=D.camX+D.follT;
   gFoll.add(m); reg(m,follPoly,[],D.follT); follMesh=m;
 }
-// 心:局部 (x,z),參數曲線,尖端在 (camX+3,0);底部挖 6.4 寬深 10 槽
 PART='心';
 function heartPts(cx,scale){
   const pts=[];
@@ -347,7 +367,6 @@ function heartPts(cx,scale){
 }
 const hcx=D.camX+D.follT/2;
 const rawHeart=heartPts(hcx,D.heartScale);
-// 心底開口槽(精確交點裁切):心下沉後,槽壁跨住推桿兩側 → x 向咬合;槽頂面坐在叉槽底面 → z 定深
 function heartWithSlot(pts,cx,w,d){
   const half=w/2;
   let tip=0; for(let i=0;i<pts.length;i++) if(pts[i][1]<pts[tip][1]) tip=i;
@@ -380,48 +399,43 @@ const heartPoly=heartWithSlot(rawHeart,hcx,D.heartSlotW,D.heartSlotD);
 let heartMesh;
 {
   const m=new THREE.Mesh(extrude(mkShape(heartPoly),D.t),MAT.heart);
-  m.position.z=D.shaftY-D.t/2;               // y 33.5..36.5
+  m.position.z=D.shaftY-D.t/2;
   gFoll.add(m); reg(m,heartPoly,[],D.t);
-  m.userData.zBase=D.follLen-D.forkD-D.heartSlotD;  // 心槽頂面剛好坐在叉槽底面(47-4-10=33)
+  m.userData.zBase=D.follLen-D.forkD-D.heartSlotD;
   m.position.y=D.follLen-D.forkD-D.heartSlotD;
   heartMesh=m;
 }
-let explode=0, explodeTo=0;                   // 拆解接頭:心上滑 28mm 露出兩邊的槽
+let explode=0, explodeTo=0;
 
 // ================= 爆炸圖與顯隱 =================
-// 偏移為機構座標 (x,y,z),各件沿自己的裝配方向拉開;three 對應 (x, z, y)
 const PARTGROUPS=[
-  {key:'heart', label:'心',       meshes:[],            off:[0,0,40]},   // heartMesh 建立後補
-  {key:'foll',  label:'推桿',     meshes:[],            off:[0,0,14]},
-  {key:'top',   label:'頂板',     meshes:[mTop],        off:[0,0,26]},
-  {key:'guide', label:'導套',     meshes:[mG1,mG2,mG3,mG4], off:[0,0,18]},
-  {key:'cam',   label:'凸輪',     meshes:[mCam],        off:[0,0,0]},
-  {key:'shaft', label:'軸與手把', meshes:[mShaft,handle], off:[0,0,0]},
-  {key:'crank', label:'曲柄臂',   meshes:[mCrank],      off:[20,0,0]},
-  {key:'collar',label:'軸環',     meshes:[mCol1,mCol2], off:null},       // 個別:左-12/右+12
-  {key:'side',  label:'側板',     meshes:[mSideL,mSideR], off:null},     // 個別:左-24/右+24
-  {key:'skirt', label:'裙板',     meshes:[],              off:null},     // 個別:前-16/後+16
-  {key:'base',  label:'底板',     meshes:[mBase],       off:[0,0,-14]},
+  {key:'heart', label:'心',        meshes:[],                off:[0,0,40]},
+  {key:'foll',  label:'推桿',      meshes:[],                off:[0,0,14]},
+  {key:'cap',   label:'頂蓋',      meshes:[mCap,mG1,mG2,mG3,mG4,mLipF,mLipB,mLipL,mLipR], off:[0,0,26]},
+  {key:'cam',   label:'凸輪',      meshes:[mCam],            off:[0,0,0]},
+  {key:'spacer',label:'間隔套',    meshes:[mSp1,mSp2],       off:null},
+  {key:'shaft', label:'軸',        meshes:[mShaft],          off:[0,0,0]},
+  {key:'crank', label:'曲柄與手把',meshes:[mCrank,handle,handleCap], off:[20,0,0]},
+  {key:'body',  label:'箱身',      meshes:[mBase,mSideL,mSideR,mWallF,mWallB], off:[0,0,-14]},
 ];
-const INDIV=new Map([[mCol1,[-12,0,0]],[mCol2,[12,0,0]],[mSideL,[-24,0,0]],[mSideR,[24,0,0]],[mSkF,[0,-16,0]],[mSkB,[0,16,0]]]);
+const INDIV=new Map([[mSp1,[-12,0,0]],[mSp2,[12,0,0]]]);
 let explodeF=0;
 function initExplode(){
   PARTGROUPS.find(g=>g.key==='heart').meshes.push(heartMesh);
   PARTGROUPS.find(g=>g.key==='foll').meshes.push(follMesh);
-  PARTGROUPS.find(g=>g.key==='skirt').meshes.push(mSkF,mSkB);
   for(const g of PARTGROUPS) for(const m of g.meshes) m.userData.p0=m.position.clone();
 }
 function applyExplode(f){
   explodeF=f;
   for(const g of PARTGROUPS) for(const m of g.meshes){
-    if(m===heartMesh) continue;                    // 心在動畫迴圈裡合成(接頭鈕+爆炸)
+    if(m===heartMesh) continue;
     const o=INDIV.get(m)||g.off||[0,0,0];
     m.position.copy(m.userData.p0);
     m.position.x+=o[0]*f; m.position.z+=o[1]*f; m.position.y+=o[2]*f;
   }
 }
 // ================= 驅動 =================
-const gV2=new THREE.Group(); gV2.userData={A:0}; scene.add(gV2); // 供 export-heart.js 使用的掛名
+const gV2=new THREE.Group(); gV2.userData={A:0}; scene.add(gV2);
 function updV2(_,A){
   gV2.userData.A=A;
   gRot.rotation.x=A;
@@ -465,41 +479,45 @@ function loop(ts){
 
 // ================= 幾何檢查(72 角度掃描) =================
 function runChecks(){
-  const R=[],N=72;
-  let minFootMargin=1e9,minSlotZ=1e9,minHeartTop=1e9,minHandleZ=1e9;
+  const N=72;
+  let minFootMargin=1e9,minHeartTop=1e9;
   for(let i=0;i<N;i++){
     const A=i/N*Math.PI*2, zc=footZ(A);
-    const cy=D.shaftY+D.camE*Math.cos(A);                       // 接觸點 y(符號經掃描驗證)
+    const cy=D.shaftY+D.camE*Math.cos(A);
     minFootMargin=Math.min(minFootMargin,(D.shaftY+D.footW/2)-cy, cy-(D.shaftY-D.footW/2));
-    minSlotZ=Math.min(minSlotZ, zc+D.follLen-(D.topZ+D.t), D.guideZ0-zc>0?1e9:1e9);
-    minHeartTop=Math.min(minHeartTop, zc+(D.follLen-D.forkD-D.heartSlotD)-(D.topZ+D.t)); // 心尖對頂板面
-    const hz=D.shaftZ-Math.sin(A+Math.PI/2)*0; // 手把中心軌跡
-    minHandleZ=Math.min(minHandleZ, D.shaftZ+(-D.crankArm)*Math.cos(A)-3);       // 手把最低(圓棒半徑 3)
+    minHeartTop=Math.min(minHeartTop, zc+(D.follLen-D.forkD-D.heartSlotD)-(D.capZ+D.t));
   }
-  const camClear=D.shaftZ-D.camE-D.camR-D.t;                    // 凸輪對底板
-  const guideGap=0.3;                                           // 推桿對導片(設計值)
+  const camClear=D.shaftZ-D.camE-D.camR-D.t;
   const slotPlayX=(D.slotX1-D.slotX0-D.follT)/2, slotPlayY=(D.slotY1-D.slotY0-D.follW)/2;
-  const follLow=footZ(-Math.PI/2), follHighTop=footZ(Math.PI/2)+D.follLen;
   const handleMinZ=D.shaftZ-D.crankArm-3;
-  const crankClearBase=D.crankX-D.baseX;                        // 曲柄面離底板右緣
+  const crankClearBase=D.crankX-D.boxX1;
+  const inner=(D.boxX1-D.t)-(D.boxX0+D.t);                       // 牆內面跨距 74
+  const axialPlay=inner-2*D.spacerLen-D.camT;                    // 軸向總游隙
+  const camIn=Math.max(2*(D.camR+D.camE), 2*D.camR);             // 凸輪最大外徑
+  const innerY=(D.boxY1-D.t)-(D.boxY0+D.t);                      // 前後牆內距 64
+  const dBite=D.camDflat-D.shaftDflat;                           // D 面間隙
+  const dChord=2*Math.sqrt(D.holeR*D.holeR-D.camDflat*D.camDflat);
   const items=[
     ['凸輪對底板間隙', camClear+' mm(軸心 '+D.shaftZ+',最大半徑 '+(D.camR+D.camE)+')', camClear>=6],
     ['接觸點落在 T 腳底緣內', '最小邊距 '+minFootMargin.toFixed(1)+' mm(腳寬 '+D.footW+',接觸游走 ±'+D.camE+')', minFootMargin>=3],
-    ['凸輪軸向容差', '凸輪厚 '+D.camT+' vs 推桿 '+D.follT+':黏歪 ±'+((D.camT-D.follT)/2).toFixed(1)+' mm 仍全面接觸', D.camT>=D.follT+2],
-    ['推桿全程貫穿導套與頂板槽', (()=>{
+    ['凸輪置中靠間隔套(免對尺寸)', '牆內距 '+inner+' = 套 '+D.spacerLen+'×2 + 凸輪 '+D.camT+' + 游隙 '+axialPlay.toFixed(1)+' mm', axialPlay>0.4&&axialPlay<=1.5],
+    ['D 軸傳扭力(凸輪/曲柄免膠)', '軸 D 面 '+D.shaftDflat+' / 孔 D 面 '+D.camDflat+':間隙 '+dBite.toFixed(1)+',扭力弦寬 '+dChord.toFixed(1)+' mm', dBite>=0.2&&dBite<=0.5&&dChord>=4],
+    ['凸輪放得進箱口', '凸輪最大徑 '+camIn+' < 箱口內寬 '+innerY+'(從頂開口入,再穿軸)', camIn<innerY-4],
+    ['推桿全程貫穿導套與頂蓋槽', (()=>{
         const zLo=footZ(Math.PI/2), zHi=footZ(-Math.PI/2);
         return '桿底 '+zLo.toFixed(0)+'~'+zHi.toFixed(0)+',桿頂 '+(zLo+D.follLen).toFixed(0)+'~'+(zHi+D.follLen).toFixed(0)+';T 腳頂最高 '+(zHi+D.footH).toFixed(1)+' < 導套底 '+D.guideZ0;
-      })(), (footZ(Math.PI/2)+D.follLen)>(D.topZ+D.t) && (footZ(-Math.PI/2)+D.footH)<D.guideZ0],
-    ['導槽配合間隙', 'x 向 ±'+slotPlayX.toFixed(2)+' mm / y 向 ±'+slotPlayY.toFixed(2)+' mm / 導套四面 ±'+guideGap, slotPlayX>0.2&&slotPlayY>0.2],
+      })(), (footZ(Math.PI/2)+D.follLen)>(D.capZ+D.t) && (footZ(-Math.PI/2)+D.footH)<D.guideZ0],
+    ['導槽配合間隙', 'x 向 ±'+slotPlayX.toFixed(2)+' mm / y 向 ±'+slotPlayY.toFixed(2)+' mm / 導套四面 ±0.3(印在幾何裡,不用墊紙)', slotPlayX>0.2&&slotPlayY>0.2],
     ['導引防卡滯(抽屜法則)', (()=>{
-        const engage=(D.topZ+D.t)-D.guideZ0;                     // 嚙合深度 15
-        const lever=D.guideZ0-footZ(Math.PI/2);                  // 最大懸臂(推桿最低時)
+        const engage=(D.capZ+D.t)-D.guideZ0;
+        const lever=D.guideZ0-footZ(Math.PI/2);
         const ratio=lever/engage;
-        return '懸臂 '+lever.toFixed(0)+' / 嚙合 '+engage.toFixed(0)+' = '+ratio.toFixed(2)+'(木件上蠟安全值 < 2.5)';
-      })(), ((D.guideZ0-footZ(Math.PI/2))/((D.topZ+D.t)-D.guideZ0))<2.5],
-    ['心對頂板間隙', '最低時心尖距頂板面 '+minHeartTop.toFixed(1)+' mm', minHeartTop>=3],
+        return '懸臂 '+lever.toFixed(0)+' / 嚙合 '+engage.toFixed(0)+' = '+ratio.toFixed(2)+'(PLA 對 PLA 安全值 < 2.5)';
+      })(), ((D.guideZ0-footZ(Math.PI/2))/((D.capZ+D.t)-D.guideZ0))<2.5],
+    ['頂蓋唇壓入配合', '唇外緣對牆內面單邊 '+D.lipClr+' mm(緊了磨唇;鬆了貼紙膠帶)', D.lipClr>=0.15&&D.lipClr<=0.4],
+    ['心對頂蓋間隙', '最低時心尖距頂蓋面 '+minHeartTop.toFixed(1)+' mm', minHeartTop>=3],
     ['手把不掃桌面', '手把最低點 z='+handleMinZ+' mm(> 0)', handleMinZ>3],
-    ['曲柄整圈不碰底板', '曲柄平面在底板右緣外 '+crankClearBase.toFixed(1)+' mm', crankClearBase>0],
+    ['曲柄整圈不碰箱身', '曲柄平面在右牆外 '+crankClearBase.toFixed(1)+' mm', crankClearBase>0],
     ['錯位搭接四面咬合', 'x:心槽壁跨桿(有料段 '+(D.heartSlotD-5.7).toFixed(1)+' mm,單邊隙 0.2);y:叉齒夾心 '+D.forkD+' mm(單邊隙 0.15);z:槽頂面貼叉底面', (D.heartSlotD-5.7)>=3 && D.forkD>=3],
   ];
   const box=document.getElementById('checks');
