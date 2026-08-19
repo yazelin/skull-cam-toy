@@ -78,7 +78,7 @@ const NAV = (cur) => `<nav class="nav"><a class="brand" href="./">骷髏頭凸�
 const FOOT = fs.existsSync(path.join(DIR, '_footer.html'))
   ? fs.readFileSync(path.join(DIR, '_footer.html'), 'utf8') : '';
 
-function page({ title, cur, body, desc }) {
+function page({ title, cur, body, desc, out }) {
   return `<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -86,6 +86,12 @@ function page({ title, cur, body, desc }) {
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${title}</title>
 <meta name="description" content="${desc || ''}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${desc || ''}">
+<meta property="og:image" content="https://yazelin.github.io/skull-cam-toy/assets/og.jpg">
+<meta property="og:url" content="https://yazelin.github.io/skull-cam-toy/${out || ''}">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
